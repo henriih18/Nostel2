@@ -219,4 +219,5 @@ public class Aprendiz {
     public void setComentarios(List<Comentario> comentarios) {
         this.comentarios = comentarios;
     }
+
 }

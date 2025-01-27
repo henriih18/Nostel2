@@ -1,0 +1,137 @@
+package Sena.ProyectoNostel.domain.dto;
+import Sena.ProyectoNostel.persistence.entity.GeneroAprendiz;
+
+import java.time.LocalDate;
+
+public class AprendizDTO {
+    private Integer idAprendiz;
+    private String primerNombre;
+    private String segundoNombre;
+    private String primerApellido;
+    private String segundoApellido;
+    private LocalDate fechaNacimiento;
+    private GeneroAprendiz genero;
+    private String correo;
+    private String telefono;
+    private String residencia;
+    /*private Boolean discapacidad;*/
+    private String grupoEtnico;
+
+    // Constructores
+    public AprendizDTO() {}
+
+    public AprendizDTO(Integer idAprendiz, String primerNombre, String segundoNombre,
+                       String primerApellido, String segundoApellido, LocalDate fechaNacimiento,
+                       GeneroAprendiz genero, String correo, String telefono, String residencia,
+                       /*Boolean discapacidad,*/ String grupoEtnico) {
+        this.idAprendiz = idAprendiz;
+        this.primerNombre = primerNombre;
+        this.segundoNombre = segundoNombre;
+        this.primerApellido = primerApellido;
+        this.segundoApellido = segundoApellido;
+        this.fechaNacimiento = fechaNacimiento;
+        this.genero = genero;
+        this.correo = correo;
+        this.telefono = telefono;
+        this.residencia = residencia;
+        /*this.discapacidad = discapacidad;*/
+        this.grupoEtnico = grupoEtnico;
+    }
+
+    // Getters y Setters
+    public Integer getIdAprendiz() {
+        return idAprendiz;
+    }
+
+    public void setIdAprendiz(Integer idAprendiz) {
+        this.idAprendiz = idAprendiz;
+    }
+
+    public String getPrimerNombre() {
+        return primerNombre;
+    }
+
+    public void setPrimerNombre(String primerNombre) {
+        this.primerNombre = primerNombre;
+    }
+
+    public String getSegundoNombre() {
+        return segundoNombre;
+    }
+
+    public void setSegundoNombre(String segundoNombre) {
+        this.segundoNombre = segundoNombre;
+    }
+
+    public String getPrimerApellido() {
+        return primerApellido;
+    }
+
+    public void setPrimerApellido(String primerApellido) {
+        this.primerApellido = primerApellido;
+    }
+
+    public String getSegundoApellido() {
+        return segundoApellido;
+    }
+
+    public void setSegundoApellido(String segundoApellido) {
+        this.segundoApellido = segundoApellido;
+    }
+
+    public LocalDate getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public GeneroAprendiz getGenero() {
+        return genero;
+    }
+
+    public void setGenero(GeneroAprendiz genero) {
+        this.genero = genero;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getResidencia() {
+        return residencia;
+    }
+
+    public void setResidencia(String residencia) {
+        this.residencia = residencia;
+    }
+
+    /*public Boolean getDiscapacidad() {
+        return discapacidad;
+    }
+
+    public void setDiscapacidad(Boolean discapacidad) {
+        this.discapacidad = discapacidad;
+    }*/
+
+    public String getGrupoEtnico() {
+        return grupoEtnico;
+    }
+
+    public void setGrupoEtnico(String grupoEtnico) {
+        this.grupoEtnico = grupoEtnico;
+    }
+}
