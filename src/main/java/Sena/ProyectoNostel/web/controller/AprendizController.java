@@ -10,11 +10,15 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/aprendices")
+@RequestMapping("aprendices")
 public class AprendizController {
 
     @Autowired
     private AprendizService aprendizService;
+
+    public AprendizController(AprendizService aprendizService) {
+        this.aprendizService = aprendizService;
+    }
 
     @GetMapping
     public ResponseEntity<List<AprendizDTO>> obtenerTodos() {
@@ -22,11 +26,23 @@ public class AprendizController {
         return new ResponseEntity<>(aprendices, HttpStatus.OK);
     }
 
-    @GetMapping("/{idAprendiz}")
+    /*@GetMapping
+    public List<AprendizDTO> obtenerTodo() {
+        return aprendizService.obtenerTodos();
+    }*/
+
+    /*@GetMapping("/idAprendiz")
     public ResponseEntity<AprendizDTO> obtenerPorId(@PathVariable Integer idAprendiz) {
         Optional<AprendizDTO> aprendiz = aprendizService.obtenerPorIdAprendiz(idAprendiz);
         return aprendiz.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }*/
+
+    @GetMapping("/{idAprendiz}")
+    public ResponseEntity<AprendizDTO> obtenerPorId(@PathVariable Integer idAprendiz) {
+        Optional<AprendizDTO> aprendiz = aprendizService.obtenerPorIdAprendiz(idAprendiz);
+        return aprendiz.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping

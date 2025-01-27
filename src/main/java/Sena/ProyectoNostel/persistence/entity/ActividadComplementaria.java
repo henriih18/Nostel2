@@ -24,7 +24,7 @@ public class ActividadComplementaria {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "estado", nullable = false)
-    private EstadoActvidad estado = EstadoActvidad.PENDIENTE;
+    private EstadoActvidad estado = EstadoActvidad.Pendiente;
 
 
     //relacion aprendiz

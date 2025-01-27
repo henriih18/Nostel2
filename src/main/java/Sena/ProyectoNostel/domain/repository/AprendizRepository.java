@@ -19,8 +19,8 @@ public interface AprendizRepository extends AprendizCrudRepository {
                 .collect(Collectors.toList());
     }
 
-    default Optional<AprendizDTO> obtenerPorIdDTO(Integer id) {
-        return findById(id).map(this::convertirAaprendizDTO);
+    default Optional<AprendizDTO> obtenerPorIdDTO(Integer idAprendiz) {
+        return findById(idAprendiz).map(this::convertirAaprendizDTO);
     }
 
     default AprendizDTO convertirAaprendizDTO(Aprendiz aprendiz) {

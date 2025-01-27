@@ -22,7 +22,7 @@ public class PlanMejoramiento {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "estado", nullable = false)
-    private EstadoPlanMejoramiento estado = EstadoPlanMejoramiento.PENDIENTE;
+    private EstadoPlanMejoramiento estado = EstadoPlanMejoramiento.Pendiente;
 
     //relacion aprendiz
     @ManyToOne
