@@ -2,7 +2,6 @@ package Sena.ProyectoNostel.web.controller;
 
 import Sena.ProyectoNostel.domain.dto.AprendizDTO;
 import Sena.ProyectoNostel.domain.service.AprendizService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +12,7 @@ import java.util.Optional;
 @RequestMapping("aprendices")
 public class AprendizController {
 
-    @Autowired
-    private AprendizService aprendizService;
+    private final AprendizService aprendizService;
 
     public AprendizController(AprendizService aprendizService) {
         this.aprendizService = aprendizService;
