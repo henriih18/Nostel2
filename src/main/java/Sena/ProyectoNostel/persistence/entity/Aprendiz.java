@@ -1,9 +1,12 @@
 package Sena.ProyectoNostel.persistence.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -33,6 +36,7 @@ public class Aprendiz {
     @Column(name = "genero")
     private GeneroAprendiz genero;
 
+    //@Email
     private String correo;
 
     private String telefono;
@@ -60,20 +64,20 @@ public class Aprendiz {
     @OneToMany(mappedBy = "aprendiz")
     private List<ActividadComplementaria> actividadesComplementarias;
 
-    @OneToMany(mappedBy = "aprendiz")
-    private List<Comentario> comentarios;
+    @OneToMany(mappedBy = "aprendiz", cascade = CascadeType.ALL , fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Comentario> comentarios = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "id_ficha")
+    private Ficha ficha;
 
 
 
     public Aprendiz() {
     }
 
-    public Aprendiz(Integer idAprendiz, String primerNombre, String segundoNombre,
-                    String primerApellido, String segundoApellido, LocalDate fechaNacimiento,
-                    GeneroAprendiz genero, String correo, String telefono, String residencia,
-                    boolean discapacidad, String grupoEtnico, List<Inasistencia> inasistencias,
-                    List<PlanMejoramiento> planesMejoramiento,
-                    List<ActividadComplementaria> actividadesComplementarias, List<Comentario> comentarios) {
+    public Aprendiz(Integer idAprendiz, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido, LocalDate fechaNacimiento, GeneroAprendiz genero, String correo, String telefono, String residencia, String grupoEtnico, List<Inasistencia> inasistencias, List<PlanMejoramiento> planesMejoramiento, List<ActividadComplementaria> actividadesComplementarias, List<Comentario> comentarios, Ficha ficha) {
         this.idAprendiz = idAprendiz;
         this.primerNombre = primerNombre;
         this.segundoNombre = segundoNombre;
@@ -84,12 +88,12 @@ public class Aprendiz {
         this.correo = correo;
         this.telefono = telefono;
         this.residencia = residencia;
-        //this.discapacidad = discapacidad;
         this.grupoEtnico = grupoEtnico;
         this.inasistencias = inasistencias;
         this.planesMejoramiento = planesMejoramiento;
         this.actividadesComplementarias = actividadesComplementarias;
         this.comentarios = comentarios;
+        this.ficha = ficha;
     }
 
     public Integer getIdAprendiz() {
@@ -172,14 +176,6 @@ public class Aprendiz {
         this.residencia = residencia;
     }
 
-   /* public boolean isDiscapacidad() {
-        return discapacidad;
-    }
-
-    public void setDiscapacidad(boolean discapacidad) {
-        this.discapacidad = discapacidad;
-    }*/
-
     public String getGrupoEtnico() {
         return grupoEtnico;
     }
@@ -220,4 +216,11 @@ public class Aprendiz {
         this.comentarios = comentarios;
     }
 
+    public Ficha getFicha() {
+        return ficha;
+    }
+
+    public void setFicha(Ficha ficha) {
+        this.ficha = ficha;
+    }
 }

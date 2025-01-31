@@ -16,14 +16,14 @@ public class Programa {
     private String nombrePrograma;
 
     @OneToMany(mappedBy = "programa")
-    private List<Fichas> fichas;
+    private List<Ficha> fichas;
 
     //IMPELMETAR NIVELES DE FORMACION - TAMBIEN EN BD
 
     public Programa() {
     }
 
-    public Programa(Integer idPrograma, String nombrePrograma, List<Fichas> fichas) {
+    public Programa(Integer idPrograma, String nombrePrograma, List<Ficha> fichas) {
         this.idPrograma = idPrograma;
         this.nombrePrograma = nombrePrograma;
         this.fichas = fichas;
@@ -45,11 +45,11 @@ public class Programa {
         this.nombrePrograma = nombrePrograma;
     }
 
-    public List<Fichas> getFichas() {
+    public List<Ficha> getFichas() {
         return fichas;
     }
 
-    public void setFichas(List<Fichas> fichas) {
+    public void setFichas(List<Ficha> fichas) {
         this.fichas = fichas;
     }
 }

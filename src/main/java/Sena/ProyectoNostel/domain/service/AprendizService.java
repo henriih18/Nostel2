@@ -13,4 +13,8 @@ public interface AprendizService {
     AprendizDTO crear(AprendizDTO aprendizDTO);
     Optional<AprendizDTO> actualizar(Integer idAprendiz, AprendizDTO aprendizDTO);
     void eliminar(Integer idAprendiz);
+
+    AprendizDTO obtenerAprendizConComentarios(Integer idAprendiz);
+
+
 }

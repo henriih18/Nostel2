@@ -1,29 +1,33 @@
 package Sena.ProyectoNostel.domain.dto;
+import Sena.ProyectoNostel.persistence.entity.Comentario;
 import Sena.ProyectoNostel.persistence.entity.GeneroAprendiz;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AprendizDTO {
     private Integer idAprendiz;
+
+    //@NotBlank
     private String primerNombre;
     private String segundoNombre;
     private String primerApellido;
     private String segundoApellido;
     private LocalDate fechaNacimiento;
     private GeneroAprendiz genero;
+    //@Email
     private String correo;
     private String telefono;
     private String residencia;
     /*private Boolean discapacidad;*/
     private String grupoEtnico;
+    private List<ComentarioDTO> comentarios;
 
     // Constructores
     public AprendizDTO() {}
 
-    public AprendizDTO(Integer idAprendiz, String primerNombre, String segundoNombre,
-                       String primerApellido, String segundoApellido, LocalDate fechaNacimiento,
-                       GeneroAprendiz genero, String correo, String telefono, String residencia,
-                       /*Boolean discapacidad,*/ String grupoEtnico) {
+    public AprendizDTO(Integer idAprendiz, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido, LocalDate fechaNacimiento, GeneroAprendiz genero, String correo, String telefono, String residencia, String grupoEtnico, List<ComentarioDTO> comentarios) {
         this.idAprendiz = idAprendiz;
         this.primerNombre = primerNombre;
         this.segundoNombre = segundoNombre;
@@ -34,11 +38,11 @@ public class AprendizDTO {
         this.correo = correo;
         this.telefono = telefono;
         this.residencia = residencia;
-        /*this.discapacidad = discapacidad;*/
         this.grupoEtnico = grupoEtnico;
+        this.comentarios = (comentarios != null) ? comentarios : new ArrayList<>();
+
     }
 
-    // Getters y Setters
     public Integer getIdAprendiz() {
         return idAprendiz;
     }
@@ -133,5 +137,13 @@ public class AprendizDTO {
 
     public void setGrupoEtnico(String grupoEtnico) {
         this.grupoEtnico = grupoEtnico;
+    }
+
+    public List<ComentarioDTO> getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(List<ComentarioDTO> comentarios) {
+        this.comentarios = comentarios;
     }
 }

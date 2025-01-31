@@ -6,7 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "fichas")
-public class Fichas {
+public class Ficha {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_ficha")
@@ -37,12 +37,17 @@ public class Fichas {
     @OneToMany(mappedBy = "ficha")
     private List<FichasInstructor> fichasInstructores;
 
-    public Fichas() {
+    @OneToMany(mappedBy = "ficha")
+    private List<Aprendiz> aprendices;
+
+
+
+    public Ficha() {
     }
 
-    public Fichas(Integer idFicha, Integer numeroFicha, String nombrePrograma, String horario,
-                  String fechaInicio, String fechaFin,
-                  String numeroAmbiente, Programa programa, List<FichasInstructor> fichasInstructores) {
+    public Ficha(Integer idFicha, Integer numeroFicha, String nombrePrograma, String horario,
+                 String fechaInicio, String fechaFin,
+                 String numeroAmbiente, Programa programa, List<FichasInstructor> fichasInstructores) {
         this.idFicha = idFicha;
         this.numeroFicha = numeroFicha;
         this.nombrePrograma = nombrePrograma;
@@ -124,5 +129,13 @@ public class Fichas {
 
     public void setFichasInstructores(List<FichasInstructor> fichasInstructores) {
         this.fichasInstructores = fichasInstructores;
+    }
+
+    public List<Aprendiz> getAprendices() {
+        return aprendices;
+    }
+
+    public void setAprendices(List<Aprendiz> aprendices) {
+        this.aprendices = aprendices;
     }
 }

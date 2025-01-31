@@ -11,7 +11,7 @@ public class FichasInstructor {
     @ManyToOne
     @MapsId("idFicha")
     @JoinColumn(name = "id_ficha", insertable = false, updatable = false)
-    private Fichas ficha;
+    private Ficha ficha;
 
     @ManyToOne
     @MapsId("idInstructor")
@@ -21,7 +21,7 @@ public class FichasInstructor {
     public FichasInstructor() {
     }
 
-    public FichasInstructor(FichasInstructorPK id, Fichas ficha, Instructor instructor) {
+    public FichasInstructor(FichasInstructorPK id, Ficha ficha, Instructor instructor) {
         this.id = id;
         this.ficha = ficha;
         this.instructor = instructor;
@@ -35,11 +35,11 @@ public class FichasInstructor {
         this.id = id;
     }
 
-    public Fichas getFicha() {
+    public Ficha getFicha() {
         return ficha;
     }
 
-    public void setFicha(Fichas ficha) {
+    public void setFicha(Ficha ficha) {
         this.ficha = ficha;
     }
 

@@ -61,5 +61,11 @@ public class AprendizController {
         aprendizService.eliminar(idAprendiz);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/{idAprendiz}/comentarios")
+    public ResponseEntity<AprendizDTO> obtenerAprendizConComentarios(@PathVariable Integer idAprendiz) {
+        AprendizDTO aprendizDTO = aprendizService.obtenerAprendizConComentarios(idAprendiz);
+        return ResponseEntity.ok(aprendizDTO);
+    }
 }
 
