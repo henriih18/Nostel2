@@ -13,7 +13,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface AprendizMapper {
-    AprendizMapper INSTANCE = Mappers.getMapper(AprendizMapper.class);
+    //AprendizMapper INSTANCE = Mappers.getMapper(AprendizMapper.class);
 
     @Mapping(source = "primerNombre", target = "primerNombre")
     @Mapping(source = "segundoNombre", target = "segundoNombre")

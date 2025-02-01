@@ -62,10 +62,10 @@ public class AprendizController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/{idAprendiz}/comentarios")
+    /*@GetMapping("/{idAprendiz}/comentarios")
     public ResponseEntity<AprendizDTO> obtenerAprendizConComentarios(@PathVariable Integer idAprendiz) {
         AprendizDTO aprendizDTO = aprendizService.obtenerAprendizConComentarios(idAprendiz);
         return ResponseEntity.ok(aprendizDTO);
-    }
+    }*/
 }
 

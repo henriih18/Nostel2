@@ -7,15 +7,16 @@ public class InasistenciaDTO {
     private Integer idInasistencia;
     private LocalDate fechaInasistencia;
     private String motivo;
+    private String nombreInstructor;
 
-    private List<InasistenciaDTO> inasistencias;
-    public InasistenciaDTO() {
-    }
+   public InasistenciaDTO() {
+   }
 
-    public InasistenciaDTO(Integer idInasistencia, LocalDate fechaInasistencia, String motivo) {
+    public InasistenciaDTO(Integer idInasistencia, LocalDate fechaInasistencia, String motivo, String nombreInstructor) {
         this.idInasistencia = idInasistencia;
         this.fechaInasistencia = fechaInasistencia;
         this.motivo = motivo;
+        this.nombreInstructor = nombreInstructor;
     }
 
     public Integer getIdInasistencia() {
@@ -40,5 +41,13 @@ public class InasistenciaDTO {
 
     public void setMotivo(String motivo) {
         this.motivo = motivo;
+    }
+
+    public String getNombreInstructor() {
+        return nombreInstructor;
+    }
+
+    public void setNombreInstructor(String nombreInstructor) {
+        this.nombreInstructor = nombreInstructor;
     }
 }

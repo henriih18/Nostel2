@@ -24,5 +24,4 @@ public interface InstructorMapper {
     @Mapping(source = "area", target = "area")
     Instructor toInstructor(InstructorDTO instructorDTO);
 
-
 }

@@ -1,5 +1,6 @@
 package Sena.ProyectoNostel.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -30,18 +31,32 @@ public class Inasistencia {
     //relacion instructor
     @ManyToOne
     @JoinColumn(name = "id_instructor", insertable = false, updatable = false)
+    @JsonBackReference
     private Instructor instructor;
+    @Column(name = "id_nstructor")
+    private Integer idInstructor;
+
+    @Transient
+    private String nombreInstructor;
+
+    @PostLoad
+    private void postload() {
+        if (instructor != null){
+            this.nombreInstructor = instructor.getNombres() + " " + instructor.getApellidos();
+        }
+    }
 
     public Inasistencia() {
     }
 
-    public Inasistencia(Integer idInasistencia, LocalDate fechaInasistencia, String motivo,
-                        Aprendiz aprendiz, Instructor instructor) {
+    public Inasistencia(Integer idInasistencia, LocalDate fechaInasistencia, String motivo, Aprendiz aprendiz, Instructor instructor, Integer idInstructor, String nombreInstructor) {
         this.idInasistencia = idInasistencia;
         this.fechaInasistencia = fechaInasistencia;
         this.motivo = motivo;
         this.aprendiz = aprendiz;
         this.instructor = instructor;
+        this.idInstructor = idInstructor;
+        this.nombreInstructor = nombreInstructor;
     }
 
     public Integer getIdInasistencia() {
@@ -82,5 +97,21 @@ public class Inasistencia {
 
     public void setInstructor(Instructor instructor) {
         this.instructor = instructor;
+    }
+
+    public Integer getIdInstructor() {
+        return idInstructor;
+    }
+
+    public void setIdInstructor(Integer idInstructor) {
+        this.idInstructor = idInstructor;
+    }
+
+    public String getNombreInstructor() {
+        return nombreInstructor;
+    }
+
+    public void setNombreInstructor(String nombreInstructor) {
+        this.nombreInstructor = nombreInstructor;
     }
 }

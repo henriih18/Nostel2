@@ -55,8 +55,9 @@ public class Aprendiz {
     private String grupoEtnico;
 
     //Relacio entre entidades
-    @OneToMany(mappedBy = "aprendiz")
-    private List<Inasistencia> inasistencias;
+    @OneToMany(mappedBy = "aprendiz", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Inasistencia> inasistencias = new ArrayList<>();
 
     @OneToMany(mappedBy = "aprendiz")
     private List<PlanMejoramiento> planesMejoramiento;

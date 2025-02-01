@@ -23,11 +23,14 @@ public class AprendizDTO {
     /*private Boolean discapacidad;*/
     private String grupoEtnico;
     private List<ComentarioDTO> comentarios;
+    private List<InasistenciaDTO> inasistencias;
 
     // Constructores
     public AprendizDTO() {}
 
-    public AprendizDTO(Integer idAprendiz, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido, LocalDate fechaNacimiento, GeneroAprendiz genero, String correo, String telefono, String residencia, String grupoEtnico, List<ComentarioDTO> comentarios) {
+    public AprendizDTO(Integer idAprendiz, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido,
+                       LocalDate fechaNacimiento, GeneroAprendiz genero, String correo, String telefono, String residencia,
+                       String grupoEtnico, List<ComentarioDTO> comentarios, List<InasistenciaDTO> inasistencias) {
         this.idAprendiz = idAprendiz;
         this.primerNombre = primerNombre;
         this.segundoNombre = segundoNombre;
@@ -40,6 +43,7 @@ public class AprendizDTO {
         this.residencia = residencia;
         this.grupoEtnico = grupoEtnico;
         this.comentarios = (comentarios != null) ? comentarios : new ArrayList<>();
+        this.inasistencias = (inasistencias != null) ? inasistencias : new ArrayList<>();
 
     }
 
@@ -145,5 +149,14 @@ public class AprendizDTO {
 
     public void setComentarios(List<ComentarioDTO> comentarios) {
         this.comentarios = comentarios;
+    }
+
+
+    public List<InasistenciaDTO> getInasistencias() {
+        return inasistencias;
+    }
+
+    public void setInasistencias(List<InasistenciaDTO> inasistencias) {
+        this.inasistencias = inasistencias;
     }
 }

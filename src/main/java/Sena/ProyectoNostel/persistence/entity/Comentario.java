@@ -24,26 +24,33 @@ public class Comentario {
     //relacion aprendiz
     @ManyToOne
     @JoinColumn(name = "id_aprendiz", insertable = false, updatable = false)
-
     @JsonBackReference
     private Aprendiz aprendiz;
-
     @Column(name = "id_aprendiz")
     private Integer idAprendiz;
 
     //relacion instructor
     @ManyToOne
     @JoinColumn(name = "id_instructor", insertable = false, updatable = false)
+    @JsonBackReference
     private Instructor instructor;
-
     @Column(name = "id_instructor")
     private Integer idInstructor;
-    //FALTA ID-INSTRUCTOR
+
+    @Transient
+    private String nombreInstructor;
+
+    @PostLoad
+    private void postLoad() {
+        if (instructor != null) {
+            this.nombreInstructor = instructor.getNombres()  + " " + instructor.getApellidos();
+        }
+    }
 
     public Comentario() {
     }
 
-    public Comentario(Integer idComentario, LocalDate fechaComentario, String comentario, Aprendiz aprendiz, Integer idAprendiz, Instructor instructor, Integer idInstructor) {
+    public Comentario(Integer idComentario, LocalDate fechaComentario, String comentario, Aprendiz aprendiz, Integer idAprendiz, Instructor instructor, Integer idInstructor, String nombreInstructor) {
         this.idComentario = idComentario;
         this.fechaComentario = fechaComentario;
         this.comentario = comentario;
@@ -51,6 +58,7 @@ public class Comentario {
         this.idAprendiz = idAprendiz;
         this.instructor = instructor;
         this.idInstructor = idInstructor;
+        this.nombreInstructor = nombreInstructor;
     }
 
     public Integer getIdComentario() {
@@ -108,4 +116,13 @@ public class Comentario {
     public void setIdInstructor(Integer idInstructor) {
         this.idInstructor = idInstructor;
     }
+
+    public String getNombreInstructor() {
+        return nombreInstructor;
+    }
+
+    public void setNombreInstructor(String nombreInstructor) {
+        this.nombreInstructor = nombreInstructor;
+    }
+
 }

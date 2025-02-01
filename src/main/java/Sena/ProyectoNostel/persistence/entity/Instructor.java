@@ -1,6 +1,7 @@
 package Sena.ProyectoNostel.persistence.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -32,6 +33,7 @@ public class Instructor {
     private List<PlanMejoramiento> planesMejoramiento;
 
     @OneToMany(mappedBy = "instructor")
+    @JsonManagedReference
     private List<Comentario> comentarios;
 
     @OneToMany(mappedBy = "instructor")

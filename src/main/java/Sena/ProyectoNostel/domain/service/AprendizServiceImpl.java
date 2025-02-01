@@ -74,7 +74,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Service
 public class AprendizServiceImpl implements AprendizService {
 
