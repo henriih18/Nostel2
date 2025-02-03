@@ -24,7 +24,7 @@ public class Instructor {
     private String area;
 
     @OneToMany(mappedBy = "instructor")
-    private List<ActividadComplementaria> actividadesComplementaria;
+    private List<ActividadComplementaria> actividadComplementarias;
 
     @OneToMany(mappedBy = "instructor")
     private List<Inasistencia> inasistencias;
@@ -51,7 +51,7 @@ public class Instructor {
         this.apellidos = apellidos;
         this.numeroDocente = numeroDocente;
         this.area = area;
-        this.actividadesComplementaria = actividadesComplementaria;
+        this.actividadComplementarias = actividadesComplementaria;
         this.inasistencias = inasistencias;
         this.planesMejoramiento = planesMejoramiento;
         this.comentarios = comentarios;
@@ -98,12 +98,12 @@ public class Instructor {
         this.area = area;
     }
 
-    public List<ActividadComplementaria> getActividadesComplementaria() {
-        return actividadesComplementaria;
+    public List<ActividadComplementaria> getActividadComplementarias() {
+        return actividadComplementarias;
     }
 
-    public void setActividadesComplementaria(List<ActividadComplementaria> actividadesComplementaria) {
-        this.actividadesComplementaria = actividadesComplementaria;
+    public void setActividadComplementarias(List<ActividadComplementaria> actividadComplementarias) {
+        this.actividadComplementarias = actividadComplementarias;
     }
 
     public List<Inasistencia> getInasistencias() {

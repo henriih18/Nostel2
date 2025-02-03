@@ -1,5 +1,4 @@
 package Sena.ProyectoNostel.domain.dto;
-import Sena.ProyectoNostel.persistence.entity.Comentario;
 import Sena.ProyectoNostel.persistence.entity.GeneroAprendiz;
 
 import java.time.LocalDate;
@@ -24,13 +23,14 @@ public class AprendizDTO {
     private String grupoEtnico;
     private List<ComentarioDTO> comentarios;
     private List<InasistenciaDTO> inasistencias;
+    private List<ActividadComplementariaDTO> actividadComplementarias;
 
     // Constructores
     public AprendizDTO() {}
 
     public AprendizDTO(Integer idAprendiz, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido,
                        LocalDate fechaNacimiento, GeneroAprendiz genero, String correo, String telefono, String residencia,
-                       String grupoEtnico, List<ComentarioDTO> comentarios, List<InasistenciaDTO> inasistencias) {
+                       String grupoEtnico, List<ComentarioDTO> comentarios, List<InasistenciaDTO> inasistencias, List<ActividadComplementariaDTO> actividadComplementarias) {
         this.idAprendiz = idAprendiz;
         this.primerNombre = primerNombre;
         this.segundoNombre = segundoNombre;
@@ -44,6 +44,7 @@ public class AprendizDTO {
         this.grupoEtnico = grupoEtnico;
         this.comentarios = (comentarios != null) ? comentarios : new ArrayList<>();
         this.inasistencias = (inasistencias != null) ? inasistencias : new ArrayList<>();
+        this.actividadComplementarias = (actividadComplementarias != null) ? actividadComplementarias : new ArrayList<>();
 
     }
 
@@ -158,5 +159,13 @@ public class AprendizDTO {
 
     public void setInasistencias(List<InasistenciaDTO> inasistencias) {
         this.inasistencias = inasistencias;
+    }
+
+    public List<ActividadComplementariaDTO> getActividadComplementarias() {
+        return actividadComplementarias;
+    }
+
+    public void setActividadComplementarias(List<ActividadComplementariaDTO> actividadComplementarias) {
+        this.actividadComplementarias = actividadComplementarias;
     }
 }

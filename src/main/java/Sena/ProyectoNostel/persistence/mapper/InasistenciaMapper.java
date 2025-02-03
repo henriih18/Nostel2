@@ -11,6 +11,8 @@ import java.util.List;
 public interface InasistenciaMapper {
     @Mapping(source = "fechaInasistencia", target = "fechaInasistencia")
     @Mapping(source = "motivo", target = "motivo")
+    //@Mapping(target = "aprendiz", ignore = true)
+    //@Mapping(target = "instructor", ignore = true)
     @Mapping(expression = "java(inasistencia.getInstructor().getNombres() + \" \" + inasistencia.getInstructor().getApellidos())", target = "nombreInstructor")
     InasistenciaDTO toInasistenciaDTO(Inasistencia inasistencia);
 
@@ -18,6 +20,7 @@ public interface InasistenciaMapper {
 
     @Mapping(source = "fechaInasistencia", target = "fechaInasistencia")
     @Mapping(source = "motivo", target = "motivo")
-    @Mapping(target = "instructor", ignore = true)
+    //@Mapping(target = "idInstructor", ignore = true)
+    //@Mapping(target = "idAprendiz", ignore = true)
     Inasistencia toInasistencia(InasistenciaDTO inasistenciaDTO);
 }

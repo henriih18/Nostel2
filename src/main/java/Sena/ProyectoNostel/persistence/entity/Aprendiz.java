@@ -3,7 +3,6 @@ package Sena.ProyectoNostel.persistence.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -62,8 +61,9 @@ public class Aprendiz {
     @OneToMany(mappedBy = "aprendiz")
     private List<PlanMejoramiento> planesMejoramiento;
 
-    @OneToMany(mappedBy = "aprendiz")
-    private List<ActividadComplementaria> actividadesComplementarias;
+    @OneToMany(mappedBy = "aprendiz", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<ActividadComplementaria> actividadComplementarias;
 
     @OneToMany(mappedBy = "aprendiz", cascade = CascadeType.ALL , fetch = FetchType.LAZY)
     @JsonManagedReference
@@ -78,7 +78,7 @@ public class Aprendiz {
     public Aprendiz() {
     }
 
-    public Aprendiz(Integer idAprendiz, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido, LocalDate fechaNacimiento, GeneroAprendiz genero, String correo, String telefono, String residencia, String grupoEtnico, List<Inasistencia> inasistencias, List<PlanMejoramiento> planesMejoramiento, List<ActividadComplementaria> actividadesComplementarias, List<Comentario> comentarios, Ficha ficha) {
+    public Aprendiz(Integer idAprendiz, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido, LocalDate fechaNacimiento, GeneroAprendiz genero, String correo, String telefono, String residencia, String grupoEtnico, List<Inasistencia> inasistencias, List<PlanMejoramiento> planesMejoramiento, List<ActividadComplementaria> actividadComplementarias, List<Comentario> comentarios, Ficha ficha) {
         this.idAprendiz = idAprendiz;
         this.primerNombre = primerNombre;
         this.segundoNombre = segundoNombre;
@@ -92,7 +92,7 @@ public class Aprendiz {
         this.grupoEtnico = grupoEtnico;
         this.inasistencias = inasistencias;
         this.planesMejoramiento = planesMejoramiento;
-        this.actividadesComplementarias = actividadesComplementarias;
+        this.actividadComplementarias = actividadComplementarias;
         this.comentarios = comentarios;
         this.ficha = ficha;
     }
@@ -201,12 +201,12 @@ public class Aprendiz {
         this.planesMejoramiento = planesMejoramiento;
     }
 
-    public List<ActividadComplementaria> getActividadesComplementarias() {
-        return actividadesComplementarias;
+    public List<ActividadComplementaria> getActividadComplementarias() {
+        return actividadComplementarias;
     }
 
-    public void setActividadesComplementarias(List<ActividadComplementaria> actividadesComplementarias) {
-        this.actividadesComplementarias = actividadesComplementarias;
+    public void setActividadComplementarias(List<ActividadComplementaria> actividadComplementarias) {
+        this.actividadComplementarias = actividadComplementarias;
     }
 
     public List<Comentario> getComentarios() {

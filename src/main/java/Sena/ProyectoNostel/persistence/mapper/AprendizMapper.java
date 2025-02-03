@@ -1,13 +1,10 @@
 package Sena.ProyectoNostel.persistence.mapper;
 
 import Sena.ProyectoNostel.domain.dto.AprendizDTO;
-import Sena.ProyectoNostel.domain.dto.ComentarioDTO;
 import Sena.ProyectoNostel.persistence.entity.Aprendiz;
-import Sena.ProyectoNostel.persistence.entity.Comentario;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
@@ -26,11 +23,14 @@ public interface AprendizMapper {
     @Mapping(source = "residencia", target = "residencia")
     @Mapping(source = "grupoEtnico", target = "grupoEtnico")
     /*@Mapping(source = "ficha.idFicha", target = "idFicha")*/
-    //@Mapping(source = "inasistencias", target = "inasistencias")
-    //@Mapping(target = "comentario", ignore = true)
+    @Mapping(source = "inasistencias", target = "inasistencias")
+    @Mapping(source = "comentarios", target = "comentarios")
+    @Mapping(source = "actividadComplementarias", target = "actividadComplementarias")
     AprendizDTO toAprendizDTO(Aprendiz aprendiz);
 
-    List<ComentarioDTO> toComentarioDTOList(List<Comentario> comentario);
+   /* List<ComentarioDTO> toComentarioDTOList(List<Comentario> comentario);*/
+    List<AprendizDTO> toAprendizDTOList(List<Aprendiz> aprendices);
+
 
     @Mapping(source = "primerNombre", target = "primerNombre")
     @Mapping(source = "segundoNombre", target = "segundoNombre")
@@ -42,10 +42,18 @@ public interface AprendizMapper {
     @Mapping(source = "telefono", target = "telefono")
     @Mapping(source = "residencia", target = "residencia")
     @Mapping(source = "grupoEtnico", target = "grupoEtnico")
+    @Mapping(source = "inasistencias", target = "inasistencias")
+    @Mapping(source = "comentarios", target = "comentarios")
+    //@Mapping(target = "planesMejoramiento", ignore = true)
+    @Mapping(source = "actividadComplementarias", target = "actividadComplementarias")
     //@Mapping(target = "ficha", ignore = true)
-    //@Mapping(target = "comentario", ignore = true)
-    //@Mapping(target = "inasistencias", ignore = true)
     Aprendiz toAprendiz(AprendizDTO aprendizDTO);
 
+
+    /*@Mapping(target = "inasistencias", ignore = true)
+    @Mapping(target = "comentarios", ignore = true)
+    @Mapping(target = "planesMejoramiento", ignore = true)
+    @Mapping(target = "actividadComplementarias", ignore = true)
+    @Mapping(target = "ficha", ignore = true)*/
     void updateAprendizFromDto(AprendizDTO aprendizDTO, @MappingTarget Aprendiz aprendiz);
 }

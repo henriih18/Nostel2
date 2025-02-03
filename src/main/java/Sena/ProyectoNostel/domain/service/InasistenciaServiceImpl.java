@@ -2,6 +2,7 @@ package Sena.ProyectoNostel.domain.service;
 
 import Sena.ProyectoNostel.domain.dto.InasistenciaDTO;
 import Sena.ProyectoNostel.domain.repository.InasistenciaRepository;
+import Sena.ProyectoNostel.persistence.mapper.InasistenciaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +13,8 @@ public class InasistenciaServiceImpl implements InasistenciaService {
     @Autowired
     private InasistenciaRepository inasistenciaRepository;
 
-   /* @Autowired
-    private InasistenciaMapper inasistenciaMapper;*/
+    @Autowired
+    private InasistenciaMapper inasistenciaMapper;
 
     public InasistenciaServiceImpl() {
         super();

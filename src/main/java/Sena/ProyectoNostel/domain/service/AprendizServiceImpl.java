@@ -117,12 +117,14 @@ public class AprendizServiceImpl implements AprendizService {
         aprendizRepository.deleteById(idAprendiz);
     }
 
-    @Override
+    /*@Override
     public AprendizDTO obtenerAprendizConComentarios(Integer idAprendiz) {
         Aprendiz aprendiz = aprendizRepository.obtenerConComentarios(idAprendiz)
                 .orElseThrow(() -> new RuntimeException("Aprendiz no encontrado"));
         return aprendizMapper.toAprendizDTO(aprendiz);
-    }
+    }*/
+
+
 
 
 }

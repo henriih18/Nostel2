@@ -25,7 +25,18 @@ public interface AprendizRepository extends AprendizCrudRepository {
     /*default Optional<AprendizDTO> obtenerPorIdDTO(Integer idAprendiz) {
         return findById(idAprendiz).map(AprendizMapper.INSTANCE::toAprendizDTO);}
 */
-    @Query("SELECT  a from Aprendiz a left join fetch a.comentarios c   left join fetch c.instructor b left  join fetch b.inasistencias   where a.idAprendiz = :idAprendiz")
-    Optional<Aprendiz> obtenerConComentarios(@Param("idAprendiz")Integer idAprendiz);
+   /* @Query("SELECT  a from Aprendiz a left join fetch a.comentarios c   left join fetch c.instructor b left  join fetch b.inasistencias   where a.idAprendiz = :idAprendiz")
+    Optional<Aprendiz> obtenerConComentarios(@Param("idAprendiz")Integer idAprendiz);*/
+
+   /* @Query("SELECT DISTINCT a FROM Aprendiz a " +
+            "LEFT JOIN FETCH a.comentarios c " +
+            "LEFT JOIN FETCH c.instructor b " +
+            "LEFT JOIN FETCH b.inasistencias " +
+            "WHERE a.idAprendiz = :idAprendiz")
+    Optional<Aprendiz> obtenerConComentarios(@Param("idAprendiz") Integer idAprendiz);*/
+
+    @Query("SELECT a FROM Aprendiz a WHERE a.idAprendiz = :idAprendiz")
+    Optional<Aprendiz> obtenerPorId(@Param("idAprendiz") Integer idAprendiz);
+
 }
 
