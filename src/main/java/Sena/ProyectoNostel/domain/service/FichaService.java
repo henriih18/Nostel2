@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Service
 public interface FichaService {
-    List<FichaDTO> obtenerfichas();
+    List<FichaDTO> obtenerFichas();
     Optional<FichaDTO> obtenerFichaId(Integer idFicha);
     FichaDTO crearFicha(FichaDTO fichaDTO);
     Optional<FichaDTO> actualizarFicha(Integer idFicha, FichaDTO fichaDTO);

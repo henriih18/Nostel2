@@ -17,7 +17,7 @@ public interface FichaMapper {
     @Mapping(source = "fechaFin", target = "fechaFin")
     @Mapping(source = "numeroAmbiente", target = "numeroAmbiente")
     @Mapping(source = "aprendices", target = "aprendices")
-    FichaDTO toFichaDTOList(Ficha ficha);
+    FichaDTO toFichaDTO(Ficha ficha);
 
     List<FichaDTO> toFichaDTOList(List<Ficha> fichas);
 

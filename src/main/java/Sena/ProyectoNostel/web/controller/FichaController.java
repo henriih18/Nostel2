@@ -20,7 +20,7 @@ public class FichaController {
 
     @GetMapping
     public ResponseEntity<List<FichaDTO>> obtenerFichas() {
-        List<FichaDTO> fichas = fichaService.obtenerfichas();
+        List<FichaDTO> fichas = fichaService.obtenerFichas();
         return new ResponseEntity<>(fichas, HttpStatus.OK);
     }
 
