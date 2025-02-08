@@ -1,6 +1,9 @@
 package Sena.ProyectoNostel.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "planes_mejoramiento")
@@ -15,10 +18,10 @@ public class PlanMejoramiento {
     private String descripcion;
 
     @Column(name = "fecha_inicio")
-    private String fechaInicio;
+    private LocalDate fechaInicio;
 
     @Column(name = "fecha_fin")
-    private String fechaFin;
+    private LocalDate fechaFin;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "estado", nullable = false)
@@ -32,14 +35,24 @@ public class PlanMejoramiento {
     //relacion instructor
     @ManyToOne
     @JoinColumn(name = "id_instructor", insertable = false, updatable = false)
+    @JsonBackReference
     private Instructor instructor;
+    @Column(name = "id_instructor")
+    private Integer idInstructor;
 
+    @Transient
+    private String nombreInstructor;
+
+    @PostLoad
+    private void postload() {
+        if (instructor != null) {
+            this.nombreInstructor = instructor.getNombres() + " " + instructor.getApellidos();
+        }
+    }
     public PlanMejoramiento() {
     }
 
-    public PlanMejoramiento(Integer idPlanMejoramiento, String descripcion, String fechaInicio,
-                            String fechaFin, EstadoPlanMejoramiento estado, Aprendiz aprendiz,
-                            Instructor instructor) {
+    public PlanMejoramiento(Integer idPlanMejoramiento, String descripcion, LocalDate fechaInicio, LocalDate fechaFin, EstadoPlanMejoramiento estado, Aprendiz aprendiz, Instructor instructor, Integer idInstructor, String nombreInstructor) {
         this.idPlanMejoramiento = idPlanMejoramiento;
         this.descripcion = descripcion;
         this.fechaInicio = fechaInicio;
@@ -47,6 +60,8 @@ public class PlanMejoramiento {
         this.estado = estado;
         this.aprendiz = aprendiz;
         this.instructor = instructor;
+        this.idInstructor = idInstructor;
+        this.nombreInstructor = nombreInstructor;
     }
 
     public Integer getIdPlanMejoramiento() {
@@ -65,19 +80,19 @@ public class PlanMejoramiento {
         this.descripcion = descripcion;
     }
 
-    public String getFechaInicio() {
+    public LocalDate getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(String fechaInicio) {
+    public void setFechaInicio(LocalDate fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public String getFechaFin() {
+    public LocalDate getFechaFin() {
         return fechaFin;
     }
 
-    public void setFechaFin(String fechaFin) {
+    public void setFechaFin(LocalDate fechaFin) {
         this.fechaFin = fechaFin;
     }
 
@@ -103,5 +118,21 @@ public class PlanMejoramiento {
 
     public void setInstructor(Instructor instructor) {
         this.instructor = instructor;
+    }
+
+    public Integer getIdInstructor() {
+        return idInstructor;
+    }
+
+    public void setIdInstructor(Integer idInstructor) {
+        this.idInstructor = idInstructor;
+    }
+
+    public String getNombreInstructor() {
+        return nombreInstructor;
+    }
+
+    public void setNombreInstructor(String nombreInstructor) {
+        this.nombreInstructor = nombreInstructor;
     }
 }

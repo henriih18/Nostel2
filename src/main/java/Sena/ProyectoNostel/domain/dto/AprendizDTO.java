@@ -24,13 +24,12 @@ public class AprendizDTO {
     private List<ComentarioDTO> comentarios;
     private List<InasistenciaDTO> inasistencias;
     private List<ActividadComplementariaDTO> actividadComplementarias;
+    private  List<PlanMejoramientoDTO> planMejoramientos;
 
     // Constructores
     public AprendizDTO() {}
 
-    public AprendizDTO(Integer idAprendiz, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido,
-                       LocalDate fechaNacimiento, GeneroAprendiz genero, String correo, String telefono, String residencia,
-                       String grupoEtnico, List<ComentarioDTO> comentarios, List<InasistenciaDTO> inasistencias, List<ActividadComplementariaDTO> actividadComplementarias) {
+    public AprendizDTO(Integer idAprendiz, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido, LocalDate fechaNacimiento, GeneroAprendiz genero, String correo, String telefono, String residencia, String grupoEtnico, List<ComentarioDTO> comentarios, List<InasistenciaDTO> inasistencias, List<ActividadComplementariaDTO> actividadComplementarias, List<PlanMejoramientoDTO> planMejoramientos) {
         this.idAprendiz = idAprendiz;
         this.primerNombre = primerNombre;
         this.segundoNombre = segundoNombre;
@@ -42,10 +41,10 @@ public class AprendizDTO {
         this.telefono = telefono;
         this.residencia = residencia;
         this.grupoEtnico = grupoEtnico;
-        this.comentarios = (comentarios != null) ? comentarios : new ArrayList<>();
-        this.inasistencias = (inasistencias != null) ? inasistencias : new ArrayList<>();
-        this.actividadComplementarias = (actividadComplementarias != null) ? actividadComplementarias : new ArrayList<>();
-
+        this.comentarios = comentarios;
+        this.inasistencias = inasistencias;
+        this.actividadComplementarias = actividadComplementarias;
+        this.planMejoramientos = planMejoramientos;
     }
 
     public Integer getIdAprendiz() {
@@ -167,5 +166,13 @@ public class AprendizDTO {
 
     public void setActividadComplementarias(List<ActividadComplementariaDTO> actividadComplementarias) {
         this.actividadComplementarias = actividadComplementarias;
+    }
+
+    public List<PlanMejoramientoDTO> getPlanMejoramientos() {
+        return planMejoramientos;
+    }
+
+    public void setPlanMejoramientos(List<PlanMejoramientoDTO> planMejoramientos) {
+        this.planMejoramientos = planMejoramientos;
     }
 }

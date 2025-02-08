@@ -25,6 +25,7 @@ public interface AprendizMapper {
     /*@Mapping(source = "ficha.idFicha", target = "idFicha")*/
     @Mapping(source = "inasistencias", target = "inasistencias")
     @Mapping(source = "comentarios", target = "comentarios")
+    @Mapping(source = "planMejoramientos", target ="planMejoramientos")
     @Mapping(source = "actividadComplementarias", target = "actividadComplementarias")
     AprendizDTO toAprendizDTO(Aprendiz aprendiz);
 
@@ -44,7 +45,7 @@ public interface AprendizMapper {
     @Mapping(source = "grupoEtnico", target = "grupoEtnico")
     @Mapping(source = "inasistencias", target = "inasistencias")
     @Mapping(source = "comentarios", target = "comentarios")
-    //@Mapping(target = "planesMejoramiento", ignore = true)
+    @Mapping(source = "planMejoramientos", target ="planMejoramientos")
     @Mapping(source = "actividadComplementarias", target = "actividadComplementarias")
     //@Mapping(target = "ficha", ignore = true)
     Aprendiz toAprendiz(AprendizDTO aprendizDTO);

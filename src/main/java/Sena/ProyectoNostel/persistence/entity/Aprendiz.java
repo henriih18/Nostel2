@@ -58,8 +58,9 @@ public class Aprendiz {
     @JsonManagedReference
     private List<Inasistencia> inasistencias = new ArrayList<>();
 
-    @OneToMany(mappedBy = "aprendiz")
-    private List<PlanMejoramiento> planesMejoramiento;
+    @OneToMany(mappedBy = "aprendiz", cascade = CascadeType.ALL, fetch = FetchType.LAZY )
+    @JsonManagedReference
+    private List<PlanMejoramiento> planMejoramientos = new ArrayList<>();
 
     @OneToMany(mappedBy = "aprendiz", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
@@ -78,7 +79,7 @@ public class Aprendiz {
     public Aprendiz() {
     }
 
-    public Aprendiz(Integer idAprendiz, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido, LocalDate fechaNacimiento, GeneroAprendiz genero, String correo, String telefono, String residencia, String grupoEtnico, List<Inasistencia> inasistencias, List<PlanMejoramiento> planesMejoramiento, List<ActividadComplementaria> actividadComplementarias, List<Comentario> comentarios, Ficha ficha) {
+    public Aprendiz(Integer idAprendiz, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido, LocalDate fechaNacimiento, GeneroAprendiz genero, String correo, String telefono, String residencia, String grupoEtnico, List<Inasistencia> inasistencias, List<PlanMejoramiento> planMejoramientos, List<ActividadComplementaria> actividadComplementarias, List<Comentario> comentarios, Ficha ficha) {
         this.idAprendiz = idAprendiz;
         this.primerNombre = primerNombre;
         this.segundoNombre = segundoNombre;
@@ -91,7 +92,7 @@ public class Aprendiz {
         this.residencia = residencia;
         this.grupoEtnico = grupoEtnico;
         this.inasistencias = inasistencias;
-        this.planesMejoramiento = planesMejoramiento;
+        this.planMejoramientos = planMejoramientos;
         this.actividadComplementarias = actividadComplementarias;
         this.comentarios = comentarios;
         this.ficha = ficha;
@@ -193,12 +194,12 @@ public class Aprendiz {
         this.inasistencias = inasistencias;
     }
 
-    public List<PlanMejoramiento> getPlanesMejoramiento() {
-        return planesMejoramiento;
+    public List<PlanMejoramiento> getPlanMejoramientos() {
+        return planMejoramientos;
     }
 
-    public void setPlanesMejoramiento(List<PlanMejoramiento> planesMejoramiento) {
-        this.planesMejoramiento = planesMejoramiento;
+    public void setPlanMejoramientos(List<PlanMejoramiento> planMejoramientos) {
+        this.planMejoramientos = planMejoramientos;
     }
 
     public List<ActividadComplementaria> getActividadComplementarias() {
