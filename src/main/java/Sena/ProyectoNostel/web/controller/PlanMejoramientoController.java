@@ -18,6 +18,7 @@ public class PlanMejoramientoController {
         this.planMejoramientoService = planMejoramientoService;
     }
 
+
     @PostMapping("/{idAprendiz}")
     public ResponseEntity<PlanMejoramientoDTO> agregarPlanMejoramiento(@RequestBody PlanMejoramientoDTO planMejoramientoDTO ){
         PlanMejoramientoDTO creado = planMejoramientoService.agregarPlanMejoramiento(planMejoramientoDTO);
