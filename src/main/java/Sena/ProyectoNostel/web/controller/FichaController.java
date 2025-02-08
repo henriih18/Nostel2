@@ -1,4 +1,53 @@
 package Sena.ProyectoNostel.web.controller;
 
+import Sena.ProyectoNostel.domain.dto.FichaDTO;
+import Sena.ProyectoNostel.domain.service.FichaService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/fichas")
 public class FichaController {
+    private final FichaService fichaService;
+
+    public FichaController(FichaService fichaService) {
+        this.fichaService = fichaService;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<FichaDTO>> obtenerFichas() {
+        List<FichaDTO> fichas = fichaService.obtenerfichas();
+        return new ResponseEntity<>(fichas, HttpStatus.OK);
+    }
+
+    @GetMapping("/{idFicha}")
+    public ResponseEntity<FichaDTO> obtenerFichaPorId(@PathVariable Integer idFicha) {
+        Optional<FichaDTO> ficha = fichaService.obtenerFichaId(idFicha);
+        return ficha.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    public ResponseEntity<FichaDTO> crearFicha(@RequestBody FichaDTO fichaDTO) {
+        FichaDTO creado = fichaService.crearFicha(fichaDTO);
+        return new ResponseEntity<>(creado, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{idFicha}")
+    public ResponseEntity<FichaDTO> actualizarFicha (@PathVariable Integer idFicha, @RequestBody FichaDTO fichaDTO) {
+        Optional<FichaDTO> actualizado = fichaService.actualizarFicha(idFicha, fichaDTO);
+        return actualizado.map( value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @DeleteMapping("/{idFicha}")
+    public ResponseEntity<String> eliminarFicha(@PathVariable Integer idFicha) {
+        fichaService.eliminarFicha(idFicha);
+        return new ResponseEntity<>("Ficha eliminada", HttpStatus.OK);
+    }
+
+
 }

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("inasitencias")
+@RequestMapping("/inasitencias")
 public class InasistenciaController {
 
     private final InasistenciaService inasistenciaService;

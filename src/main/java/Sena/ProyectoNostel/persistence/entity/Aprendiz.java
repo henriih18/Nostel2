@@ -1,6 +1,7 @@
 package Sena.ProyectoNostel.persistence.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -71,15 +72,26 @@ public class Aprendiz {
     private List<Comentario> comentarios = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name = "id_ficha")
+    @JoinColumn(name = "id_ficha", insertable = false, updatable = false)
+    @JsonBackReference
     private Ficha ficha;
+    @Column(name = "id_ficha")
+    private Integer idFicha;
 
+    @Transient
+    private Integer numeroFicha;
 
+    @PostLoad
+    private void postLoad() {
+        if(ficha != null) {
+            this.numeroFicha = ficha.getIdFicha();
+        }
+    }
 
     public Aprendiz() {
     }
 
-    public Aprendiz(Integer idAprendiz, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido, LocalDate fechaNacimiento, GeneroAprendiz genero, String correo, String telefono, String residencia, String grupoEtnico, List<Inasistencia> inasistencias, List<PlanMejoramiento> planMejoramientos, List<ActividadComplementaria> actividadComplementarias, List<Comentario> comentarios, Ficha ficha) {
+    public Aprendiz(Integer idAprendiz, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido, LocalDate fechaNacimiento, GeneroAprendiz genero, String correo, String telefono, String residencia, String grupoEtnico, List<Inasistencia> inasistencias, List<PlanMejoramiento> planMejoramientos, List<ActividadComplementaria> actividadComplementarias, List<Comentario> comentarios, Ficha ficha, Integer idFicha, Integer numeroFicha) {
         this.idAprendiz = idAprendiz;
         this.primerNombre = primerNombre;
         this.segundoNombre = segundoNombre;
@@ -96,6 +108,8 @@ public class Aprendiz {
         this.actividadComplementarias = actividadComplementarias;
         this.comentarios = comentarios;
         this.ficha = ficha;
+        this.idFicha = idFicha;
+        this.numeroFicha = numeroFicha;
     }
 
     public Integer getIdAprendiz() {
@@ -224,5 +238,21 @@ public class Aprendiz {
 
     public void setFicha(Ficha ficha) {
         this.ficha = ficha;
+    }
+
+    public Integer getIdFicha() {
+        return idFicha;
+    }
+
+    public void setIdFicha(Integer idFicha) {
+        this.idFicha = idFicha;
+    }
+
+    public Integer getNumeroFicha() {
+        return numeroFicha;
+    }
+
+    public void setNumeroFicha(Integer numeroFicha) {
+        this.numeroFicha = numeroFicha;
     }
 }

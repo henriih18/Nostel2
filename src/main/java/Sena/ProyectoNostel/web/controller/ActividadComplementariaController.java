@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("actividadComplementarias")
+@RequestMapping("/actividadComplementarias")
 
 public class ActividadComplementariaController {
     private final ActividadComplementariaService actividadComplementariaService;

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("planMejoramientos")
+@RequestMapping("/planMejoramientos")
 public class PlanMejoramientoController {
     private final PlanMejoramientoService planMejoramientoService;
 

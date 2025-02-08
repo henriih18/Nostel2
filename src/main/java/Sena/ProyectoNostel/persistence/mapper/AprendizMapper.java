@@ -26,6 +26,8 @@ public interface AprendizMapper {
     @Mapping(source = "inasistencias", target = "inasistencias")
     @Mapping(source = "comentarios", target = "comentarios")
     @Mapping(source = "planMejoramientos", target ="planMejoramientos")
+    @Mapping(expression = "java(aprendiz.getFicha().getIdFicha()) ", target = "numeroFicha")
+
     @Mapping(source = "actividadComplementarias", target = "actividadComplementarias")
     AprendizDTO toAprendizDTO(Aprendiz aprendiz);
 

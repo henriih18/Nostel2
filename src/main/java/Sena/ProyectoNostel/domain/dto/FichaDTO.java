@@ -1,57 +1,24 @@
-package Sena.ProyectoNostel.persistence.entity;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
+package Sena.ProyectoNostel.domain.dto;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "fichas")
-public class Ficha {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_ficha")
+public class FichaDTO {
     private Integer idFicha;
-
-    @Column(name = "numero_ficha")
     private Integer numeroFicha;
-
-    @Column(name = "nombre_programa")
     private String nombrePrograma;
-
     private String horario;
 
-    @Column(name = "fecha_inicio")
     private LocalDate fechaInicio;
-
-    @Column(name = "fecha_fin")
     private LocalDate fechaFin;
-
-    @Column(name = "numero_ambiente")
     private Integer numeroAmbiente;
+    private List<AprendizDTO> aprendices;
 
-    //FALTA EL ID-PROGRAMA
-    @ManyToOne
-    @JoinColumn(name = "id_programa", insertable = false, updatable = false)
-    private Programa programa;
+    public FichaDTO() {
 
-    @OneToMany(mappedBy = "ficha")
-    private List<FichasInstructor> fichasInstructores;
-
-    @OneToMany(mappedBy = "ficha", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
-    private List<Aprendiz> aprendices = new ArrayList<>();
-
-
-
-    public Ficha() {
     }
 
-    public Ficha(Integer idFicha, Integer numeroFicha, String nombrePrograma, String horario,
-                 LocalDate fechaInicio, LocalDate fechaFin,
-                 Integer numeroAmbiente, Programa programa, List<FichasInstructor> fichasInstructores) {
+    public FichaDTO(Integer idFicha, Integer numeroFicha, String nombrePrograma, String horario, LocalDate fechaInicio, LocalDate fechaFin, Integer numeroAmbiente, List<AprendizDTO> aprendices) {
         this.idFicha = idFicha;
         this.numeroFicha = numeroFicha;
         this.nombrePrograma = nombrePrograma;
@@ -59,8 +26,7 @@ public class Ficha {
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.numeroAmbiente = numeroAmbiente;
-        this.programa = programa;
-        this.fichasInstructores = fichasInstructores;
+        this.aprendices = aprendices;
     }
 
     public Integer getIdFicha() {
@@ -119,27 +85,11 @@ public class Ficha {
         this.numeroAmbiente = numeroAmbiente;
     }
 
-    public Programa getPrograma() {
-        return programa;
-    }
-
-    public void setPrograma(Programa programa) {
-        this.programa = programa;
-    }
-
-    public List<FichasInstructor> getFichasInstructores() {
-        return fichasInstructores;
-    }
-
-    public void setFichasInstructores(List<FichasInstructor> fichasInstructores) {
-        this.fichasInstructores = fichasInstructores;
-    }
-
-    public List<Aprendiz> getAprendices() {
+    public List<AprendizDTO> getAprendices() {
         return aprendices;
     }
 
-    public void setAprendices(List<Aprendiz> aprendices) {
+    public void setAprendices(List<AprendizDTO> aprendices) {
         this.aprendices = aprendices;
     }
 }

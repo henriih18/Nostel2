@@ -25,11 +25,12 @@ public class AprendizDTO {
     private List<InasistenciaDTO> inasistencias;
     private List<ActividadComplementariaDTO> actividadComplementarias;
     private  List<PlanMejoramientoDTO> planMejoramientos;
+    private Integer numeroFicha;
 
     // Constructores
     public AprendizDTO() {}
 
-    public AprendizDTO(Integer idAprendiz, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido, LocalDate fechaNacimiento, GeneroAprendiz genero, String correo, String telefono, String residencia, String grupoEtnico, List<ComentarioDTO> comentarios, List<InasistenciaDTO> inasistencias, List<ActividadComplementariaDTO> actividadComplementarias, List<PlanMejoramientoDTO> planMejoramientos) {
+    public AprendizDTO(Integer idAprendiz, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido, LocalDate fechaNacimiento, GeneroAprendiz genero, String correo, String telefono, String residencia, String grupoEtnico, List<ComentarioDTO> comentarios, List<InasistenciaDTO> inasistencias, List<ActividadComplementariaDTO> actividadComplementarias, List<PlanMejoramientoDTO> planMejoramientos, Integer numeroFicha) {
         this.idAprendiz = idAprendiz;
         this.primerNombre = primerNombre;
         this.segundoNombre = segundoNombre;
@@ -45,6 +46,7 @@ public class AprendizDTO {
         this.inasistencias = inasistencias;
         this.actividadComplementarias = actividadComplementarias;
         this.planMejoramientos = planMejoramientos;
+        this.numeroFicha = numeroFicha;
     }
 
     public Integer getIdAprendiz() {
@@ -174,5 +176,13 @@ public class AprendizDTO {
 
     public void setPlanMejoramientos(List<PlanMejoramientoDTO> planMejoramientos) {
         this.planMejoramientos = planMejoramientos;
+    }
+
+    public Integer getNumeroFicha() {
+        return numeroFicha;
+    }
+
+    public void setNumeroFicha(Integer numeroFicha) {
+        this.numeroFicha = numeroFicha;
     }
 }
