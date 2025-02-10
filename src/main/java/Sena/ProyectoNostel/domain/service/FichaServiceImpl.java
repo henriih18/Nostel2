@@ -17,8 +17,6 @@ public class FichaServiceImpl implements FichaService {
     private FichaRepository fichaRepository;
 
     @Autowired
-    private FichaService fichaService;
-    @Autowired
     private FichaMapper fichaMapper;
 
     @Override

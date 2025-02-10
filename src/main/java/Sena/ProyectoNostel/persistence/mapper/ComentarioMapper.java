@@ -14,7 +14,8 @@ import java.util.List;
 public interface ComentarioMapper {
     @Mapping(source = "comentario", target = "comentario")
     @Mapping(source = "fechaComentario", target = "fechaComentario")
-    @Mapping(expression = "java(comentario.getInstructor().getNombres() + \" \" + comentario.getInstructor().getApellidos())", target = "nombreInstructor")
+    @Mapping(source = "instructor.nombres", target = "nombreInstructor")
+    //@Mapping(expression = "java(comentario.getInstructor().getNombres() + \" \" + comentario.getInstructor().getApellidos())", target = "nombreInstructor")
     ComentarioDTO toComentarioDTO(Comentario comentario);
 
     List<ComentarioDTO> toComentarioDTOList(List<Comentario> comentarios);

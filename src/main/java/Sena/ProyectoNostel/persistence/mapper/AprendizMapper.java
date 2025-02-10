@@ -22,11 +22,13 @@ public interface AprendizMapper {
     @Mapping(source = "telefono", target = "telefono")
     @Mapping(source = "residencia", target = "residencia")
     @Mapping(source = "grupoEtnico", target = "grupoEtnico")
-    /*@Mapping(source = "ficha.idFicha", target = "idFicha")*/
+    @Mapping(source = "ficha.numeroFicha", target = "numeroFicha")
+    @Mapping(source = "ficha.nombrePrograma", target = "nombrePrograma")
+    @Mapping(source = "ficha.numeroAmbiente", target = "numeroAmbiente")
     @Mapping(source = "inasistencias", target = "inasistencias")
     @Mapping(source = "comentarios", target = "comentarios")
     @Mapping(source = "planMejoramientos", target ="planMejoramientos")
-    @Mapping(expression = "java(aprendiz.getFicha().getIdFicha()) ", target = "numeroFicha")
+    //@Mapping(expression = "java(aprendiz.getFicha().getNumeroFicha()) ", target = "numeroFicha")
 
     @Mapping(source = "actividadComplementarias", target = "actividadComplementarias")
     AprendizDTO toAprendizDTO(Aprendiz aprendiz);

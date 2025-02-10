@@ -54,28 +54,11 @@ public class Aprendiz {
     @Column(name = "grupo_etnico")
     private String grupoEtnico;
 
-    //Relacio entre entidades
-    @OneToMany(mappedBy = "aprendiz", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
-    private List<Inasistencia> inasistencias = new ArrayList<>();
-
-    @OneToMany(mappedBy = "aprendiz", cascade = CascadeType.ALL, fetch = FetchType.LAZY )
-    @JsonManagedReference
-    private List<PlanMejoramiento> planMejoramientos = new ArrayList<>();
-
-    @OneToMany(mappedBy = "aprendiz", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
-    private List<ActividadComplementaria> actividadComplementarias;
-
-    @OneToMany(mappedBy = "aprendiz", cascade = CascadeType.ALL , fetch = FetchType.LAZY)
-    @JsonManagedReference
-    private List<Comentario> comentarios = new ArrayList<>();
-
     @ManyToOne
     @JoinColumn(name = "id_ficha", insertable = false, updatable = false)
     @JsonBackReference
     private Ficha ficha;
-    @Column(name = "id_ficha")
+    /*@Column(name = "id_ficha")
     private Integer idFicha;
 
     @Transient
@@ -84,9 +67,27 @@ public class Aprendiz {
     @PostLoad
     private void postLoad() {
         if(ficha != null) {
-            this.numeroFicha = ficha.getIdFicha();
+            this.numeroFicha = ficha.getNumeroAmbiente();
         }
-    }
+    }*/
+
+    //Relacio entre entidades
+    @OneToMany(mappedBy = "aprendiz", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Inasistencia> inasistencias = new ArrayList<>();
+
+    @OneToMany(mappedBy = "aprendiz", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<PlanMejoramiento> planMejoramientos = new ArrayList<>();
+
+    @OneToMany(mappedBy = "aprendiz", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<ActividadComplementaria> actividadComplementarias;
+
+    @OneToMany(mappedBy = "aprendiz", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Comentario> comentarios = new ArrayList<>();
+
 
     public Aprendiz() {
     }
@@ -108,8 +109,8 @@ public class Aprendiz {
         this.actividadComplementarias = actividadComplementarias;
         this.comentarios = comentarios;
         this.ficha = ficha;
-        this.idFicha = idFicha;
-        this.numeroFicha = numeroFicha;
+        //this.idFicha = idFicha;
+        //this.numeroFicha = numeroFicha;
     }
 
     public Integer getIdAprendiz() {
@@ -240,7 +241,7 @@ public class Aprendiz {
         this.ficha = ficha;
     }
 
-    public Integer getIdFicha() {
+    /*public Integer getIdFicha() {
         return idFicha;
     }
 
@@ -254,5 +255,5 @@ public class Aprendiz {
 
     public void setNumeroFicha(Integer numeroFicha) {
         this.numeroFicha = numeroFicha;
-    }
+    }*/
 }

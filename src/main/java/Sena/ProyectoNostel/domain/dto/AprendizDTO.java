@@ -1,4 +1,5 @@
 package Sena.ProyectoNostel.domain.dto;
+
 import Sena.ProyectoNostel.persistence.entity.GeneroAprendiz;
 
 import java.time.LocalDate;
@@ -21,16 +22,20 @@ public class AprendizDTO {
     private String residencia;
     /*private Boolean discapacidad;*/
     private String grupoEtnico;
+    private Integer numeroFicha;
+    private String nombrePrograma;
+    private Integer numeroAmbiente;
     private List<ComentarioDTO> comentarios;
     private List<InasistenciaDTO> inasistencias;
     private List<ActividadComplementariaDTO> actividadComplementarias;
-    private  List<PlanMejoramientoDTO> planMejoramientos;
-    private Integer numeroFicha;
+    private List<PlanMejoramientoDTO> planMejoramientos;
+
 
     // Constructores
-    public AprendizDTO() {}
+    public AprendizDTO() {
+    }
 
-    public AprendizDTO(Integer idAprendiz, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido, LocalDate fechaNacimiento, GeneroAprendiz genero, String correo, String telefono, String residencia, String grupoEtnico, List<ComentarioDTO> comentarios, List<InasistenciaDTO> inasistencias, List<ActividadComplementariaDTO> actividadComplementarias, List<PlanMejoramientoDTO> planMejoramientos, Integer numeroFicha) {
+    public AprendizDTO(Integer idAprendiz, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido, LocalDate fechaNacimiento, GeneroAprendiz genero, String correo, String telefono, String residencia, String grupoEtnico, List<ComentarioDTO> comentarios, List<InasistenciaDTO> inasistencias, List<ActividadComplementariaDTO> actividadComplementarias, List<PlanMejoramientoDTO> planMejoramientos, Integer numeroFicha, String nombrePrograma, Integer numeroAmbiente) {
         this.idAprendiz = idAprendiz;
         this.primerNombre = primerNombre;
         this.segundoNombre = segundoNombre;
@@ -47,6 +52,8 @@ public class AprendizDTO {
         this.actividadComplementarias = actividadComplementarias;
         this.planMejoramientos = planMejoramientos;
         this.numeroFicha = numeroFicha;
+        this.nombrePrograma = nombrePrograma;
+        this.numeroAmbiente = numeroAmbiente;
     }
 
     public Integer getIdAprendiz() {
@@ -184,5 +191,21 @@ public class AprendizDTO {
 
     public void setNumeroFicha(Integer numeroFicha) {
         this.numeroFicha = numeroFicha;
+    }
+
+    public String getNombrePrograma() {
+        return nombrePrograma;
+    }
+
+    public void setNombrePrograma(String nombrePrograma) {
+        this.nombrePrograma = nombrePrograma;
+    }
+
+    public Integer getNumeroAmbiente() {
+        return numeroAmbiente;
+    }
+
+    public void setNumeroAmbiente(Integer numeroAmbiente) {
+        this.numeroAmbiente = numeroAmbiente;
     }
 }

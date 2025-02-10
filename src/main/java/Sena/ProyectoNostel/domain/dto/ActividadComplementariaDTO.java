@@ -3,6 +3,7 @@ package Sena.ProyectoNostel.domain.dto;
 import Sena.ProyectoNostel.persistence.entity.EstadoActvidad;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class ActividadComplementariaDTO {
     private Integer idActividad;
@@ -11,6 +12,7 @@ public class ActividadComplementariaDTO {
     private LocalDate fechaEntrega;
     private EstadoActvidad estado;
     private String nombreInstructor;
+
 
     public ActividadComplementariaDTO() {
 

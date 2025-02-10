@@ -15,7 +15,8 @@ public interface PlanMejoramientoMapper {
     @Mapping(source = "fechaInicio", target = "fechaInicio")
     @Mapping(source = "fechaFin", target = "fechaFin")
     @Mapping(source = "estado", target = "estado")
-    @Mapping(expression = "java(planMejoramiento.getInstructor().getNombres() + \" \" + planMejoramiento.getInstructor().getApellidos())", target = "nombreInstructor")
+    @Mapping(source = "instructor.nombres", target = "nombreInstructor")
+    //@Mapping(expression = "java(planMejoramiento.getInstructor().getNombres() + \" \" + planMejoramiento.getInstructor().getApellidos())", target = "nombreInstructor")
     PlanMejoramientoDTO toPlanMejoramientoDTO(PlanMejoramiento planMejoramiento);
 
    List<PlanMejoramientoDTO> toPlanMejoramientoList(List<PlanMejoramiento> planMejoramientos);

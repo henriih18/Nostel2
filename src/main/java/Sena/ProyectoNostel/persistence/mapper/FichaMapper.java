@@ -8,7 +8,7 @@ import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
-@Mapper(componentModel = "string")
+@Mapper(componentModel = "spring")
 public interface FichaMapper {
     @Mapping(source = "numeroFicha", target = "numeroFicha")
     @Mapping(source = "nombrePrograma", target = "nombrePrograma")

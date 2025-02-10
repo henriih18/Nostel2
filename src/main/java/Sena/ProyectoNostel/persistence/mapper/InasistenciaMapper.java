@@ -13,7 +13,8 @@ public interface InasistenciaMapper {
     @Mapping(source = "motivo", target = "motivo")
     //@Mapping(target = "aprendiz", ignore = true)
     //@Mapping(target = "instructor", ignore = true)
-    @Mapping(expression = "java(inasistencia.getInstructor().getNombres() + \" \" + inasistencia.getInstructor().getApellidos())", target = "nombreInstructor")
+    @Mapping(source = "instructor.nombres", target = "nombreInstructor")
+    //@Mapping(expression = "java(inasistencia.getInstructor().getNombres() + \" \" + inasistencia.getInstructor().getApellidos())", target = "nombreInstructor")
     InasistenciaDTO toInasistenciaDTO(Inasistencia inasistencia);
 
     List<InasistenciaDTO> toInasistenciaDTOList(List<Inasistencia> inasistencias);

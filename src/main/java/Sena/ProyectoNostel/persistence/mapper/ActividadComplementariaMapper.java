@@ -16,8 +16,8 @@ public interface ActividadComplementariaMapper {
     @Mapping(source = "fechaEntrega", target = "fechaEntrega")
     @Mapping(source = "estado", target = "estado")
    // @Mapping(target = "aprendiz", ignore = true)
-
-    @Mapping(expression = "java(actividadComplementaria.getInstructor().getNombres() + \" \" + actividadComplementaria.getInstructor().getApellidos())", target = "nombreInstructor")
+@Mapping(source = "instructor.nombres", target = "nombreInstructor")
+    //@Mapping(expression = "java(actividadComplementaria.getInstructor().getNombres() + \" \" + actividadComplementaria.getInstructor().getApellidos())", target = "nombreInstructor")
     ActividadComplementariaDTO toActividadCompelemtariaDTO(ActividadComplementaria actividadComplementaria);
 
     List<ActividadComplementariaDTO> toActividadComplementariaList(List<ActividadComplementaria> actividadComplementarias);
