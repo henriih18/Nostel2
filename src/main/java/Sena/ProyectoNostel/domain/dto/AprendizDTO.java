@@ -1,17 +1,24 @@
 package Sena.ProyectoNostel.domain.dto;
 
 import Sena.ProyectoNostel.persistence.entity.GeneroAprendiz;
+import Sena.ProyectoNostel.util.Views;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AprendizDTO {
+
+    //@JsonView(Views.AprendizView.class)
     private Integer idAprendiz;
 
     //@NotBlank
+    //@JsonView(Views.AprendizView.class)
     private String primerNombre;
+    //@JsonView(Views.AprendizView.class)
     private String segundoNombre;
+    //@JsonView(Views.AprendizView.class)
     private String primerApellido;
     private String segundoApellido;
     private LocalDate fechaNacimiento;

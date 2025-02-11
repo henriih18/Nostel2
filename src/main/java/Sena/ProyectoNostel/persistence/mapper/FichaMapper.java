@@ -16,7 +16,7 @@ public interface FichaMapper {
     @Mapping(source = "fechaInicio", target = "fechaInicio")
     @Mapping(source = "fechaFin", target = "fechaFin")
     @Mapping(source = "numeroAmbiente", target = "numeroAmbiente")
-    @Mapping(source = "aprendices", target = "aprendices")
+    //@Mapping(source = "aprendices", target = "aprendices")
     FichaDTO toFichaDTO(Ficha ficha);
 
     List<FichaDTO> toFichaDTOList(List<Ficha> fichas);
@@ -27,7 +27,7 @@ public interface FichaMapper {
     @Mapping(source = "fechaInicio", target = "fechaInicio")
     @Mapping(source = "fechaFin", target = "fechaFin")
     @Mapping(source = "numeroAmbiente", target = "numeroAmbiente")
-    @Mapping(source = "aprendices", target = "aprendices")
+    //@Mapping(source = "aprendices", target = "aprendices")
     Ficha toFicha(FichaDTO fichaDTO);
 
     void updateFichaFromDto(FichaDTO fichaDTO, @MappingTarget Ficha ficha);

@@ -20,36 +20,43 @@ public class FichaServiceImpl implements FichaService {
     private FichaMapper fichaMapper;
 
     @Override
-public List<FichaDTO> obtenerFichas() {
-    return fichaRepository.findAll().stream().map(fichaMapper::toFichaDTO).collect(Collectors.toList());
-}
+    public List<FichaDTO> obtenerFichas() {
+        return fichaRepository.findAll().stream().map(ficha -> {
+            FichaDTO fichaDTO = fichaMapper.toFichaDTO(ficha);
+            fichaDTO.setTotalAprendices(ficha.getAprendices() != null ? ficha.getAprendices().size() : 0);
+            return fichaDTO;
+        }).collect(Collectors.toList());
+    }
 
-
-@Override
+    @Override
     public Optional<FichaDTO> obtenerFichaId(Integer idFicha) {
         return fichaRepository.findById(idFicha)
-                .map(fichaMapper::toFichaDTO);
-}
+                .map(ficha -> {
+                    FichaDTO fichaDTO = fichaMapper.toFichaDTO(ficha);
+                    fichaDTO.setTotalAprendices(ficha.getAprendices() != null ? ficha.getAprendices().size() : 0);
+                    return fichaDTO;
+                });
+    }
 
-@Override
+    @Override
     public FichaDTO crearFicha(FichaDTO fichaDTO) {
         Ficha ficha = fichaMapper.toFicha(fichaDTO);
         ficha = fichaRepository.save(ficha);
         return fichaMapper.toFichaDTO(ficha);
-}
+    }
 
-@Override
+    @Override
     public Optional<FichaDTO> actualizarFicha(Integer idFicha, FichaDTO fichaDTO) {
         return fichaRepository.findById(idFicha).map(fichaExistente -> {
             fichaMapper.updateFichaFromDto(fichaDTO, fichaExistente);
             Ficha fichaActualizado = fichaRepository.save(fichaExistente);
             return fichaMapper.toFichaDTO(fichaActualizado);
         });
-}
+    }
 
-@Override
+    @Override
     public void eliminarFicha(Integer idFicha) {
         fichaRepository.deleteById(idFicha);
-}
+    }
 
 }

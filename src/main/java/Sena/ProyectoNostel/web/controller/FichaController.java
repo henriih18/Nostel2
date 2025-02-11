@@ -2,6 +2,8 @@ package Sena.ProyectoNostel.web.controller;
 
 import Sena.ProyectoNostel.domain.dto.FichaDTO;
 import Sena.ProyectoNostel.domain.service.FichaService;
+import Sena.ProyectoNostel.util.Views;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +21,14 @@ public class FichaController {
     }
 
     @GetMapping
+    //@JsonView(Views.FichaView.class)
     public ResponseEntity<List<FichaDTO>> obtenerFichas() {
         List<FichaDTO> fichas = fichaService.obtenerFichas();
         return new ResponseEntity<>(fichas, HttpStatus.OK);
     }
 
     @GetMapping("/{idFicha}")
+    @JsonView(Views.FichaView.class)
     public ResponseEntity<FichaDTO> obtenerFichaPorId(@PathVariable Integer idFicha) {
         Optional<FichaDTO> ficha = fichaService.obtenerFichaId(idFicha);
         return ficha.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());

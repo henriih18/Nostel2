@@ -4,21 +4,34 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class FichaDTO {
-    private Integer idFicha;
-    private Integer numeroFicha;
-    private String nombrePrograma;
-    private String horario;
 
+    //@JsonView(Views.FichaView.class)
+    private Integer idFicha;
+
+    //@JsonView(Views.FichaView.class)
+    private Integer numeroFicha;
+   // @JsonView(Views.FichaView.class)
+    private String nombrePrograma;
+   // @JsonView(Views.FichaView.class)
+    private String horario;
+    //@JsonView(Views.FichaView.class)
     private LocalDate fechaInicio;
+    //@JsonView(Views.FichaView.class)
     private LocalDate fechaFin;
+    //@JsonView(Views.FichaView.class)
     private Integer numeroAmbiente;
-    private List<AprendizDTO> aprendices;
+
+    private Integer totalAprendices;
+
+    //@JsonView(Views.FichaView.class)
+    //private List<AprendizDTO> aprendices;
 
     public FichaDTO() {
 
     }
 
-    public FichaDTO(Integer idFicha, Integer numeroFicha, String nombrePrograma, String horario, LocalDate fechaInicio, LocalDate fechaFin, Integer numeroAmbiente, List<AprendizDTO> aprendices) {
+    public FichaDTO(Integer idFicha, Integer numeroFicha, String nombrePrograma, String horario, LocalDate fechaInicio, LocalDate fechaFin,
+                    Integer numeroAmbiente, List<AprendizDTO> aprendices, Integer totalAprendices) {
         this.idFicha = idFicha;
         this.numeroFicha = numeroFicha;
         this.nombrePrograma = nombrePrograma;
@@ -26,7 +39,8 @@ public class FichaDTO {
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.numeroAmbiente = numeroAmbiente;
-        this.aprendices = aprendices;
+        //this.aprendices = aprendices;
+        this.totalAprendices = totalAprendices;
     }
 
     public Integer getIdFicha() {
@@ -85,11 +99,19 @@ public class FichaDTO {
         this.numeroAmbiente = numeroAmbiente;
     }
 
-    public List<AprendizDTO> getAprendices() {
+    /*public List<AprendizDTO> getAprendices() {
         return aprendices;
     }
 
     public void setAprendices(List<AprendizDTO> aprendices) {
         this.aprendices = aprendices;
+    }*/
+
+    public Integer getTotalAprendices() {
+        return totalAprendices;
+    }
+
+    public void setTotalAprendices(Integer totalAprendices) {
+        this.totalAprendices = totalAprendices;
     }
 }
