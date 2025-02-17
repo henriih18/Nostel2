@@ -4,6 +4,7 @@ import Sena.ProyectoNostel.domain.dto.AprendizDTO;
 import Sena.ProyectoNostel.domain.service.AprendizService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +20,7 @@ public class AprendizController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('INSTRUCTOR', 'APRENDIZ')")
     public ResponseEntity<List<AprendizDTO>> obtenerTodos() {
         List<AprendizDTO> aprendices = aprendizService.obtenerTodos();
         return new ResponseEntity<>(aprendices, HttpStatus.OK);
@@ -36,7 +38,9 @@ public class AprendizController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }*/
 
+
     @GetMapping("/{idAprendiz}")
+    @PreAuthorize("hasRole('INSTRUCTOR', 'APRENDIZ')")
     public ResponseEntity<AprendizDTO> obtenerPorId(@PathVariable Integer idAprendiz) {
         Optional<AprendizDTO> aprendiz = aprendizService.obtenerPorIdAprendiz(idAprendiz);
         return aprendiz.map(ResponseEntity::ok)
@@ -44,12 +48,14 @@ public class AprendizController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN', 'APRENDIZ')")
     public ResponseEntity<AprendizDTO> crear(@RequestBody AprendizDTO aprendizDTO) {
         AprendizDTO creado = aprendizService.crear(aprendizDTO);
         return new ResponseEntity<>(creado, HttpStatus.CREATED);
     }
 
     @PutMapping("/{idAprendiz}")
+    @PreAuthorize("hasRole('APRENDIZ')")
     public ResponseEntity<AprendizDTO> actualizar(@PathVariable Integer idAprendiz, @RequestBody AprendizDTO aprendizDTO) {
         Optional<AprendizDTO> actualizado = aprendizService.actualizar(idAprendiz, aprendizDTO);
         return actualizado.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
@@ -57,6 +63,7 @@ public class AprendizController {
     }
 
     @DeleteMapping("/{idAprendiz}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> eliminar(@PathVariable Integer idAprendiz) {
         aprendizService.eliminar(idAprendiz);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
