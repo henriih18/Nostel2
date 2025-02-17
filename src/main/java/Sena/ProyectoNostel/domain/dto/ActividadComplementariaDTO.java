@@ -1,10 +1,12 @@
 package Sena.ProyectoNostel.domain.dto;
 
 import Sena.ProyectoNostel.persistence.entity.EstadoActvidad;
+import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Data
 public class ActividadComplementariaDTO {
     private Integer idActividad;
     private String actividad;
@@ -14,7 +16,7 @@ public class ActividadComplementariaDTO {
     private String nombreInstructor;
 
 
-    public ActividadComplementariaDTO() {
+    /*public ActividadComplementariaDTO() {
 
     }
 
@@ -73,5 +75,5 @@ public class ActividadComplementariaDTO {
 
     public void setNombreInstructor(String nombreInstructor) {
         this.nombreInstructor = nombreInstructor;
-    }
+    }*/
 }

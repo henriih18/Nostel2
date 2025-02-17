@@ -3,11 +3,13 @@ package Sena.ProyectoNostel.domain.dto;
 import Sena.ProyectoNostel.persistence.entity.GeneroAprendiz;
 import Sena.ProyectoNostel.util.Views;
 import com.fasterxml.jackson.annotation.JsonView;
+import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 public class AprendizDTO {
 
     //@JsonView(Views.AprendizView.class)
@@ -25,6 +27,7 @@ public class AprendizDTO {
     private GeneroAprendiz genero;
     //@Email
     private String correo;
+    private String contrasena;
     private String telefono;
     private String residencia;
     /*private Boolean discapacidad;*/
@@ -37,12 +40,16 @@ public class AprendizDTO {
     private List<ActividadComplementariaDTO> actividadComplementarias;
     private List<PlanMejoramientoDTO> planMejoramientos;
 
-
+/*
     // Constructores
     public AprendizDTO() {
     }
 
-    public AprendizDTO(Integer idAprendiz, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido, LocalDate fechaNacimiento, GeneroAprendiz genero, String correo, String telefono, String residencia, String grupoEtnico, List<ComentarioDTO> comentarios, List<InasistenciaDTO> inasistencias, List<ActividadComplementariaDTO> actividadComplementarias, List<PlanMejoramientoDTO> planMejoramientos, Integer numeroFicha, String nombrePrograma, Integer numeroAmbiente) {
+    public AprendizDTO(Integer idAprendiz, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido,
+                       LocalDate fechaNacimiento, GeneroAprendiz genero, String correo, String telefono, String residencia,
+                       String grupoEtnico, List<ComentarioDTO> comentarios, List<InasistenciaDTO> inasistencias,
+                       List<ActividadComplementariaDTO> actividadComplementarias, List<PlanMejoramientoDTO> planMejoramientos,
+                       Integer numeroFicha, String nombrePrograma, Integer numeroAmbiente, String contrasena) {
         this.idAprendiz = idAprendiz;
         this.primerNombre = primerNombre;
         this.segundoNombre = segundoNombre;
@@ -61,6 +68,7 @@ public class AprendizDTO {
         this.numeroFicha = numeroFicha;
         this.nombrePrograma = nombrePrograma;
         this.numeroAmbiente = numeroAmbiente;
+        this.contrasena = contrasena;
     }
 
     public Integer getIdAprendiz() {
@@ -149,7 +157,7 @@ public class AprendizDTO {
 
     public void setDiscapacidad(Boolean discapacidad) {
         this.discapacidad = discapacidad;
-    }*/
+    }//aca termina un comentario
 
     public String getGrupoEtnico() {
         return grupoEtnico;
@@ -215,4 +223,14 @@ public class AprendizDTO {
     public void setNumeroAmbiente(Integer numeroAmbiente) {
         this.numeroAmbiente = numeroAmbiente;
     }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
+ */
 }

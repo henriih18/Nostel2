@@ -2,11 +2,13 @@ package Sena.ProyectoNostel.persistence.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 @Entity
 @Table(name = "fichas")
 public class Ficha {
@@ -44,7 +46,7 @@ public class Ficha {
     @JsonManagedReference
     private List<Aprendiz> aprendices = new ArrayList<>();
 
-
+/*
 
     public Ficha() {
     }
@@ -142,4 +144,6 @@ public class Ficha {
     public void setAprendices(List<Aprendiz> aprendices) {
         this.aprendices = aprendices;
     }
+
+ */
 }

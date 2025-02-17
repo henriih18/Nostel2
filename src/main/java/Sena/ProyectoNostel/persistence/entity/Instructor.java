@@ -3,9 +3,11 @@ package Sena.ProyectoNostel.persistence.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.List;
 
+@Data
 @Entity
 @Table(name = "instructores")
 public class Instructor {
@@ -23,6 +25,10 @@ public class Instructor {
 
     private String area;
 
+    private String correo;
+
+    private String contrasena;
+
     @OneToMany(mappedBy = "instructor")
     private List<ActividadComplementaria> actividadComplementarias;
 
@@ -39,13 +45,15 @@ public class Instructor {
     @OneToMany(mappedBy = "instructor")
     private List<FichasInstructor> fichasInstructores;
 
+    /*
     public Instructor() {
     }
 
     public Instructor(Integer idInstructor, String nombres, String apellidos, Integer numeroDocente,
                       String area, List<ActividadComplementaria> actividadesComplementaria,
                       List<Inasistencia> inasistencias, List<PlanMejoramiento> planesMejoramiento,
-                      List<Comentario> comentarios, List<FichasInstructor> fichasInstructores) {
+                      List<Comentario> comentarios, List<FichasInstructor> fichasInstructores, String correo,
+                      String contrasena) {
         this.idInstructor = idInstructor;
         this.nombres = nombres;
         this.apellidos = apellidos;
@@ -56,6 +64,8 @@ public class Instructor {
         this.planesMejoramiento = planesMejoramiento;
         this.comentarios = comentarios;
         this.fichasInstructores = fichasInstructores;
+        this.correo = correo;
+        this.contrasena = contrasena;
     }
 
     public Integer getIdInstructor() {
@@ -137,4 +147,22 @@ public class Instructor {
     public void setFichasInstructores(List<FichasInstructor> fichasInstructores) {
         this.fichasInstructores = fichasInstructores;
     }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
+     */
 }

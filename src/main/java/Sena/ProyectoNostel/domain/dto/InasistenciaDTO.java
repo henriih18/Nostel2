@@ -1,14 +1,18 @@
 package Sena.ProyectoNostel.domain.dto;
 
+import lombok.Data;
+
 import java.time.LocalDate;
 import java.util.List;
 
+@Data
 public class InasistenciaDTO {
     private Integer idInasistencia;
     private LocalDate fechaInasistencia;
     private String motivo;
     private String nombreInstructor;
 
+    /*
    public InasistenciaDTO() {
    }
 
@@ -49,5 +53,5 @@ public class InasistenciaDTO {
 
     public void setNombreInstructor(String nombreInstructor) {
         this.nombreInstructor = nombreInstructor;
-    }
+    }*/
 }

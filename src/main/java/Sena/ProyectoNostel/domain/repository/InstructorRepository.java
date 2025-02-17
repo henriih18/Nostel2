@@ -2,6 +2,7 @@ package Sena.ProyectoNostel.domain.repository;
 
 import Sena.ProyectoNostel.domain.dto.InstructorDTO;
 import Sena.ProyectoNostel.persistence.crud.InstructorCrudRepository;
+import Sena.ProyectoNostel.persistence.entity.Aprendiz;
 import Sena.ProyectoNostel.persistence.entity.Comentario;
 import Sena.ProyectoNostel.persistence.entity.Instructor;
 import Sena.ProyectoNostel.persistence.mapper.InstructorMapper;
@@ -20,4 +21,7 @@ public interface InstructorRepository extends InstructorCrudRepository {
     /*default Optional<InstructorDTO> obtenerPorIdDTO(Integer idInstructor) {
         return findById(idInstructor).map(InstructorMapper.INSTANCE::toInstructorDTO);
     }*/
+
+    Optional<Instructor> findByCorreo(String correo);
+    Instructor save(Instructor instructor);
 }

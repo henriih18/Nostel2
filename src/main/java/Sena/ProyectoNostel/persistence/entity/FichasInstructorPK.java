@@ -2,10 +2,12 @@ package Sena.ProyectoNostel.persistence.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Objects;
 
+@Data
 @Embeddable
 public class FichasInstructorPK implements Serializable {
     @Column(name = "id_ficha")
@@ -34,6 +36,7 @@ public class FichasInstructorPK implements Serializable {
         return Objects.hash(idFicha, idInstructor);
     }
 
+    /*
     public FichasInstructorPK() {
     }
 
@@ -57,4 +60,6 @@ public class FichasInstructorPK implements Serializable {
     public void setIdInstructor(Integer idInstructor) {
         this.idInstructor = idInstructor;
     }
+
+     */
 }

@@ -4,11 +4,13 @@ package Sena.ProyectoNostel.persistence.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 @Entity
 @Table(name = "aprendices")
 public class Aprendiz {
@@ -38,6 +40,8 @@ public class Aprendiz {
 
     //@Email
     private String correo;
+
+    private String contrasena;
 
     private String telefono;
 
@@ -88,11 +92,15 @@ public class Aprendiz {
     @JsonManagedReference
     private List<Comentario> comentarios = new ArrayList<>();
 
-
+/*
     public Aprendiz() {
     }
 
-    public Aprendiz(Integer idAprendiz, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido, LocalDate fechaNacimiento, GeneroAprendiz genero, String correo, String telefono, String residencia, String grupoEtnico, List<Inasistencia> inasistencias, List<PlanMejoramiento> planMejoramientos, List<ActividadComplementaria> actividadComplementarias, List<Comentario> comentarios, Ficha ficha, Integer idFicha, Integer numeroFicha) {
+    public Aprendiz(Integer idAprendiz, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido,
+                    LocalDate fechaNacimiento, GeneroAprendiz genero, String correo, String telefono, String residencia,
+                    String grupoEtnico, List<Inasistencia> inasistencias, List<PlanMejoramiento> planMejoramientos,
+                    List<ActividadComplementaria> actividadComplementarias, List<Comentario> comentarios, Ficha ficha,
+                    Integer idFicha, Integer numeroFicha, String contrasena ) {
         this.idAprendiz = idAprendiz;
         this.primerNombre = primerNombre;
         this.segundoNombre = segundoNombre;
@@ -101,6 +109,7 @@ public class Aprendiz {
         this.fechaNacimiento = fechaNacimiento;
         this.genero = genero;
         this.correo = correo;
+        this.contrasena = contrasena;
         this.telefono = telefono;
         this.residencia = residencia;
         this.grupoEtnico = grupoEtnico;
@@ -255,5 +264,13 @@ public class Aprendiz {
 
     public void setNumeroFicha(Integer numeroFicha) {
         this.numeroFicha = numeroFicha;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }*/
 }

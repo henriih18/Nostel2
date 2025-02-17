@@ -19,6 +19,8 @@ public interface InstructorMapper {
     @Mapping(source = "apellidos", target = "apellidos")
     @Mapping(source = "numeroDocente", target = "numeroDocente")
     @Mapping(source = "area", target = "area")
+    @Mapping(source = "correo", target = "correo")
+    @Mapping(source = "contrasena", target = "contrasena")
     /*@Mapping(target = "actividadComplementarias", ignore = true)
     @Mapping(target = "inasistencias", ignore = true)
     @Mapping(target = "planesMejoramiento", ignore = true)
@@ -32,12 +34,15 @@ public interface InstructorMapper {
     @Mapping(source = "apellidos", target = "apellidos")
     @Mapping(source = "numeroDocente", target = "numeroDocente")
     @Mapping(source = "area", target = "area")
+    @Mapping(source = "correo", target = "correo")
+    @Mapping(source = "contrasena", target = "contrasena")
    /* @Mapping(target = "actividadComplementarias", ignore = true)
     @Mapping(target = "inasistencias", ignore = true)
     @Mapping(target = "planesMejoramiento", ignore = true)
     @Mapping(target = "comentarios", ignore = true)
     @Mapping(target = "fichasInstructores", ignore = true)*/
     Instructor toInstructor(InstructorDTO instructorDTO);
+
     void updateInstructorFromDto(InstructorDTO instructorDTO, @MappingTarget Instructor instructor);
 
 

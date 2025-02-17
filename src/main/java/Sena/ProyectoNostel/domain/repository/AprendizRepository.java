@@ -31,6 +31,12 @@ public interface AprendizRepository extends AprendizCrudRepository {
     @Query("SELECT a FROM Aprendiz a WHERE a.idAprendiz = :idAprendiz")
     Optional<Aprendiz> obtenerPorId(@Param("idAprendiz") Integer idAprendiz);
 
+    //Optional<Object> findByCorreo(void attr0);
+
+    //Optional<Aprendiz>findByCorreo(String correo);
     //obtenerPorIdAprendiz ensayar
+
+    Optional<Aprendiz> findByCorreo(String correo);
+    Aprendiz save(Aprendiz aprendiz);
 }
 

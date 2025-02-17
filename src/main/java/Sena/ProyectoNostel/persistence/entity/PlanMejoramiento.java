@@ -2,9 +2,11 @@ package Sena.ProyectoNostel.persistence.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDate;
 
+@Data
 @Entity
 @Table(name = "planes_mejoramiento")
 public class PlanMejoramiento {
@@ -49,6 +51,8 @@ public class PlanMejoramiento {
             this.nombreInstructor = instructor.getNombres() + " " + instructor.getApellidos();
         }
     }
+
+    /*
     public PlanMejoramiento() {
     }
 
@@ -135,4 +139,6 @@ public class PlanMejoramiento {
     public void setNombreInstructor(String nombreInstructor) {
         this.nombreInstructor = nombreInstructor;
     }
+
+     */
 }

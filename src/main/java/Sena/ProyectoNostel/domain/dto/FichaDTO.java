@@ -1,8 +1,11 @@
 package Sena.ProyectoNostel.domain.dto;
 
+import lombok.Data;
+
 import java.time.LocalDate;
 import java.util.List;
 
+@Data
 public class FichaDTO {
 
     //@JsonView(Views.FichaView.class)
@@ -26,7 +29,7 @@ public class FichaDTO {
     //@JsonView(Views.FichaView.class)
     //private List<AprendizDTO> aprendices;
 
-    public FichaDTO() {
+    /*public FichaDTO() {
 
     }
 
@@ -105,7 +108,7 @@ public class FichaDTO {
 
     public void setAprendices(List<AprendizDTO> aprendices) {
         this.aprendices = aprendices;
-    }*/
+    }//aca termina un comentario
 
     public Integer getTotalAprendices() {
         return totalAprendices;
@@ -113,5 +116,5 @@ public class FichaDTO {
 
     public void setTotalAprendices(Integer totalAprendices) {
         this.totalAprendices = totalAprendices;
-    }
+    }*/
 }

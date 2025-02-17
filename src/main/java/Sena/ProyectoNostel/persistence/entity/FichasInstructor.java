@@ -1,7 +1,9 @@
 package Sena.ProyectoNostel.persistence.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "fichas_instructores")
 public class FichasInstructor {
@@ -18,6 +20,7 @@ public class FichasInstructor {
     @JoinColumn(name = "id_instructor", insertable = false, updatable = false)
     private Instructor instructor;
 
+    /*
     public FichasInstructor() {
     }
 
@@ -50,4 +53,6 @@ public class FichasInstructor {
     public void setInstructor(Instructor instructor) {
         this.instructor = instructor;
     }
+
+     */
 }

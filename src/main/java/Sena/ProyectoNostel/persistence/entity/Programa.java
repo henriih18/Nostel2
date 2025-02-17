@@ -1,9 +1,11 @@
 package Sena.ProyectoNostel.persistence.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.List;
 
+@Data
 @Entity
 @Table(name = "programas")
 public class Programa {
@@ -20,6 +22,7 @@ public class Programa {
 
     //IMPELMETAR NIVELES DE FORMACION - TAMBIEN EN BD
 
+    /*
     public Programa() {
     }
 
@@ -52,4 +55,6 @@ public class Programa {
     public void setFichas(List<Ficha> fichas) {
         this.fichas = fichas;
     }
+
+     */
 }

@@ -3,9 +3,11 @@ package Sena.ProyectoNostel.persistence.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDate;
 
+@Data
 @Entity
 @Table(name = "comentarios")
 public class Comentario {
@@ -47,6 +49,7 @@ public class Comentario {
         }
     }
 
+    /*
     public Comentario() {
     }
 
@@ -123,6 +126,6 @@ public class Comentario {
 
     public void setNombreInstructor(String nombreInstructor) {
         this.nombreInstructor = nombreInstructor;
-    }
+    }*/
 
 }

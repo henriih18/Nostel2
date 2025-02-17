@@ -2,9 +2,11 @@ package Sena.ProyectoNostel.persistence.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDate;
 
+@Data
 @Entity
 @Table(name = "inasistencias")
 public class Inasistencia {
@@ -45,7 +47,7 @@ public class Inasistencia {
             this.nombreInstructor = instructor.getNombres() + " " + instructor.getApellidos();
         }
     }
-
+/*
     public Inasistencia() {
     }
 
@@ -114,4 +116,6 @@ public class Inasistencia {
     public void setNombreInstructor(String nombreInstructor) {
         this.nombreInstructor = nombreInstructor;
     }
+
+ */
 }

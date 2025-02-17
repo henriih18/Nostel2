@@ -1,7 +1,10 @@
 package Sena.ProyectoNostel.domain.dto;
 
+import lombok.Data;
+
 import java.time.LocalDate;
 
+@Data
 public class ComentarioDTO {
 
     private Integer idComentario;
@@ -9,7 +12,7 @@ public class ComentarioDTO {
     private String comentario;
     private String nombreInstructor;
 
-    public ComentarioDTO() {
+    /*public ComentarioDTO() {
     }
 
     public ComentarioDTO(Integer idComentario, LocalDate fechaComentario, String comentario, String nombreInstructor) {
@@ -49,5 +52,5 @@ public class ComentarioDTO {
 
     public void setNombreInstructor(String nombreInstructor) {
         this.nombreInstructor = nombreInstructor;
-    }
+    }*/
 }
