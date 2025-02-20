@@ -1,4 +1,4 @@
-/*
+package Sena.ProyectoNostel.web.controller;/*
 package Sena.ProyectoNostel.web.controller;
 
 import Sena.ProyectoNostel.domain.dto.JwtResponseDTO;
@@ -134,7 +134,7 @@ public class AuthController {
                 ));
             }
 
-            // Si no es un aprendiz, buscar si el usuario es un instructor
+            // Si no es un aprendiz, buscar si el usuario es un instructor o admin
             Instructor instructor = instructorRepository.findByCorreo(request.getCorreo())
                     .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 

@@ -12,29 +12,26 @@ import java.util.Collections;
 public class UserDetailsImpl implements UserDetails {
     private String correo;
     private String contrasena;
-    private String rol; // Nuevo campo para el rol
+    private String rol;
 
     // Constructor para Aprendiz
     public UserDetailsImpl(Aprendiz aprendiz) {
         this.correo = aprendiz.getCorreo();
         this.contrasena = aprendiz.getContrasena();
-        this.rol = "ROLE_APRENDIZ"; // Asignar rol directamente
+        this.rol = "ROLE_APRENDIZ";
     }
 
     // Constructor para Instructor
     public UserDetailsImpl(Instructor instructor) {
         this.correo = instructor.getCorreo();
         this.contrasena = instructor.getContrasena();
-        this.rol = "ROLE_INSTRUCTOR"; // Asignar rol directamente
+        this.rol = "ROLE_INSTRUCTOR";
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // Retorna el rol como una autoridad
         return Collections.singletonList(new SimpleGrantedAuthority(rol));
     }
-
-    // Resto de los métodos se mantienen igual...
     @Override
     public String getPassword() {
         return contrasena;

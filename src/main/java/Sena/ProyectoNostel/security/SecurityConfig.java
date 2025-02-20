@@ -19,68 +19,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    /*private final JwtAuthenticationFilter jwtAuthenticationFilter;
-
-    public SecurityConfig( JwtAuthenticationFilter JwtAuthenticationFilter ) {
-        this.jwtAuthenticationFilter = JwtAuthenticationFilter;
-    }
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll()
-                        .anyRequest().authenticated()
-                )
-                .sessionManagment(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
-    }*/
-
-    /*private final JwtAuthenticationFilter jwtAuthFilter;
-    private final AuthenticationProvider authenticationProvider;
-
-    public SecurityConfig(
-            JwtAuthenticationFilter jwtAuthFilter,
-            AuthenticationProvider authenticationProvider
-    ) {
-        this.jwtAuthFilter = jwtAuthFilter;
-        this.authenticationProvider = authenticationProvider;
-    }
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/aprendices/**").hasAnyRole("APRENDIZ", "ADMIN")
-                        .requestMatchers("/api/instructores/**").hasAnyRole("INSTRUCTOR", "ADMIN")
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                        .anyRequest().authenticated()
-                )
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
-                .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-
-        return http.build();
-    }*/
-
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
 
