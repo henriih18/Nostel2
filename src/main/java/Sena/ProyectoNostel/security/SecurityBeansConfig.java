@@ -10,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,27 +23,17 @@ public class SecurityBeansConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> {
-            var aprendiz = aprendizRepository.findByCorreo(username);
-            if (aprendiz.isPresent()) {
-                return new UserDetailsImpl(aprendiz.get());
-            }
-
-            var instructor = instructorRepository.findByCorreo(username);
-            if (instructor.isPresent()) {
-                return new UserDetailsImpl(instructor.get());
-            }
-
-            throw new RuntimeException("Usuario no encontrado");
-        };
+        return username -> aprendizRepository.findByCorreo(username)
+                .map(UserDetailsImpl::new)
+                .or(() -> instructorRepository.findByCorreo(username).map(UserDetailsImpl::new))
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + username));
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider() {
+    public AuthenticationProvider authenticationProvider(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService());
-        //authProvider.setPasswordEncoder(passwordEncoder());
-        authProvider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
+        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder); //cambiar cuando se quiera encriptar contraseña
         return authProvider;
     }
 
@@ -53,6 +44,6 @@ public class SecurityBeansConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return NoOpPasswordEncoder.getInstance(); //cambiar cuando se quiera encriptar contraseña
     }
 }

@@ -1,4 +1,6 @@
-package Sena.ProyectoNostel.web.controller;/*
+/*
+package Sena.ProyectoNostel.web.controller;*/
+/*
 package Sena.ProyectoNostel.web.controller;
 
 import Sena.ProyectoNostel.domain.dto.JwtResponseDTO;
@@ -75,7 +77,8 @@ public class AuthController {
     }
 
 }
-*/
+*//*
+
 
 import Sena.ProyectoNostel.domain.dto.JwtResponseDTO;
 import Sena.ProyectoNostel.domain.dto.LoginRequestDTO;
@@ -155,6 +158,70 @@ public class AuthController {
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
+    }
+}
+
+*/
+
+package Sena.ProyectoNostel.web.controller;
+
+import Sena.ProyectoNostel.domain.dto.JwtResponseDTO;
+import Sena.ProyectoNostel.domain.dto.LoginRequestDTO;
+import Sena.ProyectoNostel.domain.repository.AprendizRepository;
+import Sena.ProyectoNostel.domain.repository.InstructorRepository;
+import Sena.ProyectoNostel.domain.service.JwtService;
+import Sena.ProyectoNostel.persistence.entity.Aprendiz;
+import Sena.ProyectoNostel.persistence.entity.Instructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/auth")
+public class AuthController {
+
+    private final JwtService jwtService;
+    private final AprendizRepository aprendizRepository;
+    private final InstructorRepository instructorRepository;
+
+    public AuthController(JwtService jwtService, AprendizRepository aprendizRepository, InstructorRepository instructorRepository) {
+        this.jwtService = jwtService;
+        this.aprendizRepository = aprendizRepository;
+        this.instructorRepository = instructorRepository;
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequestDTO request) {
+
+        Optional<Aprendiz> aprendizOptional = aprendizRepository.findByCorreo(request.getCorreo());
+        if (aprendizOptional.isPresent()) {
+            Aprendiz aprendiz = aprendizOptional.get();
+            if (!aprendiz.getContrasena().equals(request.getContrasena())) {
+                return ResponseEntity.status(401).body("Contraseña incorrecta");
+            }
+            HashMap<String, Object> claims = new HashMap<>();
+            claims.put("role", "ROLE_APRENDIZ");
+
+            String token = jwtService.generateToken(claims, aprendiz.getCorreo());
+            return ResponseEntity.ok(new JwtResponseDTO(token, "ROLE_APRENDIZ", aprendiz.getCorreo(), aprendiz.getPrimerNombre()));
+        }
+
+        Optional<Instructor> instructorOptional = instructorRepository.findByCorreo(request.getCorreo());
+        if (instructorOptional.isPresent()) {
+            Instructor instructor = instructorOptional.get();
+            if (!instructor.getContrasena().equals(request.getContrasena())) {
+                return ResponseEntity.status(401).body("Contraseña incorrecta");
+            }
+            HashMap<String, Object> claims = new HashMap<>();
+            claims.put("role", "ROLE_INSTRUCTOR");
+
+            String token = jwtService.generateToken(claims, instructor.getCorreo());
+            return ResponseEntity.ok(new JwtResponseDTO(token, "ROLE_INSTRUCTOR", instructor.getCorreo(), instructor.getNombres()));
+        }
+
+        return ResponseEntity.status(404).body("Usuario no encontrado");
     }
 }
 

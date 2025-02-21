@@ -20,7 +20,7 @@ public class AprendizController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('INSTRUCTOR', 'APRENDIZ')")
+    @PreAuthorize("hasRole('INSTRUCTOR', 'APRENDIZ', 'ADMIN')")
     public ResponseEntity<List<AprendizDTO>> obtenerTodos() {
         List<AprendizDTO> aprendices = aprendizService.obtenerTodos();
         return new ResponseEntity<>(aprendices, HttpStatus.OK);
@@ -40,7 +40,7 @@ public class AprendizController {
 
 
     @GetMapping("/{idAprendiz}")
-    @PreAuthorize("hasRole('INSTRUCTOR', 'APRENDIZ')")
+    @PreAuthorize("hasRole('INSTRUCTOR', 'APRENDIZ', 'ADMIN')")
     public ResponseEntity<AprendizDTO> obtenerPorId(@PathVariable Integer idAprendiz) {
         Optional<AprendizDTO> aprendiz = aprendizService.obtenerPorIdAprendiz(idAprendiz);
         return aprendiz.map(ResponseEntity::ok)
