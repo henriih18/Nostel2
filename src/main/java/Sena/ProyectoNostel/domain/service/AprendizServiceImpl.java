@@ -67,6 +67,7 @@ import Sena.ProyectoNostel.domain.dto.AprendizDTO;
 import Sena.ProyectoNostel.domain.repository.AprendizRepository;
 import Sena.ProyectoNostel.persistence.entity.Aprendiz;
 import Sena.ProyectoNostel.persistence.mapper.AprendizMapper;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -91,9 +92,14 @@ public class AprendizServiceImpl implements AprendizService {
     }
 
     @Override
+    @Transactional
     public Optional<AprendizDTO> obtenerPorIdAprendiz(Integer idAprendiz) {
         return aprendizRepository.findById(idAprendiz)
                 .map(aprendizMapper::toAprendizDTO);
+        /*.map(aprendiz -> {
+                    aprendiz.getInasistencias().size();
+                    return aprendizMapper.toAprendizDTO(aprendiz);
+                });*/
     }
 
     @Override
@@ -104,6 +110,7 @@ public class AprendizServiceImpl implements AprendizService {
     }
 
     @Override
+    @Transactional
     public Optional<AprendizDTO> actualizar(Integer idAprendiz, AprendizDTO aprendizDTO) {
         return aprendizRepository.findById(idAprendiz).map(aprendizExistente -> {
             aprendizMapper.updateAprendizFromDto(aprendizDTO, aprendizExistente);

@@ -202,7 +202,7 @@ public class AuthController {
                 return ResponseEntity.status(401).body("Contraseña incorrecta");
             }
             HashMap<String, Object> claims = new HashMap<>();
-            claims.put("role", "ROLE_APRENDIZ");
+            claims.put("rol", "ROLE_APRENDIZ");
 
             String token = jwtService.generateToken(claims, aprendiz.getCorreo());
             return ResponseEntity.ok(new JwtResponseDTO(token, "ROLE_APRENDIZ", aprendiz.getCorreo(), aprendiz.getPrimerNombre()));
@@ -215,7 +215,7 @@ public class AuthController {
                 return ResponseEntity.status(401).body("Contraseña incorrecta");
             }
             HashMap<String, Object> claims = new HashMap<>();
-            claims.put("role", "ROLE_INSTRUCTOR");
+            claims.put("rol", "ROLE_INSTRUCTOR");
 
             String token = jwtService.generateToken(claims, instructor.getCorreo());
             return ResponseEntity.ok(new JwtResponseDTO(token, "ROLE_INSTRUCTOR", instructor.getCorreo(), instructor.getNombres()));

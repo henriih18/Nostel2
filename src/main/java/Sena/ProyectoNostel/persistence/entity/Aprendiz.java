@@ -19,6 +19,8 @@ public class Aprendiz {
     @Column(name = "id_aprendiz")
     private Integer idAprendiz;
 
+    private Integer documento;
+
     @Column(name = "primer_nombre")
     private String primerNombre;
 
@@ -30,6 +32,8 @@ public class Aprendiz {
 
     @Column(name = "segundo_apellido")
     private String segundoApellido;
+
+
 
     @Column(name = "fecha_nacimiento")
     private LocalDate fechaNacimiento;
@@ -92,185 +96,5 @@ public class Aprendiz {
     @JsonManagedReference
     private List<Comentario> comentarios = new ArrayList<>();
 
-/*
-    public Aprendiz() {
-    }
 
-    public Aprendiz(Integer idAprendiz, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido,
-                    LocalDate fechaNacimiento, GeneroAprendiz genero, String correo, String telefono, String residencia,
-                    String grupoEtnico, List<Inasistencia> inasistencias, List<PlanMejoramiento> planMejoramientos,
-                    List<ActividadComplementaria> actividadComplementarias, List<Comentario> comentarios, Ficha ficha,
-                    Integer idFicha, Integer numeroFicha, String contrasena ) {
-        this.idAprendiz = idAprendiz;
-        this.primerNombre = primerNombre;
-        this.segundoNombre = segundoNombre;
-        this.primerApellido = primerApellido;
-        this.segundoApellido = segundoApellido;
-        this.fechaNacimiento = fechaNacimiento;
-        this.genero = genero;
-        this.correo = correo;
-        this.contrasena = contrasena;
-        this.telefono = telefono;
-        this.residencia = residencia;
-        this.grupoEtnico = grupoEtnico;
-        this.inasistencias = inasistencias;
-        this.planMejoramientos = planMejoramientos;
-        this.actividadComplementarias = actividadComplementarias;
-        this.comentarios = comentarios;
-        this.ficha = ficha;
-        //this.idFicha = idFicha;
-        //this.numeroFicha = numeroFicha;
-    }
-
-    public Integer getIdAprendiz() {
-        return idAprendiz;
-    }
-
-    public void setIdAprendiz(Integer idAprendiz) {
-        this.idAprendiz = idAprendiz;
-    }
-
-    public String getPrimerNombre() {
-        return primerNombre;
-    }
-
-    public void setPrimerNombre(String primerNombre) {
-        this.primerNombre = primerNombre;
-    }
-
-    public String getSegundoNombre() {
-        return segundoNombre;
-    }
-
-    public void setSegundoNombre(String segundoNombre) {
-        this.segundoNombre = segundoNombre;
-    }
-
-    public String getPrimerApellido() {
-        return primerApellido;
-    }
-
-    public void setPrimerApellido(String primerApellido) {
-        this.primerApellido = primerApellido;
-    }
-
-    public String getSegundoApellido() {
-        return segundoApellido;
-    }
-
-    public void setSegundoApellido(String segundoApellido) {
-        this.segundoApellido = segundoApellido;
-    }
-
-    public LocalDate getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(LocalDate fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
-    }
-
-    public GeneroAprendiz getGenero() {
-        return genero;
-    }
-
-    public void setGenero(GeneroAprendiz genero) {
-        this.genero = genero;
-    }
-
-    public String getCorreo() {
-        return correo;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public String getResidencia() {
-        return residencia;
-    }
-
-    public void setResidencia(String residencia) {
-        this.residencia = residencia;
-    }
-
-    public String getGrupoEtnico() {
-        return grupoEtnico;
-    }
-
-    public void setGrupoEtnico(String grupoEtnico) {
-        this.grupoEtnico = grupoEtnico;
-    }
-
-    public List<Inasistencia> getInasistencias() {
-        return inasistencias;
-    }
-
-    public void setInasistencias(List<Inasistencia> inasistencias) {
-        this.inasistencias = inasistencias;
-    }
-
-    public List<PlanMejoramiento> getPlanMejoramientos() {
-        return planMejoramientos;
-    }
-
-    public void setPlanMejoramientos(List<PlanMejoramiento> planMejoramientos) {
-        this.planMejoramientos = planMejoramientos;
-    }
-
-    public List<ActividadComplementaria> getActividadComplementarias() {
-        return actividadComplementarias;
-    }
-
-    public void setActividadComplementarias(List<ActividadComplementaria> actividadComplementarias) {
-        this.actividadComplementarias = actividadComplementarias;
-    }
-
-    public List<Comentario> getComentarios() {
-        return comentarios;
-    }
-
-    public void setComentarios(List<Comentario> comentarios) {
-        this.comentarios = comentarios;
-    }
-
-    public Ficha getFicha() {
-        return ficha;
-    }
-
-    public void setFicha(Ficha ficha) {
-        this.ficha = ficha;
-    }
-
-    /*public Integer getIdFicha() {
-        return idFicha;
-    }
-
-    public void setIdFicha(Integer idFicha) {
-        this.idFicha = idFicha;
-    }
-
-    public Integer getNumeroFicha() {
-        return numeroFicha;
-    }
-
-    public void setNumeroFicha(Integer numeroFicha) {
-        this.numeroFicha = numeroFicha;
-    }
-
-    public String getContrasena() {
-        return contrasena;
-    }
-
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
-    }*/
 }

@@ -12,11 +12,13 @@ import java.util.List;
 public interface AprendizMapper {
     //AprendizMapper INSTANCE = Mappers.getMapper(AprendizMapper.class);
 
+    @Mapping(source = "documento", target = "documento")
     @Mapping(source = "primerNombre", target = "primerNombre")
     @Mapping(source = "segundoNombre", target = "segundoNombre")
     @Mapping(source = "primerApellido", target = "primerApellido")
     @Mapping(source = "segundoApellido", target = "segundoApellido")
     @Mapping(source = "fechaNacimiento", target = "fechaNacimiento")
+
     @Mapping(source = "genero", target = "genero")
     @Mapping(source = "correo", target = "correo")
     @Mapping(source = "contrasena", target = "contrasena")
@@ -38,6 +40,7 @@ public interface AprendizMapper {
     List<AprendizDTO> toAprendizDTOList(List<Aprendiz> aprendices);
 
 
+    @Mapping(source = "documento", target = "documento")
     @Mapping(source = "primerNombre", target = "primerNombre")
     @Mapping(source = "segundoNombre", target = "segundoNombre")
     @Mapping(source = "primerApellido", target = "primerApellido")
@@ -62,5 +65,7 @@ public interface AprendizMapper {
     @Mapping(target = "planesMejoramiento", ignore = true)
     @Mapping(target = "actividadComplementarias", ignore = true)
     @Mapping(target = "ficha", ignore = true)*/
+
+
     void updateAprendizFromDto(AprendizDTO aprendizDTO, @MappingTarget Aprendiz aprendiz);
 }
