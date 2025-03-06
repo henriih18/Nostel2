@@ -7,4 +7,5 @@ public class LoginRequestDTO {
     private String correo;
     private String contrasena;
     private String rol;
+    private Integer idFicha;
 }

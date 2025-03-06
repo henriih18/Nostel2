@@ -17,24 +17,7 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
 
-  /*  @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/api/aprendices/**").hasRole("APRENDIZ")
-                        .requestMatchers("/api/instructores/**").hasRole("INSTRUCTOR")
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                        .anyRequest().authenticated()
-                )
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
-        return http.build();
-    }*/
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -42,7 +25,9 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/aprendices").permitAll() // 👈 Permitir registrar aprendices
+                        .requestMatchers(HttpMethod.POST, "/aprendices").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/fichas", "/api/fichas").permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         // Permitir que ADMIN e INSTRUCTOR puedan gestionar aprendices (PUT, DELETE, POST)
                         .requestMatchers(HttpMethod.PUT, "/api/aprendices/**").hasAnyRole("ADMIN", "INSTRUCTOR")
                         .requestMatchers(HttpMethod.POST, "/api/aprendices/**").hasAnyRole("ADMIN", "INSTRUCTOR")

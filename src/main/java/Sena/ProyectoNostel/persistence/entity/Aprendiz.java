@@ -21,17 +21,17 @@ public class Aprendiz {
 
     private Integer documento;
 
-    @Column(name = "primer_nombre")
-    private String primerNombre;
+   // @Column(name = "primer_nombre")
+    private String nombres;
 
-    @Column(name = "segundo_nombre")
-    private String segundoNombre;
+   /* @Column(name = "segundo_nombre")
+    private String segundoNombre;*/
 
-    @Column(name = "primer_apellido")
-    private String primerApellido;
+    //@Column(name = "primer_apellido")
+    private String apellidos;
 
-    @Column(name = "segundo_apellido")
-    private String segundoApellido;
+    /*@Column(name = "segundo_apellido")
+    private String segundoApellido;*/
 
 
 
@@ -59,8 +59,8 @@ public class Aprendiz {
     //Revisar si es necesario cambiar el tipo de dato de discapacidad
 
 
-    @Column(name = "grupo_etnico")
-    private String grupoEtnico;
+    /*@Column(name = "grupo_etnico")
+    private String grupoEtnico;*/
 
     @ManyToOne
     @JoinColumn(name = "id_ficha", insertable = false, updatable = false)

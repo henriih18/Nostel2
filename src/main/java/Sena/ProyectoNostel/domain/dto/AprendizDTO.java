@@ -18,12 +18,14 @@ public class AprendizDTO {
     private Integer documento;
     //@NotBlank
     //@JsonView(Views.AprendizView.class)
-    private String primerNombre;
+    private String nombres;
     //@JsonView(Views.AprendizView.class)
-    private String segundoNombre;
+    /*private String segundoNombre;*/
     //@JsonView(Views.AprendizView.class)
-    private String primerApellido;
+    private String apellidos;
+/*
     private String segundoApellido;
+*/
     private LocalDate fechaNacimiento;
     private GeneroAprendiz genero;
     //@Email

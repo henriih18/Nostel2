@@ -29,7 +29,7 @@ public interface AprendizRepository extends AprendizCrudRepository {
     Optional<Aprendiz> obtenerConComentarios(@Param("idAprendiz") Integer idAprendiz);*/
 
     @Query("SELECT a FROM Aprendiz a WHERE a.idAprendiz = :idAprendiz")
-    Optional<Aprendiz> obtenerPorId(@Param("idAprendiz") Integer idAprendiz);
+    Optional<Aprendiz> findById(@Param("idAprendiz") Integer idAprendiz);
 
     //Optional<Object> findByCorreo(void attr0);
 

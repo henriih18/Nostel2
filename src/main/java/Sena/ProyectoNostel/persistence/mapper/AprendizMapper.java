@@ -13,10 +13,10 @@ public interface AprendizMapper {
     //AprendizMapper INSTANCE = Mappers.getMapper(AprendizMapper.class);
 
     @Mapping(source = "documento", target = "documento")
-    @Mapping(source = "primerNombre", target = "primerNombre")
-    @Mapping(source = "segundoNombre", target = "segundoNombre")
-    @Mapping(source = "primerApellido", target = "primerApellido")
-    @Mapping(source = "segundoApellido", target = "segundoApellido")
+    @Mapping(source = "nombres", target = "nombres")
+    /*@Mapping(source = "segundoNombre", target = "segundoNombre")*/
+    @Mapping(source = "apellidos", target = "apellidos")
+   /* @Mapping(source = "segundoApellido", target = "segundoApellido")*/
     @Mapping(source = "fechaNacimiento", target = "fechaNacimiento")
 
     @Mapping(source = "genero", target = "genero")
@@ -41,10 +41,13 @@ public interface AprendizMapper {
 
 
     @Mapping(source = "documento", target = "documento")
-    @Mapping(source = "primerNombre", target = "primerNombre")
+    /*@Mapping(source = "primerNombre", target = "primerNombre")
     @Mapping(source = "segundoNombre", target = "segundoNombre")
     @Mapping(source = "primerApellido", target = "primerApellido")
-    @Mapping(source = "segundoApellido", target = "segundoApellido")
+    @Mapping(source = "segundoApellido", target = "segundoApellido")*/
+    @Mapping(source = "nombres", target = "nombres")
+
+    @Mapping(source = "apellidos", target = "apellidos")
     @Mapping(source = "fechaNacimiento", target = "fechaNacimiento")
     @Mapping(source = "genero", target = "genero")
     @Mapping(source = "correo", target = "correo")

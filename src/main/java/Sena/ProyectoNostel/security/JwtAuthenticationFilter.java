@@ -87,6 +87,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
 
+    /*@Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getRequestURI();
+        String method = request.getMethod();
+
+        return (path.equals("/fichas") || path.equals("/api/fichas")) && method.equals("GET")
+                || (path.equals("/api/aprendices") && method.equals("POST"));
+    }*/
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
@@ -100,6 +109,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }*/
+
+        String path = request.getServletPath();
+        // Skip JWT validation for permitted endpoints
+        if (path.equals("/fichas") || path.equals("/api/fichas") || request.getMethod().equals("OPTIONS")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         final String authHeader = request.getHeader("Authorization");
         final String jwt;

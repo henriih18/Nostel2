@@ -168,9 +168,11 @@ package Sena.ProyectoNostel.web.controller;
 import Sena.ProyectoNostel.domain.dto.JwtResponseDTO;
 import Sena.ProyectoNostel.domain.dto.LoginRequestDTO;
 import Sena.ProyectoNostel.domain.repository.AprendizRepository;
+import Sena.ProyectoNostel.domain.repository.FichaRepository;
 import Sena.ProyectoNostel.domain.repository.InstructorRepository;
 import Sena.ProyectoNostel.domain.service.JwtService;
 import Sena.ProyectoNostel.persistence.entity.Aprendiz;
+import Sena.ProyectoNostel.persistence.entity.Ficha;
 import Sena.ProyectoNostel.persistence.entity.Instructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -185,11 +187,13 @@ public class AuthController {
     private final JwtService jwtService;
     private final AprendizRepository aprendizRepository;
     private final InstructorRepository instructorRepository;
+    //private final FichaRepository fichaRepository;
 
-    public AuthController(JwtService jwtService, AprendizRepository aprendizRepository, InstructorRepository instructorRepository) {
+    public AuthController(JwtService jwtService, AprendizRepository aprendizRepository, InstructorRepository instructorRepository, FichaRepository fichaRepository) {
         this.jwtService = jwtService;
         this.aprendizRepository = aprendizRepository;
         this.instructorRepository = instructorRepository;
+        //this.fichaRepository = fichaRepository;
     }
 
     @PostMapping("/login")
@@ -205,7 +209,7 @@ public class AuthController {
             claims.put("rol", "ROLE_APRENDIZ");
 
             String token = jwtService.generateToken(claims, aprendiz.getCorreo());
-            return ResponseEntity.ok(new JwtResponseDTO(token, "ROLE_APRENDIZ", aprendiz.getCorreo(), aprendiz.getPrimerNombre()));
+            return ResponseEntity.ok(new JwtResponseDTO(token, "ROLE_APRENDIZ", aprendiz.getCorreo(), aprendiz.getNombres()));
         }
 
         Optional<Instructor> instructorOptional = instructorRepository.findByCorreo(request.getCorreo());
@@ -223,5 +227,26 @@ public class AuthController {
 
         return ResponseEntity.status(404).body("Usuario no encontrado");
     }
+
+    /*@PostMapping("/register")
+    public ResponseEntity<?> register(@RequestBody LoginRequestDTO request) {
+        Optional<Ficha> fichaOptional = fichaRepository.findById(request.getIdFicha());
+        if (!fichaOptional.isPresent()) {
+            return ResponseEntity.status(404).body("Ficha no encontrada");
+        }
+
+        Aprendiz aprendiz = new Aprendiz();
+        aprendiz.setCorreo(request.getCorreo());
+        aprendiz.setContrasena(request.getContrasena());
+        aprendiz.setFicha(fichaOptional.get());
+
+        aprendizRepository.save(aprendiz);
+
+        HashMap<String, Object> claims = new HashMap<>();
+        claims.put("rol", "ROLE_APRENDIZ");
+
+        String token = jwtService.generateToken(claims, aprendiz.getCorreo());
+        return ResponseEntity.ok(new JwtResponseDTO(token, "ROLE_APRENDIZ", aprendiz.getCorreo(), aprendiz.getNombres()));
+    }*/
 }
 

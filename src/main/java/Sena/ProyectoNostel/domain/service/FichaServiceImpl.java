@@ -6,20 +6,30 @@ import Sena.ProyectoNostel.persistence.entity.Ficha;
 import Sena.ProyectoNostel.persistence.mapper.FichaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class FichaServiceImpl implements FichaService {
+public class FichaServiceImpl implements FichaService {/*
     @Autowired
     private FichaRepository fichaRepository;
 
     @Autowired
     private FichaMapper fichaMapper;
+*/
 
+    private final FichaRepository fichaRepository;
+    private final FichaMapper fichaMapper;
+
+    public FichaServiceImpl(FichaRepository fichaRepository, FichaMapper fichaMapper) {
+        this.fichaRepository = fichaRepository;
+        this.fichaMapper = fichaMapper;
+    }
     @Override
+    @Transactional(readOnly = true)
     public List<FichaDTO> obtenerFichas() {
         return fichaRepository.findAll().stream().map(ficha -> {
             FichaDTO fichaDTO = fichaMapper.toFichaDTO(ficha);
@@ -27,6 +37,7 @@ public class FichaServiceImpl implements FichaService {
             return fichaDTO;
         }).collect(Collectors.toList());
     }
+
 
     @Override
     public Optional<FichaDTO> obtenerFichaId(Integer idFicha) {
