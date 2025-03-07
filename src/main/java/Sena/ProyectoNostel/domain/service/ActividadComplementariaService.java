@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Service
+//@Service
 public interface ActividadComplementariaService {
     ActividadComplementariaDTO agregarActividad(ActividadComplementariaDTO actividadComplementariaDTO);
     Optional<ActividadComplementariaDTO> actualizarActividad(Integer idActividad, ActividadComplementariaDTO actividadComplementariaDTO);

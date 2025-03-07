@@ -69,8 +69,11 @@ import Sena.ProyectoNostel.persistence.entity.Aprendiz;
 import Sena.ProyectoNostel.persistence.mapper.AprendizMapper;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -83,6 +86,8 @@ public class AprendizServiceImpl implements AprendizService {
 
     @Autowired
     private AprendizMapper aprendizMapper;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public List<AprendizDTO> obtenerTodos() {
@@ -104,7 +109,24 @@ public class AprendizServiceImpl implements AprendizService {
 
     @Override
     public AprendizDTO crear(AprendizDTO aprendizDTO) {
+        //verifica que el correo no esté registrado
+        if (aprendizRepository.findByCorreo(aprendizDTO.getCorreo()).isPresent()) {
+            throw new IllegalArgumentException("El correo ya está registrado");
+        }  if (aprendizRepository.findByDocumento(aprendizDTO.getDocumento()).isPresent()) {
+            throw new IllegalArgumentException("El número de documento ya está registrado");
+        }
+        //se aplica trim a los campos de texto que ingresa el usuario
+        aprendizDTO.setNombres(aprendizDTO.getNombres().trim());
+        aprendizDTO.setApellidos(aprendizDTO.getApellidos().trim());
+        aprendizDTO.setCorreo(aprendizDTO.getCorreo().trim());
+        aprendizDTO.setTelefono(aprendizDTO.getTelefono().trim());
+        aprendizDTO.setResidencia(aprendizDTO.getResidencia().trim());
+
+        //mapea DTO a entidad y encripta la contraseña
         Aprendiz aprendiz = aprendizMapper.toAprendiz(aprendizDTO);
+        aprendiz.setContrasena(passwordEncoder.encode(aprendiz.getContrasena()));
+
+        //guarda en la BD
         aprendiz = aprendizRepository.save(aprendiz);
         return aprendizMapper.toAprendizDTO(aprendiz);
     }

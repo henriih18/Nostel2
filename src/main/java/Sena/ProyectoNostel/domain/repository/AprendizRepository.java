@@ -37,6 +37,7 @@ public interface AprendizRepository extends AprendizCrudRepository {
     //obtenerPorIdAprendiz ensayar
 
     Optional<Aprendiz> findByCorreo(String correo);
+    Optional<Aprendiz> findByDocumento(Integer Documento);
     Aprendiz save(Aprendiz aprendiz);
 }
 

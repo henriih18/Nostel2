@@ -42,8 +42,14 @@ public class SecurityBeansConfig {
         return config.getAuthenticationManager();
     }
 
-    @Bean
+   /* @Bean
     public PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance(); //cambiar cuando se quiera encriptar contraseña
+    }*/
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(); // Ahora la contraseña se guardará encriptada
     }
+
 }

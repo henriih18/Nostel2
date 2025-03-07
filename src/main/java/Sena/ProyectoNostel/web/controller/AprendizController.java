@@ -2,11 +2,16 @@ package Sena.ProyectoNostel.web.controller;
 
 import Sena.ProyectoNostel.domain.dto.AprendizDTO;
 import Sena.ProyectoNostel.domain.service.AprendizService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -49,9 +54,21 @@ public class AprendizController {
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'APRENDIZ')")
-    public ResponseEntity<AprendizDTO> crear(@RequestBody AprendizDTO aprendizDTO) {
-        AprendizDTO creado = aprendizService.crear(aprendizDTO);
-        return new ResponseEntity<>(creado, HttpStatus.CREATED);
+    public ResponseEntity<?> crear(@RequestBody @Valid AprendizDTO aprendizDTO, BindingResult result) {
+        if (result.hasErrors()) {
+            Map<String, String> errores = new HashMap<>();
+            result.getFieldErrors().forEach(error -> errores.put(error.getField(), error.getDefaultMessage()));
+            return ResponseEntity.badRequest().body(errores);
+        }
+        try {
+            AprendizDTO creado = aprendizService.crear(aprendizDTO);
+            return new ResponseEntity<>(creado, HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            Map<String, String> response = new HashMap<>();
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+
     }
 
     @PutMapping("/{idAprendiz}")

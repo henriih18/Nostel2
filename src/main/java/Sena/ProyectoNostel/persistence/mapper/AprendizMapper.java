@@ -13,6 +13,7 @@ public interface AprendizMapper {
     //AprendizMapper INSTANCE = Mappers.getMapper(AprendizMapper.class);
 
     @Mapping(source = "documento", target = "documento")
+    @Mapping(source = "tipoDocumento", target = "tipoDocumento")
     @Mapping(source = "nombres", target = "nombres")
     /*@Mapping(source = "segundoNombre", target = "segundoNombre")*/
     @Mapping(source = "apellidos", target = "apellidos")
@@ -24,11 +25,11 @@ public interface AprendizMapper {
     @Mapping(source = "contrasena", target = "contrasena")
     @Mapping(source = "telefono", target = "telefono")
     @Mapping(source = "residencia", target = "residencia")
-    @Mapping(source = "grupoEtnico", target = "grupoEtnico")
+   // @Mapping(source = "grupoEtnico", target = "grupoEtnico")
     @Mapping(source = "ficha.numeroFicha", target = "numeroFicha")
     @Mapping(source = "ficha.nombrePrograma", target = "nombrePrograma")
     @Mapping(source = "ficha.numeroAmbiente", target = "numeroAmbiente")
-    @Mapping(source = "inasistencias", target = "inasistencias")
+    //@Mapping(source = "inasistencias", target = "inasistencias")
     @Mapping(source = "comentarios", target = "comentarios")
     @Mapping(source = "planMejoramientos", target ="planMejoramientos")
     //@Mapping(expression = "java(aprendiz.getFicha().getNumeroFicha()) ", target = "numeroFicha")
@@ -41,6 +42,7 @@ public interface AprendizMapper {
 
 
     @Mapping(source = "documento", target = "documento")
+    @Mapping(source = "tipoDocumento", target = "tipoDocumento")
     /*@Mapping(source = "primerNombre", target = "primerNombre")
     @Mapping(source = "segundoNombre", target = "segundoNombre")
     @Mapping(source = "primerApellido", target = "primerApellido")
@@ -54,8 +56,8 @@ public interface AprendizMapper {
     @Mapping(source = "contrasena", target = "contrasena")
     @Mapping(source = "telefono", target = "telefono")
     @Mapping(source = "residencia", target = "residencia")
-    @Mapping(source = "grupoEtnico", target = "grupoEtnico")
-    @Mapping(source = "inasistencias", target = "inasistencias")
+    //@Mapping(source = "grupoEtnico", target = "grupoEtnico")
+    //@Mapping(source = "inasistencias", target = "inasistencias")
     @Mapping(source = "comentarios", target = "comentarios")
     @Mapping(source = "planMejoramientos", target ="planMejoramientos")
     @Mapping(source = "actividadComplementarias", target = "actividadComplementarias")

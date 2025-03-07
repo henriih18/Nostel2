@@ -4,6 +4,7 @@ package Sena.ProyectoNostel.persistence.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -16,73 +17,42 @@ import java.util.List;
 public class Aprendiz {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_aprendiz")
     private Integer idAprendiz;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_documento", nullable = false)
+    private TipoDocumento tipoDocumento;
+
+    @Column(nullable = false, unique = true)
     private Integer documento;
 
-   // @Column(name = "primer_nombre")
+    @Column(nullable = false)
     private String nombres;
 
-   /* @Column(name = "segundo_nombre")
-    private String segundoNombre;*/
-
-    //@Column(name = "primer_apellido")
+    @Column(nullable = false)
     private String apellidos;
 
-    /*@Column(name = "segundo_apellido")
-    private String segundoApellido;*/
-
-
-
-    @Column(name = "fecha_nacimiento")
+    @Column(name = "fecha_nacimiento", nullable = false)
     private LocalDate fechaNacimiento;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "genero")
+    @Column(name = "genero", nullable = false)
     private GeneroAprendiz genero;
 
-    //@Email
+    @Column(nullable = false, unique = true)
     private String correo;
 
+    @Column(nullable = false)
     private String contrasena;
 
     private String telefono;
 
     private String residencia;
 
-    /*@Column(name = "discapacidad", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
-    private boolean discapacidad = false;*/
-
-    /*@Column(name = "discapacidad")
-    private String discapacidad;*/
-    //Revisar si es necesario cambiar el tipo de dato de discapacidad
-
-
-    /*@Column(name = "grupo_etnico")
-    private String grupoEtnico;*/
-
     @ManyToOne
     @JoinColumn(name = "id_ficha", insertable = false, updatable = false)
     @JsonBackReference
     private Ficha ficha;
-    /*@Column(name = "id_ficha")
-    private Integer idFicha;
-
-    @Transient
-    private Integer numeroFicha;
-
-    @PostLoad
-    private void postLoad() {
-        if(ficha != null) {
-            this.numeroFicha = ficha.getNumeroAmbiente();
-        }
-    }*/
-
-    //Relacio entre entidades
-    @OneToMany(mappedBy = "aprendiz", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
-    private List<Inasistencia> inasistencias = new ArrayList<>();
 
     @OneToMany(mappedBy = "aprendiz", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
@@ -90,7 +60,7 @@ public class Aprendiz {
 
     @OneToMany(mappedBy = "aprendiz", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
-    private List<ActividadComplementaria> actividadComplementarias;
+    private List<ActividadComplementaria> actividadComplementarias = new ArrayList<>();
 
     @OneToMany(mappedBy = "aprendiz", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference

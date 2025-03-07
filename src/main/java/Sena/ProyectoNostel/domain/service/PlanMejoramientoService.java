@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Service
+//@Service
 public interface PlanMejoramientoService {
     PlanMejoramientoDTO agregarPlanMejoramiento(PlanMejoramientoDTO planMejoramientoDTO);
     Optional<PlanMejoramientoDTO> actualizarPlanMejoramiento(Integer idPlanMejoramiento, PlanMejoramientoDTO planMejoramientoDTO);
