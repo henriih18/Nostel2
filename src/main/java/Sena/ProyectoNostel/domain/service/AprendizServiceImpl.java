@@ -70,6 +70,7 @@ import Sena.ProyectoNostel.persistence.mapper.AprendizMapper;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -89,7 +90,11 @@ public class AprendizServiceImpl implements AprendizService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
     @Override
+    @Transactional()
     public List<AprendizDTO> obtenerTodos() {
         return aprendizRepository.findAll().stream()
                 .map(aprendizMapper::toAprendizDTO)
@@ -97,7 +102,7 @@ public class AprendizServiceImpl implements AprendizService {
     }
 
     @Override
-    @Transactional
+    @Transactional()
     public Optional<AprendizDTO> obtenerPorIdAprendiz(Integer idAprendiz) {
         return aprendizRepository.findById(idAprendiz)
                 .map(aprendizMapper::toAprendizDTO);
@@ -107,7 +112,7 @@ public class AprendizServiceImpl implements AprendizService {
                 });*/
     }
 
-    @Override
+    /*@Override
     public AprendizDTO crear(AprendizDTO aprendizDTO) {
         //verifica que el correo no esté registrado
         if (aprendizRepository.findByCorreo(aprendizDTO.getCorreo()).isPresent()) {
@@ -129,7 +134,41 @@ public class AprendizServiceImpl implements AprendizService {
         //guarda en la BD
         aprendiz = aprendizRepository.save(aprendiz);
         return aprendizMapper.toAprendizDTO(aprendiz);
+    }*/
+
+    @Override
+    @Transactional
+    public AprendizDTO crear(AprendizDTO aprendizDTO) {
+        // Validaciones previas (correo, documento, etc.)
+        // ...
+
+        // Encriptar contraseña
+        aprendizDTO.setContrasena(passwordEncoder.encode(aprendizDTO.getContrasena()));
+
+        // Llamada al procedimiento almacenado
+        jdbcTemplate.update("CALL registrarAprendiz(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                aprendizDTO.getTipoDocumento().name(),
+                aprendizDTO.getDocumento(),
+                aprendizDTO.getNombres(),
+                aprendizDTO.getApellidos(),
+                aprendizDTO.getFechaNacimiento(),
+                aprendizDTO.getGenero().name(),
+                aprendizDTO.getCorreo(),
+                aprendizDTO.getContrasena(),
+                aprendizDTO.getTelefono(),
+                aprendizDTO.getResidencia(),
+                aprendizDTO.getNumeroFicha()  // <-- Aquí envías el número de la ficha
+        );
+
+        // Opcional: recuperar el aprendiz recién insertado, por ejemplo usando el correo
+        Optional<Aprendiz> aprendizOpt = aprendizRepository.findByCorreo(aprendizDTO.getCorreo());
+        if (aprendizOpt.isPresent()) {
+            return aprendizMapper.toAprendizDTO(aprendizOpt.get());
+        } else {
+            throw new IllegalArgumentException("Error al recuperar el aprendiz registrado.");
+        }
     }
+
 
     @Override
     @Transactional

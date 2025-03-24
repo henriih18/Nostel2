@@ -27,5 +27,6 @@ public interface FichaRepository  extends FichaCrudRepository {
     //@Query("SELECT f FROM Ficha f LEFT JOIN FETCH f.aprendices a WHERE f.idFicha = :idFicha")
     //Optional<Ficha> obtenerFichaPorId(@Param("idFicha") Integer idFicha);
     List<Ficha> findAll();
+    Optional<Ficha> findByNumeroFicha(Integer numeroFicha);
 }
 

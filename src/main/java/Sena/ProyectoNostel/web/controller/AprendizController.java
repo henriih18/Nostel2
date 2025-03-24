@@ -53,7 +53,7 @@ public class AprendizController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'APRENDIZ')")
+    //@PreAuthorize("hasAnyRole('ADMIN', 'APRENDIZ')")
     public ResponseEntity<?> crear(@RequestBody @Valid AprendizDTO aprendizDTO, BindingResult result) {
         if (result.hasErrors()) {
             Map<String, String> errores = new HashMap<>();

@@ -28,6 +28,13 @@ public class UserDetailsImpl implements UserDetails {
         this.rol = "ROLE_INSTRUCTOR";
     }
 
+    // Constructor para ADMIN (directamente desde la base de datos)
+    public UserDetailsImpl(String correo, String contrasena, String rol) {
+        this.correo = correo;
+        this.contrasena = contrasena;
+        this.rol = rol;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority(rol));

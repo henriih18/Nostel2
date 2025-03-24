@@ -1,15 +1,31 @@
 package Sena.ProyectoNostel.domain.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
 public class InstructorDTO {
     private Integer idInstructor;
+    
+    @NotBlank(message = "El campo nombres no puede estar vacío")
     private String nombres;
+    
+    @NotBlank(message = "El campo apellidos no puede estar vacío")
     private String apellidos;
+    
+    @NotNull(message = "El campo numeroDocente no puede ser nulo")
     private Integer numeroDocente;
+    
+    @NotBlank(message = "El campo area no puede estar vacío")
     private String area;
+    
+    @NotBlank(message = "El campo correo no puede estar vacío")
+    @Email(message = "El formato del correo electrónico no es válido")
     private String correo;
+    
+    @NotBlank(message = "El campo contraseña no puede estar vacío")
     private String contrasena;
 
 
