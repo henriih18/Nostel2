@@ -6,6 +6,7 @@ import Sena.ProyectoNostel.persistence.mapper.ActividadComplementariaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,6 +23,11 @@ public class ActividadComplementariaServiceImpl  implements ActividadComplementa
     }
 
     @Override
+    public List<ActividadComplementariaDTO> obtenerActividadesPorAprendiz(Integer idAprendiz) {
+        return List.of();
+    }
+
+    @Override
     public ActividadComplementariaDTO agregarActividad(ActividadComplementariaDTO actividadComplementariaDTO) {
         return null;
     }
@@ -35,4 +41,6 @@ public class ActividadComplementariaServiceImpl  implements ActividadComplementa
     public boolean eliminarActividad(Integer idAprendiz, Integer idActividad) {
         return false;
     }
+
+
 }

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -18,6 +19,15 @@ public class ActividadComplementariaController {
 
     public ActividadComplementariaController(ActividadComplementariaService actividadComplementariaService) {
         this.actividadComplementariaService = actividadComplementariaService;
+    }
+
+    @GetMapping("/{idAprendiz}")
+    public ResponseEntity<List<ActividadComplementariaDTO>> obtenerActividadesPorAprendiz(@PathVariable Integer idAprendiz) {
+        List<ActividadComplementariaDTO> actividades = actividadComplementariaService.obtenerActividadesPorAprendiz(idAprendiz);
+        if (actividades.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(actividades, HttpStatus.OK);
     }
 
     @PostMapping("/{idAprendiz}")
