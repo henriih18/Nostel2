@@ -48,13 +48,11 @@ public class AprendizDTO {
 
 package Sena.ProyectoNostel.domain.dto;
 
-import Sena.ProyectoNostel.persistence.entity.GeneroAprendiz;
-import Sena.ProyectoNostel.persistence.entity.TipoDocumento;
+import Sena.ProyectoNostel.persistence.entity.Aprendiz;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Data
 public class AprendizDTO {
@@ -62,7 +60,7 @@ public class AprendizDTO {
     private Integer idAprendiz;
 
     @NotNull(message = "El tipo de documento es obligatorio")
-    private TipoDocumento tipoDocumento;
+    private Aprendiz.TipoDocumento tipoDocumento;
 
     @NotNull(message = "El documento es obligatorio")
     @Min(value = 6, message = "El documento debe tener al menos 6 dígitos")
@@ -81,7 +79,7 @@ public class AprendizDTO {
     private LocalDate fechaNacimiento;
 
     @NotNull(message = "El género es obligatorio")
-    private GeneroAprendiz genero;
+    private Aprendiz.GeneroAprendiz genero;
 
     @Email(message = "El correo debe ser válido")
     @NotNull(message = "El correo es obligatorio")
@@ -106,10 +104,10 @@ public class AprendizDTO {
     private Integer numeroFicha;
     private String nombrePrograma;
     private Integer numeroAmbiente;
-    private List<ComentarioDTO> comentarios;
+    //private List<ComentarioDTO> comentarios;
 
-    private List<ActividadComplementariaDTO> actividadComplementarias;
-    private List<PlanMejoramientoDTO> planMejoramientos;
+    //private List<ActividadComplementariaDTO> actividadComplementarias;
+    //private List<PlanMejoramientoDTO> planMejoramientos;
 
 }
 

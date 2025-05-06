@@ -1,6 +1,6 @@
 package Sena.ProyectoNostel.domain.dto;
 
-import Sena.ProyectoNostel.persistence.entity.EstadoActvidad;
+import Sena.ProyectoNostel.persistence.entity.ActividadComplementaria;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -8,72 +8,46 @@ import java.util.List;
 
 @Data
 public class ActividadComplementariaDTO {
-    private Integer idActividad;
-    private String actividad;
-    private LocalDate fechaAsignacion;
-    private LocalDate fechaEntrega;
-    private EstadoActvidad estado;
     private String nombreInstructor;
+    private Integer idActividad;
+    private Integer idAprendiz;
+    private Integer idInstructor;
+    private String estado; // Enum como String para transferencia
+    private String actaNumber;
+    private String nombreComite;
+    private String ciudad;
+    private LocalDate fecha;
+    private String horaInicio;
+    private String horaFin;
+    private String lugarEnlace;
+    private String direccionRegionalCentro;
+    private String agenda;
+    private String objetivos;
+    private String desarrollo;
+    private String conclusiones;
 
+    // Listas para compromisos y asistentes
+    private List<CompromisoDTO> compromisos;
+    private List<AsistenteDTO> asistentes;
 
-    /*public ActividadComplementariaDTO() {
-
+    // DTO anidados
+    @Data
+    public static class CompromisoDTO {
+        private Integer idCompromiso;
+        private String actividadDecision;
+        private LocalDate fecha;
+        private String responsable;
+        private String firmaParticipacion;
     }
 
-    public ActividadComplementariaDTO(Integer idActividad, String actividad, LocalDate fechaAsignacion, LocalDate fechaEntrega, EstadoActvidad estado, String nombreInstructor) {
-        this.idActividad = idActividad;
-        this.actividad = actividad;
-        this.fechaAsignacion = fechaAsignacion;
-        this.fechaEntrega = fechaEntrega;
-        this.estado = estado;
-        this.nombreInstructor = nombreInstructor;
+    @Data
+    public static class AsistenteDTO {
+        private Integer idAsistente;
+        private String nombre;
+        private String dependenciaEmpresa;
+        private String aprueba;
+        private String observacion;
+        private String firmaParticipacion;
     }
 
-    public Integer getIdActividad() {
-        return idActividad;
-    }
-
-    public void setIdActividad(Integer idActividad) {
-        this.idActividad = idActividad;
-    }
-
-    public String getActividad() {
-        return actividad;
-    }
-
-    public void setActividad(String actividad) {
-        this.actividad = actividad;
-    }
-
-    public LocalDate getFechaAsignacion() {
-        return fechaAsignacion;
-    }
-
-    public void setFechaAsignacion(LocalDate fechaAsignacion) {
-        this.fechaAsignacion = fechaAsignacion;
-    }
-
-    public LocalDate getFechaEntrega() {
-        return fechaEntrega;
-    }
-
-    public void setFechaEntrega(LocalDate fechaEntrega) {
-        this.fechaEntrega = fechaEntrega;
-    }
-
-    public EstadoActvidad getEstado() {
-        return estado;
-    }
-
-    public void setEstado(EstadoActvidad estado) {
-        this.estado = estado;
-    }
-
-    public String getNombreInstructor() {
-        return nombreInstructor;
-    }
-
-    public void setNombreInstructor(String nombreInstructor) {
-        this.nombreInstructor = nombreInstructor;
-    }*/
 }

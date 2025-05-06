@@ -1,6 +1,7 @@
 package Sena.ProyectoNostel.web.controller;
 
 import Sena.ProyectoNostel.domain.dto.AprendizDTO;
+import Sena.ProyectoNostel.domain.dto.InstructorDTO;
 import Sena.ProyectoNostel.domain.service.AprendizService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,7 @@ public class AprendizController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('INSTRUCTOR', 'APRENDIZ', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('INSTRUCTOR', 'ADMIN')")
     public ResponseEntity<List<AprendizDTO>> obtenerTodos() {
         List<AprendizDTO> aprendices = aprendizService.obtenerTodos();
         return new ResponseEntity<>(aprendices, HttpStatus.OK);
@@ -46,13 +47,22 @@ public class AprendizController {
 
     @GetMapping("/{idAprendiz}")
     @PreAuthorize("hasAnyRole('INSTRUCTOR', 'APRENDIZ', 'ADMIN')")
-    public ResponseEntity<AprendizDTO> obtenerPorId(@PathVariable Integer idAprendiz) {
+    public ResponseEntity<AprendizDTO> obtenerPorIdAprendiz(@PathVariable Integer idAprendiz) {
         Optional<AprendizDTO> aprendiz = aprendizService.obtenerPorIdAprendiz(idAprendiz);
         return aprendiz.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/usuario/{idUsuario}")
+    public ResponseEntity<AprendizDTO> obtenerPorIdUsuario(@PathVariable("idUsuario") Integer idUsuario) {
+        return aprendizService.obtenerPorIdUsuario(idUsuario)
+                .map(aprendiz -> aprendizService.toAprendizDTO(aprendiz))
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
     @PostMapping
+    //@PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'APRENDIZ')")
     //@PreAuthorize("hasAnyRole('ADMIN', 'APRENDIZ')")
     public ResponseEntity<?> crear(@RequestBody @Valid AprendizDTO aprendizDTO, BindingResult result) {
         if (result.hasErrors()) {

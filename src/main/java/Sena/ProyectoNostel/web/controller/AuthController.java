@@ -1,218 +1,165 @@
 /*
+package Sena.ProyectoNostel.web.controller;
+
+import Sena.ProyectoNostel.domain.dto.JwtResponseDTO;
+import Sena.ProyectoNostel.domain.dto.LoginRequestDTO;
+import Sena.ProyectoNostel.domain.repository.UsuarioRepository;
+import Sena.ProyectoNostel.persistence.entity.Usuario;
+import Sena.ProyectoNostel.domain.service.JwtService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import jakarta.validation.Valid;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
+@Slf4j
+@RestController
+@RequestMapping("/auth")
+@RequiredArgsConstructor
+@Validated
+public class AuthController {
+
+    private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    private final JwtService jwtService;
+
+    @PostMapping("/login")
+    public ResponseEntity<JwtResponseDTO> login(@RequestBody @Valid LoginRequestDTO request) {
+        log.info("Intentando autenticar usuario: {}", request.getCorreo());
+
+        // Buscar el usuario en la tabla usuarios
+        Optional<Usuario> usuarioOpt = usuarioRepository.findByCorreo(request.getCorreo());
+        if (usuarioOpt.isEmpty()) {
+            log.warn("Usuario no encontrado: {}", request.getCorreo());
 
 
+            throw new UsernameNotFoundException("Usuario no encontrado: " + request.getCorreo());
+        }
+
+        Usuario usuario = usuarioOpt.get();
+
+        // Verificar la contraseña
+        if (!passwordEncoder.matches(request.getContrasena(), usuario.getContrasena())) {
+            log.warn("Contraseña incorrecta para el usuario: {}", request.getCorreo());
+            throw new BadCredentialsException("Credenciales inválidas");
+
+        }
+
+        // Determinar el rol
+        String rol = "ROLE_" + usuario.getRol().toUpperCase();
+        //log.info("Rol asignado al usuario {}: {}", request.getCorreo(), rol);
+
+        // Generar el token JWT
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("rol", rol);
+
+        String token = jwtService.generateToken(claims, usuario.getCorreo());
+        //log.info("Token generado para el usuario {}: {}", usuario.getCorreo(), token);
+
+        JwtResponseDTO response = new JwtResponseDTO();
+        response.setToken(token);
+        response.setRol(rol);
+        */
+/*response.setIdFicha(idFicha);
+        response.setNombre(usuario.getNombre());*//*
+
+        response.setIdUsuario(usuario.getIdUsuario());
+
+        return ResponseEntity.ok(response);
+    }
+}*/
 
 package Sena.ProyectoNostel.web.controller;
 
 import Sena.ProyectoNostel.domain.dto.JwtResponseDTO;
 import Sena.ProyectoNostel.domain.dto.LoginRequestDTO;
-import Sena.ProyectoNostel.domain.repository.AprendizRepository;
-import Sena.ProyectoNostel.domain.repository.InstructorRepository;
+import Sena.ProyectoNostel.domain.repository.UsuarioRepository;
+import Sena.ProyectoNostel.persistence.entity.Usuario;
 import Sena.ProyectoNostel.domain.service.JwtService;
-import Sena.ProyectoNostel.persistence.entity.Aprendiz;
-import Sena.ProyectoNostel.persistence.entity.Instructor;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Query;
+import jakarta.annotation.security.PermitAll;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.List;
+import jakarta.validation.Valid;
+
 import java.util.Optional;
 
+@Slf4j
 @RestController
 @RequestMapping("/auth")
+@RequiredArgsConstructor
+@Validated
 public class AuthController {
 
+    private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
-    private final AprendizRepository aprendizRepository;
-    private final InstructorRepository instructorRepository;
+    private final UserDetailsService userDetailsService;
 
-    @PersistenceContext
-    private EntityManager entityManager; // Para consultar la tabla usuarios sin entidad
 
-    public AuthController(JwtService jwtService,
-                          AprendizRepository aprendizRepository,
-                          InstructorRepository instructorRepository) {
-        this.jwtService = jwtService;
-        this.aprendizRepository = aprendizRepository;
-        this.instructorRepository = instructorRepository;
-    }
-
+    @PermitAll
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequestDTO request) {
+    //@PreAuthorize("hasAnyRole('APRENDIZ', 'ADMIN', 'INSTRUCTOR')")
+    public ResponseEntity<JwtResponseDTO> login(@RequestBody @Valid LoginRequestDTO request) {
+        log.info("Intentando autenticar usuario: {}", request.getCorreo());
 
-        // 1️⃣ Buscar en la tabla aprendices
-        Optional<Aprendiz> aprendizOptional = aprendizRepository.findByCorreo(request.getCorreo());
-        if (aprendizOptional.isPresent()) {
-            Aprendiz aprendiz = aprendizOptional.get();
-            if (!aprendiz.getContrasena().equals(request.getContrasena())) {
-                return ResponseEntity.status(401).body("Contraseña incorrecta");
-            }
-
-            HashMap<String, Object> claims = new HashMap<>();
-            claims.put("rol", "ROLE_APRENDIZ");
-
-            String token = jwtService.generateToken(claims, aprendiz.getCorreo());
-            return ResponseEntity.ok(new JwtResponseDTO(token, "ROLE_APRENDIZ", aprendiz.getCorreo(), aprendiz.getNombres()));
+        // Buscar el usuario en la tabla usuarios
+        Optional<Usuario> usuarioOpt = usuarioRepository.findByCorreo(request.getCorreo());
+        if (usuarioOpt.isEmpty()) {
+            log.warn("Usuario no encontrado: {}", request.getCorreo());
+            throw new UsernameNotFoundException("Usuario no encontrado: " + request.getCorreo());
         }
 
-        // 2️⃣ Buscar en la tabla instructores
-        Optional<Instructor> instructorOptional = instructorRepository.findByCorreo(request.getCorreo());
-        if (instructorOptional.isPresent()) {
-            Instructor instructor = instructorOptional.get();
-            if (!instructor.getContrasena().equals(request.getContrasena())) {
-                return ResponseEntity.status(401).body("Contraseña incorrecta");
-            }
+        Usuario usuario = usuarioOpt.get();
 
-            HashMap<String, Object> claims = new HashMap<>();
-            claims.put("rol", "ROLE_INSTRUCTOR");
-
-            String token = jwtService.generateToken(claims, instructor.getCorreo());
-            return ResponseEntity.ok(new JwtResponseDTO(token, "ROLE_INSTRUCTOR", instructor.getCorreo(), instructor.getNombres()));
+        // Verificar la contraseña
+        if (!passwordEncoder.matches(request.getContrasena(), usuario.getContrasena())) {
+            log.warn("Contraseña incorrecta para el usuario: {}", request.getCorreo());
+            throw new BadCredentialsException("Credenciales inválidas");
         }
 
-        // 3️⃣ Buscar en la tabla usuarios sin entidad (para administradores u otros roles)
-        Query query = entityManager.createNativeQuery("SELECT contrasena, rol FROM usuarios WHERE correo = ?");
-        query.setParameter(1, request.getCorreo());
+        // Obtener UserDetails para el usuario
+        UserDetails userDetails = userDetailsService.loadUserByUsername(request.getCorreo());
 
-        try {
-            List<Object[]> result = query.getResultList();
-            if (result.isEmpty()) {
-                return ResponseEntity.status(404).body("Usuario no encontrado");
-            }
+        // Determinar el rol
+        String rol = usuario.getRol().startsWith("ROLE_") ? usuario.getRol() : "ROLE_" + usuario.getRol().toUpperCase();
+        log.info("Rol asignado al usuario {}: {}", request.getCorreo(), rol);
 
-            Object[] userData = result.get(0);
-            String contrasena = (String) userData[0];
-            String rol = (String) userData[1];
+        // Generar el token JWT con idUsuario
+        String token = jwtService.generateToken(userDetails, usuario.getIdUsuario(), rol);
+        log.info("Token generado para el usuario {}: {}", usuario.getCorreo(), token);
 
-            if (!contrasena.equals(request.getContrasena())) {
-                return ResponseEntity.status(401).body("Contraseña incorrecta");
-            }
+        // Construir la respuesta
+        JwtResponseDTO response = new JwtResponseDTO();
+        response.setToken(token);
+        response.setRol(rol);
+        response.setIdUsuario(usuario.getIdUsuario());
 
-            HashMap<String, Object> claims = new HashMap<>();
-            claims.put("rol", "ROLE_" + rol.toUpperCase()); // Convertimos el rol a mayúsculas
-
-            String token = jwtService.generateToken(claims, request.getCorreo());
-            return ResponseEntity.ok(new JwtResponseDTO(token, "ROLE_" + rol.toUpperCase(), request.getCorreo(), "Usuario " + rol));
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error en el servidor");
-        }
-    }
-}
-
-
-*/
-package Sena.ProyectoNostel.web.controller;
-
-import Sena.ProyectoNostel.domain.dto.JwtResponseDTO;
-import Sena.ProyectoNostel.domain.dto.LoginRequestDTO;
-import Sena.ProyectoNostel.domain.repository.AprendizRepository;
-import Sena.ProyectoNostel.domain.repository.InstructorRepository;
-import Sena.ProyectoNostel.domain.service.JwtService;
-import Sena.ProyectoNostel.persistence.entity.Aprendiz;
-import Sena.ProyectoNostel.persistence.entity.Instructor;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Query;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
-
-@RestController
-@RequestMapping("/auth")
-
-public class AuthController {
-
-    private final JwtService jwtService;
-    private final AprendizRepository aprendizRepository;
-    private final InstructorRepository instructorRepository;
-
-    @PersistenceContext
-    private EntityManager entityManager; // Para consultar la tabla usuarios sin entidad
-
-    public AuthController(JwtService jwtService,
-                          AprendizRepository aprendizRepository,
-                          InstructorRepository instructorRepository) {
-        this.jwtService = jwtService;
-        this.aprendizRepository = aprendizRepository;
-        this.instructorRepository = instructorRepository;
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequestDTO request) {
-
-        // 1️⃣ Buscar en la tabla aprendices
-        Optional<Aprendiz> aprendizOptional = aprendizRepository.findByCorreo(request.getCorreo());
-        if (aprendizOptional.isPresent()) {
-            Aprendiz aprendiz = aprendizOptional.get();
-            if (!aprendiz.getContrasena().equals(request.getContrasena())) {
-                return ResponseEntity.status(401).body("Contraseña incorrecta");
-            }
-
-            HashMap<String, Object> claims = new HashMap<>();
-            claims.put("rol", "ROLE_APRENDIZ");
-
-            String token = jwtService.generateToken(claims, aprendiz.getCorreo());
-            return ResponseEntity.ok(new JwtResponseDTO(token, "ROLE_APRENDIZ", aprendiz.getCorreo(), aprendiz.getNombres()));
-        }
-
-        // 2️⃣ Buscar en la tabla instructores
-        Optional<Instructor> instructorOptional = instructorRepository.findByCorreo(request.getCorreo());
-        if (instructorOptional.isPresent()) {
-            Instructor instructor = instructorOptional.get();
-            if (!instructor.getContrasena().equals(request.getContrasena())) {
-                return ResponseEntity.status(401).body("Contraseña incorrecta");
-            }
-
-            HashMap<String, Object> claims = new HashMap<>();
-            claims.put("rol", "ROLE_INSTRUCTOR");
-
-            String token = jwtService.generateToken(claims, instructor.getCorreo());
-            return ResponseEntity.ok(new JwtResponseDTO(token, "ROLE_INSTRUCTOR", instructor.getCorreo(), instructor.getNombres()));
-        }
-
-        // 3️⃣ Buscar en la tabla usuarios sin entidad (para administradores u otros roles)
-        Query query = entityManager.createNativeQuery("SELECT contrasena, rol FROM usuarios WHERE correo = ?");
-        query.setParameter(1, request.getCorreo());
-
-        try {
-            List<Object[]> result = query.getResultList();
-            if (result.isEmpty()) {
-                return ResponseEntity.status(404).body("Usuario no encontrado");
-            }
-
-            Object[] userData = result.get(0);
-            String contrasena = (String) userData[0];
-            String rol = (String) userData[1];
-
-            if (!contrasena.equals(request.getContrasena())) {
-                return ResponseEntity.status(401).body("Contraseña incorrecta");
-            }
-
-            HashMap<String, Object> claims = new HashMap<>();
-            String rolUpperCase = rol.toUpperCase();
-
-            // Verificar si es administrador para darle todos los permisos
-            if (rolUpperCase.equals("ADMIN") || rolUpperCase.equals("ADMINISTRADOR")) {
-                claims.put("rol", "ROLE_ADMIN");
-                // Agregar permisos adicionales para garantizar acceso completo
-                claims.put("authorities", "ADMIN,INSTRUCTOR,APRENDIZ");
-                claims.put("scope", "read,write,delete,update");
-                claims.put("isAdmin", true);
-                claims.put("fullAccess", true);
-            } else {
-                claims.put("rol", "ROLE_" + rolUpperCase);
-            }
-
-            String token = jwtService.generateToken(claims, request.getCorreo());
-            return ResponseEntity.ok(new JwtResponseDTO(token, claims.get("rol").toString(), request.getCorreo(), "Usuario " + rol));
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error en el servidor: " + e.getMessage());
-        }
+        return ResponseEntity.ok(response);
     }
 }

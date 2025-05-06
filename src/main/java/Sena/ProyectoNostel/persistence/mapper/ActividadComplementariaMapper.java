@@ -11,25 +11,11 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface ActividadComplementariaMapper {
 
-    @Mapping(source = "actividad", target = "actividad")
-    @Mapping(source = "fechaAsignacion", target = "fechaAsignacion")
-    @Mapping(source = "fechaEntrega", target = "fechaEntrega")
-    @Mapping(source = "estado", target = "estado")
-   // @Mapping(target = "aprendiz", ignore = true)
-@Mapping(source = "instructor.nombres", target = "nombreInstructor")
-    //@Mapping(expression = "java(actividadComplementaria.getInstructor().getNombres() + \" \" + actividadComplementaria.getInstructor().getApellidos())", target = "nombreInstructor")
-    ActividadComplementariaDTO toActividadCompelemtariaDTO(ActividadComplementaria actividadComplementaria);
+    @Mapping(source = "instructor.nombres", target = "nombreInstructor")
+    ActividadComplementariaDTO toActividadComplementariaDTO(ActividadComplementaria actividadComplementaria);
 
     List<ActividadComplementariaDTO> toActividadComplementariaList(List<ActividadComplementaria> actividadComplementarias);
 
-
-    @Mapping(source = "actividad", target = "actividad")
-    @Mapping(source = "fechaAsignacion", target = "fechaAsignacion")
-    @Mapping(source = "fechaEntrega", target = "fechaEntrega")
-    @Mapping(source = "estado", target = "estado")
-    //@Mapping(target = "idInstructor", ignore = true)
-    //@Mapping(target = "idAprendiz", ignore = true)
-    //@Mapping(target = "aprendiz", ignore = true)
 
     ActividadComplementaria toActividadComplementaria(ActividadComplementariaDTO actividadComplementariaDTO);
 

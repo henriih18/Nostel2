@@ -2,9 +2,11 @@ package Sena.ProyectoNostel.web.controller;
 
 import Sena.ProyectoNostel.domain.dto.ProgramaDTO;
 import Sena.ProyectoNostel.domain.service.ProgramaService;
+import jakarta.annotation.security.PermitAll;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +20,8 @@ public class ProgramaController {
     private ProgramaService programaService;
 
     @GetMapping
+    @PermitAll
+    //@PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR')")
     public ResponseEntity<List<ProgramaDTO>> obtenerProgramas() {
         try {
             List<ProgramaDTO> programas = programaService.obtenerProgramas();
@@ -28,6 +32,8 @@ public class ProgramaController {
     }
 
     @GetMapping("/{idPrograma}")
+   @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR')")
+
     public ResponseEntity<ProgramaDTO> obtenerPorIdPrograma(@PathVariable Integer idPrograma) {
         try {
             Optional<ProgramaDTO> programa = programaService.obtenerPorIdPrograma(idPrograma);
@@ -39,6 +45,7 @@ public class ProgramaController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<ProgramaDTO> crearPrograma(@RequestBody ProgramaDTO programaDTO) {
         try {
             ProgramaDTO nuevoProgramaDTO = programaService.crearPrograma(programaDTO);
@@ -49,6 +56,7 @@ public class ProgramaController {
     }
 
     @PutMapping("/{idPrograma}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<ProgramaDTO> actualizarPrograma(@PathVariable Integer idPrograma, @RequestBody ProgramaDTO programaDTO) {
         try {
             Optional<ProgramaDTO> programaActualizado = programaService.actualizarPrograma(idPrograma, programaDTO);
@@ -60,6 +68,7 @@ public class ProgramaController {
     }
 
     @DeleteMapping("/{idPrograma}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<Void> eliminarPrograma(@PathVariable Integer idPrograma) {
         try {
             if (programaService.obtenerPorIdPrograma(idPrograma).isPresent()) {

@@ -3,6 +3,7 @@ package Sena.ProyectoNostel.domain.repository;
 import Sena.ProyectoNostel.persistence.crud.FichaCrudRepository;
 import Sena.ProyectoNostel.persistence.entity.Aprendiz;
 import Sena.ProyectoNostel.persistence.entity.Ficha;
+import Sena.ProyectoNostel.persistence.entity.Instructor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -28,5 +29,6 @@ public interface FichaRepository  extends FichaCrudRepository {
     //Optional<Ficha> obtenerFichaPorId(@Param("idFicha") Integer idFicha);
     List<Ficha> findAll();
     Optional<Ficha> findByNumeroFicha(Integer numeroFicha);
+
 }
 

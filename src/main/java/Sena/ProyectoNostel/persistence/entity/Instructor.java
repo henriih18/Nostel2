@@ -1,6 +1,7 @@
 package Sena.ProyectoNostel.persistence.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -27,13 +28,12 @@ public class Instructor {
 
     private String correo;
 
-    private String contrasena;
+    /*private String contrasena;*/
+
+
 
     @OneToMany(mappedBy = "instructor")
     private List<ActividadComplementaria> actividadComplementarias;
-
-    @OneToMany(mappedBy = "instructor")
-    private List<Inasistencia> inasistencias;
 
     @OneToMany(mappedBy = "instructor")
     private List<PlanMejoramiento> planesMejoramiento;
@@ -44,6 +44,15 @@ public class Instructor {
 
     @OneToMany(mappedBy = "instructor")
     private List<FichasInstructor> fichasInstructores;
+
+
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_usuario", nullable = false)
+    @JsonBackReference
+    private Usuario usuario;
+
+
 
 
 }

@@ -4,6 +4,7 @@ import Sena.ProyectoNostel.domain.dto.FichaDTO;
 import Sena.ProyectoNostel.domain.service.FichaService;
 import Sena.ProyectoNostel.util.Views;
 import com.fasterxml.jackson.annotation.JsonView;
+import jakarta.annotation.security.PermitAll;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,8 @@ public class FichaController {
     }
 
     @GetMapping
+    //@Transactional
+    @PermitAll
     //@JsonView(Views.FichaView.class)
     public ResponseEntity<List<FichaDTO>> obtenerFichas() {
         List<FichaDTO> fichas = fichaService.obtenerFichas();
@@ -32,7 +35,8 @@ public class FichaController {
     }
 
     @GetMapping("/{idFicha}")
-    @JsonView(Views.FichaView.class)
+   // @JsonView(Views.FichaView.class)
+@PermitAll
 
     public ResponseEntity<FichaDTO> obtenerFichaPorId(@PathVariable Integer idFicha) {
         Optional<FichaDTO> ficha = fichaService.obtenerFichaId(idFicha);
@@ -40,12 +44,14 @@ public class FichaController {
     }
 
     @PostMapping
+   @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<FichaDTO> crearFicha(@RequestBody FichaDTO fichaDTO) {
         FichaDTO creado = fichaService.crearFicha(fichaDTO);
         return new ResponseEntity<>(creado, HttpStatus.CREATED);
     }
 
     @PutMapping("/{idFicha}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<FichaDTO> actualizarFicha (@PathVariable Integer idFicha, @RequestBody FichaDTO fichaDTO) {
         Optional<FichaDTO> actualizado = fichaService.actualizarFicha(idFicha, fichaDTO);
         return actualizado.map( value -> new ResponseEntity<>(value, HttpStatus.OK))
@@ -53,6 +59,7 @@ public class FichaController {
     }
 
     @DeleteMapping("/{idFicha}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<String> eliminarFicha(@PathVariable Integer idFicha) {
         fichaService.eliminarFicha(idFicha);
         return new ResponseEntity<>("Ficha eliminada", HttpStatus.OK);

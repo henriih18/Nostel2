@@ -1,10 +1,9 @@
 package Sena.ProyectoNostel.domain.dto;
 
-import Sena.ProyectoNostel.persistence.entity.EstadoPlanMejoramiento;
+import Sena.ProyectoNostel.persistence.entity.PlanMejoramiento;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.Locale;
 
 @Data
 public class PlanMejoramientoDTO {
@@ -12,7 +11,7 @@ public class PlanMejoramientoDTO {
     private String descripcion;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
-    private EstadoPlanMejoramiento estado;
+    private PlanMejoramiento.EstadoPlanMejoramiento estado;
     private String nombreInstructor;
 
     /*

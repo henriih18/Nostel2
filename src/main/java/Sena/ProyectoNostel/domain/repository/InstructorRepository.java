@@ -23,5 +23,6 @@ public interface InstructorRepository extends InstructorCrudRepository {
     }*/
 
     Optional<Instructor> findByCorreo(String correo);
-    Instructor save(Instructor instructor);
+    //Instructor save(Instructor instructor);
+    Instructor findByUsuarioIdUsuario(Integer idUsuario);
 }

@@ -4,8 +4,10 @@ import Sena.ProyectoNostel.domain.dto.ComentarioDTO;
 import Sena.ProyectoNostel.domain.service.ComentarioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -18,22 +20,51 @@ public class ComentarioController {
         this.comentarioService = comentarioService;
     }
 
-    @PostMapping("/{idAprendiz}")
-    public ResponseEntity<ComentarioDTO> agregarComentario(@PathVariable Integer idAprendiz, @RequestBody ComentarioDTO comentarioDTO) {
-        ComentarioDTO creado = comentarioService.agregarComentario(idAprendiz, comentarioDTO);
-        return new ResponseEntity<>(creado, HttpStatus.CREATED);
+    @GetMapping("/{idAprendiz}")
+    @PreAuthorize("hasAnyRole('INSTRUCTOR', 'ADMIN')")
+    public ResponseEntity<List<ComentarioDTO>> obtenerComentariosPorAprendiz(
+            @PathVariable Integer idAprendiz)
+            /*@RequestHeader("Authorization") String token)*/ {
+        List<ComentarioDTO> comentarios = comentarioService.obtenerComentariosPorAprendiz(idAprendiz);
+        return ResponseEntity.ok(comentarios);
     }
 
-    @PutMapping("/{idAprendiz}/{idComentario}")
+    @PostMapping("/{idAprendiz}")
+    @PreAuthorize("hasAnyRole('INSTRUCTOR', 'ADMIN')")
+    public ResponseEntity<ComentarioDTO> agregarComentario(
+            @PathVariable Integer idAprendiz,
+            @RequestBody ComentarioDTO comentarioDTO)
+            /*@RequestHeader("Authorization") String token)*/ {
+        /*comentario.setIdAprendiz(idAprendiz);*/
+        ComentarioDTO nuevoComentario = comentarioService.guardarComentario(idAprendiz, comentarioDTO);
+        return ResponseEntity.ok(nuevoComentario);
+    }
+
+    /*@PutMapping("/{idAprendiz}/{idComentario}")
+    //@PreAuthorize("hasAnyRole('INSTRUCTOR', 'ADMIN')")
+
     public ResponseEntity<ComentarioDTO> actualizarComentario(@PathVariable Integer idAprendiz, @PathVariable Integer idComentario, @RequestBody ComentarioDTO comentarioDTO) {
+        Optional<ComentarioDTO> actualizado = comentarioService.actualizarComentario(idAprendiz, idComentario, comentarioDTO);
+        return actualizado.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }*/
+    @PutMapping("/{idAprendiz}/{idComentario}")
+    @PreAuthorize("hasAnyRole('INSTRUCTOR', 'ADMIN')")
+    public ResponseEntity<ComentarioDTO> actualizarComentario(
+            @PathVariable Integer idAprendiz,
+            @PathVariable Integer idComentario,
+            @RequestBody ComentarioDTO comentarioDTO) {
         Optional<ComentarioDTO> actualizado = comentarioService.actualizarComentario(idAprendiz, idComentario, comentarioDTO);
         return actualizado.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @DeleteMapping("/{idAprendiz}/{idComentario}")
-    public ResponseEntity<Void> eliminarComentario(@PathVariable Integer idAprendiz, @PathVariable Integer idComentario) {
-        boolean eliminado = comentarioService.eliminarComentario(idAprendiz, idComentario);
-        return eliminado ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @PreAuthorize("hasAnyRole('INSTRUCTOR', 'ADMIN')")
+    public ResponseEntity<Void> eliminarComentario(
+            @PathVariable Integer idAprendiz,
+            @PathVariable Integer idComentario) {
+        comentarioService.eliminarComentario(idComentario);
+        return ResponseEntity.noContent().build();
     }
 }

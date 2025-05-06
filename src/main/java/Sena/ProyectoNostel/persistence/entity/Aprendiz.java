@@ -42,17 +42,28 @@ public class Aprendiz {
     @Column(nullable = false, unique = true)
     private String correo;
 
-    @Column(nullable = false)
-    private String contrasena;
+    /*@Column(nullable = false)
+    private String contrasena;*/
 
     private String telefono;
 
     private String residencia;
 
+
+
     @ManyToOne
     @JoinColumn(name = "id_ficha", insertable = false, updatable = false)
     @JsonBackReference
     private Ficha ficha;
+
+
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_usuario", nullable = false)
+    @JsonBackReference
+    private Usuario usuario;
+
+
 
     @OneToMany(mappedBy = "aprendiz", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
@@ -66,5 +77,17 @@ public class Aprendiz {
     @JsonManagedReference
     private List<Comentario> comentarios = new ArrayList<>();
 
+    public enum GeneroAprendiz {
+        Masculino,
+        Femenino,
+        Otro
+    }
+
+    public enum TipoDocumento {
+        CEDULA_CIUDADANIA,
+        TARJETA_IDENTIDAD,
+        CEDULA_EXTRANJERIA,
+        PASAPORTE
+    }
 
 }
