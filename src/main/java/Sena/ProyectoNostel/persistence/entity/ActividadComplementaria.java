@@ -70,7 +70,7 @@ public class ActividadComplementaria {
     @JsonBackReference
     private Instructor instructor;
     @Column(name = "id_instructor")
-    private Integer idIntructor;
+    private Integer idInstructor;
 
     // Relación con Compromisos
     @OneToMany(mappedBy = "actividadComplementaria", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)

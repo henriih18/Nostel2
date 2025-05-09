@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 public class ActividadComplementariaDTO {
-    private String nombreInstructor;
+    //private String nombreInstructor;
     private Integer idActividad;
     private Integer idAprendiz;
     private Integer idInstructor;
@@ -30,24 +30,7 @@ public class ActividadComplementariaDTO {
     private List<CompromisoDTO> compromisos;
     private List<AsistenteDTO> asistentes;
 
-    // DTO anidados
-    @Data
-    public static class CompromisoDTO {
-        private Integer idCompromiso;
-        private String actividadDecision;
-        private LocalDate fecha;
-        private String responsable;
-        private String firmaParticipacion;
-    }
 
-    @Data
-    public static class AsistenteDTO {
-        private Integer idAsistente;
-        private String nombre;
-        private String dependenciaEmpresa;
-        private String aprueba;
-        private String observacion;
-        private String firmaParticipacion;
-    }
+
 
 }

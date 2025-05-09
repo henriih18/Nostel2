@@ -11,7 +11,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface ActividadComplementariaMapper {
 
-    @Mapping(source = "instructor.nombres", target = "nombreInstructor")
+    //@Mapping(source = "instructor.nombres", target = "nombreInstructor")
     ActividadComplementariaDTO toActividadComplementariaDTO(ActividadComplementaria actividadComplementaria);
 
     List<ActividadComplementariaDTO> toActividadComplementariaList(List<ActividadComplementaria> actividadComplementarias);

@@ -20,39 +20,4 @@ public class FichasInstructor {
     @JoinColumn(name = "id_instructor", insertable = false, updatable = false)
     private Instructor instructor;
 
-    /*
-    public FichasInstructor() {
-    }
-
-    public FichasInstructor(FichasInstructorPK id, Ficha ficha, Instructor instructor) {
-        this.id = id;
-        this.ficha = ficha;
-        this.instructor = instructor;
-    }
-
-    public FichasInstructorPK getId() {
-        return id;
-    }
-
-    public void setId(FichasInstructorPK id) {
-        this.id = id;
-    }
-
-    public Ficha getFicha() {
-        return ficha;
-    }
-
-    public void setFicha(Ficha ficha) {
-        this.ficha = ficha;
-    }
-
-    public Instructor getInstructor() {
-        return instructor;
-    }
-
-    public void setInstructor(Instructor instructor) {
-        this.instructor = instructor;
-    }
-
-     */
 }

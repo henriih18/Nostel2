@@ -3,6 +3,8 @@ package Sena.ProyectoNostel.persistence.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Entity
 @Table(name = "asistentes")
@@ -31,4 +33,11 @@ public class Asistente {
     @ManyToOne
     @JoinColumn(name = "id_actividad")
     private ActividadComplementaria actividadComplementaria;
+
+    /*@ManyToMany(mappedBy = "asistentes")
+    private List<Instructor> instructores;*/
+
+
+
+
 }

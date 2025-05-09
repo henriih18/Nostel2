@@ -1,3 +1,5 @@
+/*
+
 
 package Sena.ProyectoNostel.domain.service;
 
@@ -65,7 +67,7 @@ public class ActividadComplementariaServiceImpl implements ActividadComplementar
         ActividadComplementaria actividad = new ActividadComplementaria();
         actividad.setIdActividad(idActividad);
         actividad.setIdAprendiz(actividadComplementariaDTO.getIdAprendiz());
-        actividad.setIdIntructor(actividadComplementariaDTO.getIdInstructor());
+        actividad.setIdInstructor(actividadComplementariaDTO.getIdInstructor());
         actividad.setEstado(ActividadComplementaria.EstadoActvidad.valueOf(actividadComplementariaDTO.getEstado()));
         actividad.setActaNumber(actividadComplementariaDTO.getActaNumber());
         actividad.setNombreComite(actividadComplementariaDTO.getNombreComite());
@@ -126,6 +128,163 @@ public class ActividadComplementariaServiceImpl implements ActividadComplementar
         if (existingActividad.isPresent()) {
             ActividadComplementaria actividad = actividadComplementariaMapper.toActividadComplementaria(actividadComplementariaDTO);
             actividad.setIdActividad(idActividad); // Mantener el ID existente
+            ActividadComplementaria updatedActividad = actividadComplementariaRepository.save(actividad);
+            return Optional.of(actividadComplementariaMapper.toActividadComplementariaDTO(updatedActividad));
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public boolean eliminarActividad(Integer idAprendiz, Integer idActividad) {
+        Optional<ActividadComplementaria> actividad = actividadComplementariaRepository.findById(idActividad);
+        if (actividad.isPresent() && actividad.get().getIdAprendiz().equals(idAprendiz)) {
+            actividadComplementariaRepository.deleteById(idActividad);
+            return true;
+        }
+        return false;
+    }
+}
+*/
+package Sena.ProyectoNostel.domain.service;
+
+import Sena.ProyectoNostel.domain.dto.ActividadComplementariaDTO;
+import Sena.ProyectoNostel.domain.repository.ActividadComplementariaRepository;
+import Sena.ProyectoNostel.persistence.entity.ActividadComplementaria;
+import Sena.ProyectoNostel.persistence.entity.Compromiso;
+import Sena.ProyectoNostel.persistence.entity.Asistente;
+import Sena.ProyectoNostel.persistence.mapper.ActividadComplementariaMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@Service
+public class ActividadComplementariaServiceImpl implements ActividadComplementariaService {
+
+    private static final Logger logger = LoggerFactory.getLogger(ActividadComplementariaServiceImpl.class);
+
+    @Autowired
+    private ActividadComplementariaRepository actividadComplementariaRepository;
+
+    @Autowired
+    private ActividadComplementariaMapper actividadComplementariaMapper;
+
+    @Override
+    @Transactional
+    public List<ActividadComplementariaDTO> obtenerActividadesPorAprendiz(Integer idAprendiz) {
+        return actividadComplementariaRepository
+                .findByIdAprendiz(idAprendiz)
+                .stream()
+                .map(actividadComplementariaMapper::toActividadComplementariaDTO)
+                .toList();
+    }
+
+    @Override
+    @Transactional
+    public ActividadComplementariaDTO agregarActividad(ActividadComplementariaDTO actividadComplementariaDTO) {
+        logger.info("Iniciando agregarActividad con idAprendiz: {}, idInstructor: {}",
+                actividadComplementariaDTO.getIdAprendiz(), actividadComplementariaDTO.getIdInstructor());
+
+        // 1. Validar que los campos obligatorios no sean nulos
+        if (actividadComplementariaDTO.getIdAprendiz() == null || actividadComplementariaDTO.getIdInstructor() == null) {
+            logger.error("idAprendiz o idInstructor es nulo");
+            throw new IllegalArgumentException("Los campos idAprendiz e idInstructor son obligatorios.");
+        }
+
+        // 2. Invocar el procedimiento almacenado para insertar los datos principales
+        actividadComplementariaRepository.asignarActividadComplementaria(
+                actividadComplementariaDTO.getIdAprendiz(),
+                actividadComplementariaDTO.getIdInstructor(),
+                actividadComplementariaDTO.getEstado(),
+                actividadComplementariaDTO.getNombreComite(),
+                actividadComplementariaDTO.getActaNumber(),
+                actividadComplementariaDTO.getCiudad(),
+                actividadComplementariaDTO.getFecha(),
+                actividadComplementariaDTO.getHoraInicio(),
+                actividadComplementariaDTO.getHoraFin(),
+                actividadComplementariaDTO.getLugarEnlace(),
+                actividadComplementariaDTO.getDireccionRegionalCentro(),
+                actividadComplementariaDTO.getAgenda(),
+                actividadComplementariaDTO.getObjetivos(),
+                actividadComplementariaDTO.getDesarrollo(),
+                actividadComplementariaDTO.getConclusiones()
+        );
+
+        // 3. Obtener el ID generado por el procedimiento
+        Integer idActividad = actividadComplementariaRepository.getLastInsertedId();
+        logger.info("ID de actividad generado: {}", idActividad);
+
+        // 4. Crear una entidad temporal para manejar las relaciones
+        ActividadComplementaria actividad = new ActividadComplementaria();
+        actividad.setIdActividad(idActividad);
+        actividad.setIdAprendiz(actividadComplementariaDTO.getIdAprendiz());
+        actividad.setIdInstructor(actividadComplementariaDTO.getIdInstructor()); // Corrección de tipografía
+        actividad.setEstado(ActividadComplementaria.EstadoActvidad.valueOf(actividadComplementariaDTO.getEstado()));
+        actividad.setActaNumber(actividadComplementariaDTO.getActaNumber());
+        actividad.setNombreComite(actividadComplementariaDTO.getNombreComite());
+        actividad.setCiudad(actividadComplementariaDTO.getCiudad());
+        actividad.setFecha(actividadComplementariaDTO.getFecha());
+        actividad.setHoraInicio(actividadComplementariaDTO.getHoraInicio());
+        actividad.setHoraFin(actividadComplementariaDTO.getHoraFin());
+        actividad.setLugarEnlace(actividadComplementariaDTO.getLugarEnlace());
+        actividad.setDireccionRegionalCentro(actividadComplementariaDTO.getDireccionRegionalCentro());
+        actividad.setAgenda(actividadComplementariaDTO.getAgenda());
+        actividad.setObjetivos(actividadComplementariaDTO.getObjetivos());
+        actividad.setDesarrollo(actividadComplementariaDTO.getDesarrollo());
+        actividad.setConclusiones(actividadComplementariaDTO.getConclusiones());
+
+        // 5. Guardar compromisos
+        if (actividadComplementariaDTO.getCompromisos() != null && !actividadComplementariaDTO.getCompromisos().isEmpty()) {
+            List<Compromiso> compromisos = actividadComplementariaDTO.getCompromisos().stream()
+                    .map(compromisoDTO -> {
+                        Compromiso compromiso = new Compromiso();
+                        compromiso.setActividadDecision(compromisoDTO.getActividadDecision());
+                        compromiso.setFecha(compromisoDTO.getFecha());
+                        compromiso.setResponsable(compromisoDTO.getResponsable());
+                        compromiso.setFirmaParticipacion(compromisoDTO.getFirmaParticipacion());
+                        compromiso.setActividadComplementaria(actividad);
+                        return compromiso;
+                    }).collect(Collectors.toList());
+            actividad.setCompromisos(compromisos);
+        }
+
+        // 6. Guardar asistentes
+        if (actividadComplementariaDTO.getAsistentes() != null && !actividadComplementariaDTO.getAsistentes().isEmpty()) {
+            List<Asistente> asistentes = actividadComplementariaDTO.getAsistentes().stream()
+                    .map(asistenteDTO -> {
+                        Asistente asistente = new Asistente();
+                        asistente.setNombre(asistenteDTO.getNombre());
+                        asistente.setDependenciaEmpresa(asistenteDTO.getDependenciaEmpresa() != null ? asistenteDTO.getDependenciaEmpresa() : "Sin dependencia");
+                        asistente.setAprueba(asistenteDTO.getAprueba() != null ? asistenteDTO.getAprueba() : "NO");
+                        asistente.setObservacion(asistenteDTO.getObservacion());
+                        asistente.setFirmaParticipacion(asistenteDTO.getFirmaParticipacion() != null ? asistenteDTO.getFirmaParticipacion() : "");
+                        asistente.setActividadComplementaria(actividad);
+                        return asistente;
+                    }).collect(Collectors.toList());
+            actividad.setAsistentes(asistentes);
+        }
+
+        // 7. Guardar las relaciones (compromisos y asistentes) usando JPA
+        actividadComplementariaRepository.save(actividad);
+        logger.info("Actividad y relaciones guardadas exitosamente con idActividad: {}", idActividad);
+
+        // 8. Recuperar la entidad completa para devolver el DTO
+        ActividadComplementaria savedActividad = actividadComplementariaRepository.findById(idActividad)
+                .orElseThrow(() -> new RuntimeException("No se pudo recuperar la actividad recién creada"));
+        return actividadComplementariaMapper.toActividadComplementariaDTO(savedActividad);
+    }
+
+    @Override
+    public Optional<ActividadComplementariaDTO> actualizarActividad(Integer idActividad, ActividadComplementariaDTO actividadComplementariaDTO) {
+        Optional<ActividadComplementaria> existingActividad = actividadComplementariaRepository.findById(idActividad);
+        if (existingActividad.isPresent()) {
+            ActividadComplementaria actividad = actividadComplementariaMapper.toActividadComplementaria(actividadComplementariaDTO);
+            actividad.setIdActividad(idActividad);
             ActividadComplementaria updatedActividad = actividadComplementariaRepository.save(actividad);
             return Optional.of(actividadComplementariaMapper.toActividadComplementariaDTO(updatedActividad));
         }

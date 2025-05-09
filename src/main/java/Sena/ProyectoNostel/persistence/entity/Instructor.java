@@ -28,10 +28,6 @@ public class Instructor {
 
     private String correo;
 
-    /*private String contrasena;*/
-
-
-
     @OneToMany(mappedBy = "instructor")
     private List<ActividadComplementaria> actividadComplementarias;
 
@@ -52,7 +48,13 @@ public class Instructor {
     @JsonBackReference
     private Usuario usuario;
 
-
+    /*@ManyToMany
+    @JoinTable(
+            name = "instructor_asistente",
+            joinColumns = @JoinColumn(name = "id_instructor"),
+            inverseJoinColumns = @JoinColumn(name = "id_asistente")
+    )
+    private List<Asistente> asistentes;*/
 
 
 }
