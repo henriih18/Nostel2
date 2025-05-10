@@ -26,6 +26,7 @@ public class ActividadComplementariaDTO {
     private String desarrollo;
     private String conclusiones;
 
+
     // Listas para compromisos y asistentes
     private List<CompromisoDTO> compromisos;
     private List<AsistenteDTO> asistentes;
