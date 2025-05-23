@@ -3,7 +3,7 @@ package Sena.ProyectoNostel.domain.dto;
 import lombok.Data;
 
 @Data
-public class AsistenteDTO {
+public class AsistentePlanDTO {
     private Integer idAsistente;
     private String nombre;
     private String dependenciaEmpresa;
@@ -17,5 +17,4 @@ public class AsistenteDTO {
     private String correoElectronico;
     private String telefonoExt;
     private Boolean autorizaGrabacion;
-
 }

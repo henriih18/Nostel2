@@ -87,6 +87,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -112,6 +113,10 @@ public class FichaServiceImpl implements FichaService {
                     fichaDTO.setTotalAprendices(ficha.getAprendices() != null ? ficha.getAprendices().size() : 0);
                     return fichaDTO;
                 }).collect(Collectors.toList());
+    }
+    public List<Ficha> obtenerFichasDisponibles() {
+        LocalDate fechaActual = LocalDate.now();
+        return fichaRepository.findFichasDisponibles(fechaActual);
     }
 
     @Override

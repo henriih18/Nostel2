@@ -28,6 +28,9 @@ public class InstructorDTO {
     @NotBlank(message = "El campo contraseña no puede estar vacío")
     private String contrasena;
 
+    @NotBlank(message = "El campo telefono no puede estar vacio")
+    private String telefono;
+
     private Integer idUsuario;
 
 

@@ -56,8 +56,43 @@ public class ActividadComplementariaController {
             actividadComplementariaDTO.setIdInstructor(instructor.getIdInstructor());
 
             // Validar el DTO
-            if (actividadComplementariaDTO.getActaNumber() == null || actividadComplementariaDTO.getNombreComite() == null) {
-                return new ResponseEntity<>("Faltan campos requeridos (actaNumber, nombreComite)", HttpStatus.BAD_REQUEST);
+            if (actividadComplementariaDTO.getActaNumber() == null || actividadComplementariaDTO.getActaNumber().trim().isEmpty()) {
+                return new ResponseEntity<>("El número de acta es obligatorio.", HttpStatus.BAD_REQUEST);
+            }
+            if (actividadComplementariaDTO.getNombreComite() == null || actividadComplementariaDTO.getNombreComite().trim().isEmpty()) {
+                return new ResponseEntity<>("El nombre del comité es obligatorio.", HttpStatus.BAD_REQUEST);
+            }
+            if (actividadComplementariaDTO.getFecha() == null) {
+                return new ResponseEntity<>("La fecha del acta es obligatoria.", HttpStatus.BAD_REQUEST);
+            }
+            if (actividadComplementariaDTO.getObjetivos() == null || actividadComplementariaDTO.getObjetivos().trim().isEmpty()) {
+                return new ResponseEntity<>("Los objetivos del acta son obligatorios y no pueden estar vacíos.", HttpStatus.BAD_REQUEST);
+            }
+            if (actividadComplementariaDTO.getCiudad() == null || actividadComplementariaDTO.getCiudad().trim().isEmpty()) {
+                return new ResponseEntity<>("La ciudad del acta es obligatoria.", HttpStatus.BAD_REQUEST);
+            }
+            if (actividadComplementariaDTO.getHoraInicio() == null || actividadComplementariaDTO.getHoraInicio().trim().isEmpty()) {
+                return new ResponseEntity<>("La hora de inicio del acta es obligatoria.", HttpStatus.BAD_REQUEST);
+            }
+            if (actividadComplementariaDTO.getHoraFin() == null || actividadComplementariaDTO.getHoraFin().trim().isEmpty()) {
+                return new ResponseEntity<>("La hora de fin del acta es obligatoria.", HttpStatus.BAD_REQUEST);
+            }
+            if (actividadComplementariaDTO.getLugarEnlace() == null || actividadComplementariaDTO.getLugarEnlace().trim().isEmpty()) {
+                return new ResponseEntity<>("El lugar o enlace del acta es obligatorio.", HttpStatus.BAD_REQUEST);
+            }
+            if (actividadComplementariaDTO.getAsistentes() == null || actividadComplementariaDTO.getAsistentes().isEmpty()) {
+                return new ResponseEntity<>("El acta debe incluir al menos un asistente.", HttpStatus.BAD_REQUEST);
+            }
+            for (var asistente : actividadComplementariaDTO.getAsistentes()) {
+                if (asistente.getNombre() == null || asistente.getNombre().trim().isEmpty()) {
+                    return new ResponseEntity<>("El nombre del asistente es obligatorio.", HttpStatus.BAD_REQUEST);
+                }
+                if (asistente.getNumeroDocumento() == null || asistente.getNumeroDocumento().trim().isEmpty()) {
+                    return new ResponseEntity<>("El número de documento del asistente es obligatorio.", HttpStatus.BAD_REQUEST);
+                }
+                if (asistente.getFirmaParticipacion() == null || asistente.getFirmaParticipacion().trim().isEmpty()) {
+                    return new ResponseEntity<>("La firma o participación virtual del asistente es obligatoria.", HttpStatus.BAD_REQUEST);
+                }
             }
 
             // Invocar el servicio

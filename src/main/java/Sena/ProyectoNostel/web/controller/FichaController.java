@@ -2,6 +2,7 @@ package Sena.ProyectoNostel.web.controller;
 
 import Sena.ProyectoNostel.domain.dto.FichaDTO;
 import Sena.ProyectoNostel.domain.service.FichaService;
+import Sena.ProyectoNostel.persistence.entity.Ficha;
 import Sena.ProyectoNostel.util.Views;
 import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.annotation.security.PermitAll;
@@ -11,8 +12,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
@@ -34,9 +38,22 @@ public class FichaController {
         return new ResponseEntity<>(fichas, HttpStatus.OK);
     }
 
+    @GetMapping("/disponibles")
+    @PermitAll
+    public List<Map<String,Object>> getFichasDisponibles() {
+        return fichaService.obtenerFichasDisponibles()
+                .stream()
+                .map(f -> {
+                    Map<String,Object> dto = new HashMap<>();
+                    dto.put("numeroFicha",    f.getNumeroFicha());
+                    dto.put("nombrePrograma", f.getNombrePrograma());
+                    return dto;
+                })
+                .collect(Collectors.toList());}
+
     @GetMapping("/{idFicha}")
-   // @JsonView(Views.FichaView.class)
-@PermitAll
+    // @JsonView(Views.FichaView.class)
+
 
     public ResponseEntity<FichaDTO> obtenerFichaPorId(@PathVariable Integer idFicha) {
         Optional<FichaDTO> ficha = fichaService.obtenerFichaId(idFicha);
@@ -44,7 +61,7 @@ public class FichaController {
     }
 
     @PostMapping
-   @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<FichaDTO> crearFicha(@RequestBody FichaDTO fichaDTO) {
         FichaDTO creado = fichaService.crearFicha(fichaDTO);
         return new ResponseEntity<>(creado, HttpStatus.CREATED);
@@ -52,9 +69,9 @@ public class FichaController {
 
     @PutMapping("/{idFicha}")
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public ResponseEntity<FichaDTO> actualizarFicha (@PathVariable Integer idFicha, @RequestBody FichaDTO fichaDTO) {
+    public ResponseEntity<FichaDTO> actualizarFicha(@PathVariable Integer idFicha, @RequestBody FichaDTO fichaDTO) {
         Optional<FichaDTO> actualizado = fichaService.actualizarFicha(idFicha, fichaDTO);
-        return actualizado.map( value -> new ResponseEntity<>(value, HttpStatus.OK))
+        return actualizado.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 

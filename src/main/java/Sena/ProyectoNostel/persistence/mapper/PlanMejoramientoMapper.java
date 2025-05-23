@@ -11,7 +11,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface PlanMejoramientoMapper {
 
-    @Mapping(source = "instructor.nombres", target = "nombreInstructor")
+
     PlanMejoramientoDTO toPlanMejoramientoDTO(PlanMejoramiento planMejoramiento);
 
    List<PlanMejoramientoDTO> toPlanMejoramientoList(List<PlanMejoramiento> planMejoramientos);

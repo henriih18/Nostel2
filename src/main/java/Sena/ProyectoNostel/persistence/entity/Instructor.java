@@ -28,6 +28,8 @@ public class Instructor {
 
     private String correo;
 
+    private String telefono;
+
     @OneToMany(mappedBy = "instructor")
     private List<ActividadComplementaria> actividadComplementarias;
 

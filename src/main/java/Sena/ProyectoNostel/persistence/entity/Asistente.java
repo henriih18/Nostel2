@@ -30,12 +30,28 @@ public class Asistente {
     @Column(name = "firma_participacion", nullable = false)
     private String firmaParticipacion;
 
+    @Column(name = "numero_documento", nullable = false)
+    private String numeroDocumento;
+
+    private Boolean planta;
+
+    private Boolean contratista;
+
+    private String otro;
+
+    @Column(name = "correo_electronico")
+    private String correoElectronico;
+
+    @Column(name = "telefono_ext")
+    private String telefonoExt;
+
+    @Column(name = "autoriza_grabacion")
+    private Boolean autorizaGrabacion;
+
     @ManyToOne
     @JoinColumn(name = "id_actividad")
     private ActividadComplementaria actividadComplementaria;
 
-    /*@ManyToMany(mappedBy = "asistentes")
-    private List<Instructor> instructores;*/
 
 
 

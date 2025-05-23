@@ -196,7 +196,13 @@ public class ActividadComplementariaServiceImpl implements ActividadComplementar
             throw new IllegalArgumentException("Los campos idAprendiz e idInstructor son obligatorios.");
         }
 
-        // 2. Invocar el procedimiento almacenado para insertar los datos principales
+        // 2. Validar que el acta de asistencia esté completa
+        if (!esActaAsistenciaCompleta(actividadComplementariaDTO)) {
+            logger.error("El acta de asistencia no está completa. Debe incluir al menos un asistente con todos los campos obligatorios.");
+            throw new IllegalArgumentException("El acta de asistencia no está completa. Debe incluir al menos un asistente con todos los campos obligatorios.");
+        }
+
+        // 3. Invocar el procedimiento almacenado para insertar los datos principales
         actividadComplementariaRepository.asignarActividadComplementaria(
                 actividadComplementariaDTO.getIdAprendiz(),
                 actividadComplementariaDTO.getIdInstructor(),
@@ -264,6 +270,13 @@ public class ActividadComplementariaServiceImpl implements ActividadComplementar
                         asistente.setObservacion(asistenteDTO.getObservacion());
                         asistente.setFirmaParticipacion(asistenteDTO.getFirmaParticipacion() != null ? asistenteDTO.getFirmaParticipacion() : "");
                         asistente.setActividadComplementaria(actividad);
+                        asistente.setNumeroDocumento(asistenteDTO.getNumeroDocumento());
+                        asistente.setPlanta(asistenteDTO.getPlanta());
+                        asistente.setContratista(asistenteDTO.getContratista());
+                        asistente.setOtro(asistenteDTO.getOtro());
+                        asistente.setCorreoElectronico(asistenteDTO.getCorreoElectronico());
+                        asistente.setTelefonoExt(asistenteDTO.getTelefonoExt());
+                        asistente.setAutorizaGrabacion(asistenteDTO.getAutorizaGrabacion() != null ? asistenteDTO.getAutorizaGrabacion() : false);
                         return asistente;
                     }).collect(Collectors.toList());
             actividad.setAsistentes(asistentes);
@@ -277,6 +290,70 @@ public class ActividadComplementariaServiceImpl implements ActividadComplementar
         ActividadComplementaria savedActividad = actividadComplementariaRepository.findById(idActividad)
                 .orElseThrow(() -> new RuntimeException("No se pudo recuperar la actividad recién creada"));
         return actividadComplementariaMapper.toActividadComplementariaDTO(savedActividad);
+    }
+
+    /*private boolean esActaAsistenciaCompleta(ActividadComplementariaDTO dto) {
+        if (dto.getFecha() == null || dto.getObjetivos() == null || dto.getObjetivos().trim().isEmpty()) {
+            logger.error("Fecha u objetivos no están completos: fecha={}, objetivos={}", dto.getFecha(), dto.getObjetivos());
+            return false;
+        }
+        if (dto.getAsistentes() == null || dto.getAsistentes().isEmpty()) {
+            logger.error("No se proporcionaron asistentes para el acta.");
+            return false;
+        }
+        return dto.getAsistentes().stream().allMatch(asistente -> {
+            boolean isValid = asistente.getNombre() != null && !asistente.getNombre().trim().isEmpty() &&
+                    asistente.getNumeroDocumento() != null && !asistente.getNumeroDocumento().trim().isEmpty() &&
+                    asistente.getFirmaParticipacion() != null && !asistente.getFirmaParticipacion().trim().isEmpty();
+            if (isValid && asistente.getCorreoElectronico() != null && !asistente.getCorreoElectronico().trim().isEmpty()) {
+                // Validar formato de correo
+                String emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+                isValid = asistente.getCorreoElectronico().matches(emailPattern);
+                if (!isValid) {
+                    logger.warn("Correo electrónico inválido para asistente: {}", asistente.getCorreoElectronico());
+                }
+            }
+            return isValid;
+        });
+    }*/
+    private boolean esActaAsistenciaCompleta(ActividadComplementariaDTO dto) {
+        // Validar campos del acta
+        if (dto.getFecha() == null) {
+            logger.error("Fecha no está completa: fecha={}", dto.getFecha());
+            throw new IllegalArgumentException("La fecha del acta es obligatoria.");
+        }
+        if (dto.getObjetivos() == null || dto.getObjetivos().trim().isEmpty()) {
+            logger.error("Objetivos no están completos: objetivos={}", dto.getObjetivos());
+            throw new IllegalArgumentException("Los objetivos del acta son obligatorios y no pueden estar vacíos.");
+        }
+        // Validar asistentes
+        if (dto.getAsistentes() == null || dto.getAsistentes().isEmpty()) {
+            logger.error("No se proporcionaron asistentes para el acta.");
+            throw new IllegalArgumentException("El acta debe incluir al menos un asistente.");
+        }
+        dto.getAsistentes().stream().allMatch(asistente -> {
+            if (asistente.getNombre() == null || asistente.getNombre().trim().isEmpty()) {
+                logger.error("Nombre del asistente no está completo: nombre={}", asistente.getNombre());
+                throw new IllegalArgumentException("El nombre del asistente es obligatorio.");
+            }
+            if (asistente.getNumeroDocumento() == null || asistente.getNumeroDocumento().trim().isEmpty()) {
+                logger.error("Número de documento del asistente no está completo: numeroDocumento={}", asistente.getNumeroDocumento());
+                throw new IllegalArgumentException("El número de documento del asistente es obligatorio.");
+            }
+            if (asistente.getFirmaParticipacion() == null || asistente.getFirmaParticipacion().trim().isEmpty()) {
+                logger.error("Firma de participación del asistente no está completa: firmaParticipacion={}", asistente.getFirmaParticipacion());
+                throw new IllegalArgumentException("La firma o participación virtual del asistente es obligatoria.");
+            }
+            if (asistente.getCorreoElectronico() != null && !asistente.getCorreoElectronico().trim().isEmpty()) {
+                String emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+                if (!asistente.getCorreoElectronico().matches(emailPattern)) {
+                    logger.warn("Correo electrónico inválido para asistente: {}", asistente.getCorreoElectronico());
+                    throw new IllegalArgumentException("El correo electrónico del asistente no tiene un formato válido: " + asistente.getCorreoElectronico());
+                }
+            }
+            return true;
+        });
+        return true;
     }
 
     @Override
