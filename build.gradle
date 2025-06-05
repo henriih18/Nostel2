@@ -53,6 +53,16 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // Gemini
+    implementation("com.google.code.gson:gson:2.11.0")
+    implementation 'org.json:json:20230227'
+    implementation ('io.github.cdimascio:dotenv-java:3.0.2') {
+        exclude group: 'com.google.code.gson', module: 'gson'
+    }
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'com.konghq:unirest-java:3.13.6'
+    testImplementation 'junit:junit:3.8.1'
 }
 
 

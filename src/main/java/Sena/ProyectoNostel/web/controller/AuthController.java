@@ -122,7 +122,7 @@ public class AuthController {
     private final UserDetailsService userDetailsService;
 
 
-    @PermitAll
+    //@PermitAll
     @PostMapping("/login")
     //@PreAuthorize("hasAnyRole('APRENDIZ', 'ADMIN', 'INSTRUCTOR')")
     public ResponseEntity<JwtResponseDTO> login(@RequestBody @Valid LoginRequestDTO request) {

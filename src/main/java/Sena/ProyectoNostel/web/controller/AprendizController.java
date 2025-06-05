@@ -3,6 +3,7 @@ package Sena.ProyectoNostel.web.controller;
 import Sena.ProyectoNostel.domain.dto.AprendizDTO;
 import Sena.ProyectoNostel.domain.dto.InstructorDTO;
 import Sena.ProyectoNostel.domain.service.AprendizService;
+import jakarta.annotation.security.PermitAll;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -59,6 +60,25 @@ public class AprendizController {
                 .map(aprendiz -> aprendizService.toAprendizDTO(aprendiz))
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/RegistroAprendiz")
+    @PermitAll
+    public ResponseEntity<?> RegistroAprendiz(@RequestBody @Valid AprendizDTO aprendizDTO, BindingResult result) {
+        if (result.hasErrors()) {
+            Map<String, String> errores = new HashMap<>();
+            result.getFieldErrors().forEach(error -> errores.put(error.getField(), error.getDefaultMessage()));
+            return ResponseEntity.badRequest().body(errores);
+        }
+        try {
+            AprendizDTO creado = aprendizService.crear(aprendizDTO);
+            return new ResponseEntity<>(creado, HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            Map<String, String> response = new HashMap<>();
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+
     }
 
     @PostMapping

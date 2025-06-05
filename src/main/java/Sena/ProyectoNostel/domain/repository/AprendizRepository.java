@@ -3,14 +3,11 @@ package Sena.ProyectoNostel.domain.repository;
 import Sena.ProyectoNostel.domain.dto.AprendizDTO;
 import Sena.ProyectoNostel.persistence.crud.AprendizCrudRepository;
 import Sena.ProyectoNostel.persistence.entity.Aprendiz;
-import Sena.ProyectoNostel.persistence.entity.Instructor;
-import Sena.ProyectoNostel.persistence.mapper.AprendizMapper;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import java.util.List;
+
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Repository
 public interface AprendizRepository extends AprendizCrudRepository {
