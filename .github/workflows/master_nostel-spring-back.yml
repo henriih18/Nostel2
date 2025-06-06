@@ -6,50 +6,54 @@ on:
       - master
   workflow_dispatch:
 
+# Necesitamos permiso para OIDC y para leer el repositorio
 permissions:
-  contents: read    # Para actions/checkout
-  id-token: write   # Para OIDC / Managed Identity
+  contents: read
+  id-token: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      # 1) Clonar el repositorio
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Set up Java version
+      # 2) Instalar Java 21
+      - name: Set up Java 21
         uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
 
+      # 3) Compilar con Gradle DENTRO de “Nostel2/” (donde está tu build.gradle)
       - name: Build with Gradle
-        working-directory: ./               # Tu build.gradle está en la raíz
+        working-directory: ./Nostel2           # ← Aquí está tu subcarpeta “Nostel2”
         run: ./gradlew clean build --no-daemon
 
+      # 4) Subir el JAR resultante (que Gradle puso en build/libs/)
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: java-app
-          path: 'build/libs/*.jar'          # Ruta al .jar generado por Gradle
+          path: 'Nostel2/build/libs/*.jar'     # ← Ajustado al subdirectorio
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
 
     steps:
+      # 5) Descargar el artefacto (.jar)
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: java-app
           path: .
 
+      # 6) Desplegar a Azure Web App usando OIDC / Managed Identity
       - name: Deploy to Azure Web App
-        id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'nostel-spring-back'    # El nombre EXACTO de tu App Service
-          slot-name: 'Production'
-          package: '*.jar'                  # Apunta al JAR descargado
-
-          
+          app-name: 'nostel-spring-back'      # ← Tu App Service EXACTO
+          package: 'Nostel2/build/libs/*.jar' # ← Ruta global al JAR dentro del workspace
