@@ -8,7 +8,7 @@ on:
 
 permissions:
   contents: read
-  id-token: write   # para que GitHub provea el token OIDC
+  id-token: write   # Necesario para que GitHub emita el token OIDC
 
 jobs:
   build:
@@ -25,7 +25,6 @@ jobs:
           distribution: 'temurin'
 
       - name: Build with Gradle (sin tests)
-        working-directory: .
         run: ./gradlew clean build --no-daemon -x test
 
       - name: Upload artifact for deployment job
@@ -45,15 +44,14 @@ jobs:
           name: java-app
           path: .
 
-      - name: Log in to Azure with OIDC
+      - name: Log in to Azure using Managed Identity
         uses: azure/login@v2
         with:
-          client-id: ""         # Vacío para usar la Managed Identity
-          tenant-id: ""         # Vacío
-          subscription-id: ""   # Vacío
+          # Indicamos que use la Managed Identity asignada al App Service:
+          use-managed-identity: true
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'nostel-spring-back'  # Tu App Service exactamente
-          package: '*.jar'                # El JAR que descargamos
+          app-name: 'nostel-spring-back'
+          package: '*.jar'
