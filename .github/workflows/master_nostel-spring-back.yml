@@ -8,7 +8,7 @@ on:
 
 permissions:
   contents: read
-  id-token: write   # Necesario para que GitHub emita el token OIDC
+  id-token: write   # para emitir token OIDC
 
 jobs:
   build:
@@ -44,11 +44,12 @@ jobs:
           name: java-app
           path: .
 
-      - name: Log in to Azure using Managed Identity
+      - name: Login to Azure using Managed Identity
         uses: azure/login@v2
         with:
-          # Indicamos que use la Managed Identity asignada al App Service:
-          use-managed-identity: true
+          auth-type: 'managedIdentity'
+          # No es necesario indicar client-id ni tenant-id
+          # porque usará la identidad del App Service (system-assigned).
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
