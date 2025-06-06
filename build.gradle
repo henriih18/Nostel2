@@ -63,6 +63,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'com.konghq:unirest-java:3.13.6'
     testImplementation 'junit:junit:3.8.1'
+
+    //Email
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
 }
 
 
