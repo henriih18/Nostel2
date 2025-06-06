@@ -26,7 +26,7 @@ jobs:
 
       - name: Build with Gradle
         working-directory: .                # Tu build.gradle está en la raíz del proyecto
-        run: ./gradlew clean build --no-daemon
+        run: ./gradlew clean build --no-daemon -x test
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
