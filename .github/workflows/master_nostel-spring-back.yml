@@ -29,7 +29,7 @@ jobs:
 
       # 3) Compilar con Gradle DENTRO de “Nostel2/” (donde está tu build.gradle)
       - name: Build with Gradle
-        working-directory: ./Nostel2           # ← Aquí está tu subcarpeta “Nostel2”
+        working-directory: .         # ← Aquí está tu subcarpeta “Nostel2”
         run: ./gradlew clean build --no-daemon
 
       # 4) Subir el JAR resultante (que Gradle puso en build/libs/)
