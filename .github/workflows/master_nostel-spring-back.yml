@@ -7,8 +7,8 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read    # Para actions/checkout
-  id-token: write   # Para OIDC / Managed Identity
+  contents: read
+  id-token: write   # para que GitHub provea el token OIDC
 
 jobs:
   build:
@@ -24,16 +24,16 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: Build with Gradle
-        working-directory: .                # Tu build.gradle está en la raíz del proyecto
+      - name: Build with Gradle (sin tests)
+        working-directory: .
         run: ./gradlew clean build --no-daemon -x test
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: java-app
-          path: build/libs/*.jar            # Aquí Gradle deja el .jar (¡sin "Nostel2/" adelante!)
-  
+          path: build/libs/*.jar
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -45,9 +45,15 @@ jobs:
           name: java-app
           path: .
 
+      - name: Log in to Azure with OIDC
+        uses: azure/login@v2
+        with:
+          client-id: ""         # Vacío para usar la Managed Identity
+          tenant-id: ""         # Vacío
+          subscription-id: ""   # Vacío
+
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'nostel-spring-back'    # Nombre exacto de tu App Service
-          package: '*.jar'                  # Busca el JAR en la raíz del espacio de trabajo 
-
+          app-name: 'nostel-spring-back'  # Tu App Service exactamente
+          package: '*.jar'                # El JAR que descargamos
