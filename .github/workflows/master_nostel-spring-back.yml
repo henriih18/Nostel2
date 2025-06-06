@@ -8,7 +8,7 @@ on:
 
 permissions:
   contents: read
-  id-token: write   # para emitir token OIDC
+  id-token: write   # Necesario para OIDC / identidad administrada
 
 jobs:
   build:
@@ -44,12 +44,12 @@ jobs:
           name: java-app
           path: .
 
-      - name: Login to Azure using Managed Identity
+      - name: Log in to Azure using Managed Identity
         uses: azure/login@v2
         with:
-          auth-type: 'managedIdentity'
-          # No es necesario indicar client-id ni tenant-id
-          # porque usará la identidad del App Service (system-assigned).
+          auth-type: 'IDENTITY'
+          # No es necesario especificar client-id, tenant-id ni subscription-id
+          # porque IDENTITY le indica que use la Managed Identity del App Service.
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
