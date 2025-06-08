@@ -48,4 +48,4 @@ jobs:
         with:
           app-name: 'nostel-spring-back'
           package: '*.jar'
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_JSON }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_XML }}
