@@ -62,7 +62,9 @@ dependencies {
     }
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'com.konghq:unirest-java:3.13.6'
-    testImplementation 'junit:junit:3.8.1'
+    //testImplementation 'junit:junit:3.8.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.11.0'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
     //Email
     implementation 'org.springframework.boot:spring-boot-starter-mail'
@@ -75,4 +77,8 @@ tasks.named('test') {
 
 tasks.named('bootJar') {
     archiveFileName.set('nostel.jar')
+}
+
+bootRun {
+    systemProperty "spring.profiles.active", "prod"
 }
