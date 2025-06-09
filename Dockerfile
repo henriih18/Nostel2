@@ -25,7 +25,7 @@ FROM eclipse-temurin:21-jre-jammy
 WORKDIR /nostel
 
 # Copiamos únicamente el JAR ya compilado
-COPY --from=build /nostel/build/libs/*.jar nostel.jar
+COPY --from=build /nostel/build/libs/ProyectoNostel-0.0.1-SNAPSHOT.jar nostel.jar
 
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "nostel.jar"]
