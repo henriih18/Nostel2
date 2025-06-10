@@ -17,9 +17,10 @@ public interface FichaRepository  extends FichaCrudRepository {
     List<Ficha> findAll();
     Optional<Ficha> findByNumeroFicha(Integer numeroFicha);
 
-    @Query("SELECT f FROM Ficha f WHERE DATEDIFF(:currentDate, f.fechaInicio) <= 60")
-    List<Ficha> findFichasDisponibles(LocalDate currentDate);
+    /*@Query("SELECT f FROM Ficha f WHERE DATEDIFF(:currentDate, f.fechaInicio) <= 60")
+    List<Ficha> findFichasDisponibles(LocalDate currentDate);*/
 
-
+    @Query("SELECT f FROM Ficha f WHERE FUNCTION('DATEDIFF', :currentDate, f.fechaInicio) <= 60")
+    List<Ficha> findFichasDisponibles(@Param("currentDate") LocalDate currentDate);
 }
 
