@@ -24,7 +24,7 @@ public class CompromisoPlan {
     @Column(name = "firma_Participacion", nullable = false )
     private String firmaParticipacion;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_plan")
     private PlanMejoramiento planMejoramiento;
 }

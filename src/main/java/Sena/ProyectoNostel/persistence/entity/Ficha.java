@@ -35,7 +35,7 @@ public class Ficha {
     private Integer numeroAmbiente;
 
     //FALTA EL ID-PROGRAMA
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_programa", insertable = false, updatable = false)
     private Programa programa;
 

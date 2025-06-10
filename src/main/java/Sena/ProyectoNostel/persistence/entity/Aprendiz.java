@@ -51,7 +51,7 @@ public class Aprendiz {
 
 
 
-    @ManyToOne
+    @ManyToOne//(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_ficha", insertable = false, updatable = false)
     @JsonBackReference
     private Ficha ficha;

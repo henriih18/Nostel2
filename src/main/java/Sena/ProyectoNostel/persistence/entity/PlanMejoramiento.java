@@ -16,19 +16,22 @@ public class PlanMejoramiento {
     @Column(name = "id_plan")
     private Integer idPlanMejoramiento;
 
-    @ManyToOne
-    @JoinColumn(name = "id_aprendiz", insertable = false, updatable = false)
-    private Aprendiz aprendiz;
     @Column(name = "id_aprendiz")
     private Integer idAprendiz;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_aprendiz", insertable = false, updatable = false)
+    private Aprendiz aprendiz;
+
+
+    @Column(name = "id_instructor")
+    private Integer idInstructor;
     //relacion instructor
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_instructor", insertable = false, updatable = false)
     @JsonBackReference
     private Instructor instructor;
-    @Column(name = "id_instructor")
-    private Integer idInstructor;
+
 
     @Enumerated(EnumType.STRING)
     @Column(name = "estado", nullable = false)

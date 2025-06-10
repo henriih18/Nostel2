@@ -48,7 +48,7 @@ public class Asistente {
     @Column(name = "autoriza_grabacion")
     private Boolean autorizaGrabacion;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_actividad")
     private ActividadComplementaria actividadComplementaria;
 

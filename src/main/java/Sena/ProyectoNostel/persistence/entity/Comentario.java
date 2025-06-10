@@ -22,22 +22,24 @@ public class Comentario {
 
     private String comentario;
 
-
-    //relacion aprendiz
-    @ManyToOne
-    @JoinColumn(name = "id_aprendiz", insertable = false, updatable = false)
-    @JsonBackReference
-    private Aprendiz aprendiz;
     @Column(name = "id_aprendiz")
     private Integer idAprendiz;
 
+    //relacion aprendiz
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_aprendiz", insertable = false, updatable = false)
+    @JsonBackReference
+    private Aprendiz aprendiz;
+
+    @Column(name = "id_instructor")
+    private Integer idInstructor;
+
     //relacion instructor
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_instructor", insertable = false, updatable = false)
     @JsonBackReference
     private Instructor instructor;
-    @Column(name = "id_instructor")
-    private Integer idInstructor;
+
 
     /*@Transient
     private String nombreInstructor;*/

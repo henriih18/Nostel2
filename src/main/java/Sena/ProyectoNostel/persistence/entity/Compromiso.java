@@ -27,7 +27,7 @@ public class Compromiso {
     @Column(name = "firma_participacion", nullable = false)
     private String firmaParticipacion;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_actividad")
     private ActividadComplementaria actividadComplementaria;
 }

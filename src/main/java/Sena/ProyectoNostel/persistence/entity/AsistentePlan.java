@@ -42,7 +42,7 @@ public class AsistentePlan {
 
     private String aprueba;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_plan")
     private PlanMejoramiento planMejoramiento;
 }

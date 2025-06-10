@@ -10,12 +10,12 @@ public class FichasInstructor {
     @EmbeddedId
     private FichasInstructorPK id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("idFicha")
     @JoinColumn(name = "id_ficha", insertable = false, updatable = false)
     private Ficha ficha;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("idInstructor")
     @JoinColumn(name = "id_instructor", insertable = false, updatable = false)
     private Instructor instructor;
