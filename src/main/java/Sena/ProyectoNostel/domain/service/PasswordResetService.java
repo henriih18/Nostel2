@@ -11,6 +11,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -20,6 +21,9 @@ import java.util.UUID;
 public class PasswordResetService {
 
     private static final Logger logger = LoggerFactory.getLogger(PasswordResetService.class);
+
+    @Value("${app.frontend.url}")
+    private String frontendUrl;
 
     @Autowired
     private PasswordResetTokenRepository tokenRepository;
@@ -54,6 +58,7 @@ public class PasswordResetService {
     // Enviar correo con enlace de restablecimiento
     private void sendResetEmail(String email, String token) {
         String resetUrl = "http://localhost:5173/reset-password?token=" + token;
+        //String resetUrl = "http://localhost:5173/reset-password?token=" + token;
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);
         message.setSubject("Restablecimiento de Contraseña - Proyecto Nostel");
