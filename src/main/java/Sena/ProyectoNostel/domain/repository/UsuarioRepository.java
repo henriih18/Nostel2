@@ -12,6 +12,6 @@ import java.util.Optional;
 public interface UsuarioRepository extends UsuarioCrudRepository {
     Optional<Usuario> findByCorreo(String correo);
     boolean existsByCorreo(String correo);
-    Aprendiz save(Aprendiz aprendiz);
-    Instructor save(Instructor instructor);
+    /*Aprendiz save(Aprendiz aprendiz);
+    Instructor save(Instructor instructor);*/
 }
