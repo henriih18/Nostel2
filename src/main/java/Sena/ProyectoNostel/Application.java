@@ -12,6 +12,8 @@ public class Application {
 
 	public static void main(String[] args) {
 		System.out.println(">> SPRING_DATASOURCE_URL=" + System.getenv("SPRING_DATASOURCE_URL"));
+		System.out.println(">> SPRING_DATASOURCE_USERNAME=" + System.getenv("SPRING_DATASOURCE_USERNAME"));
+		System.out.println(">> SPRING_DATASOURCE_PASSWORD=" + System.getenv("SPRING_DATASOURCE_PASSWORD"));
 		SpringApplication.run(Application.class, args);
 
 		/*SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
