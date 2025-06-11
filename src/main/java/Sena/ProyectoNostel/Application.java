@@ -38,6 +38,7 @@ public class Application {
 		/*SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 		String base64Key = Base64.getEncoder().encodeToString(key.getEncoded());
 		System.out.println("jwt.secret=" + base64Key);*/
+
 	}
 	}
 
