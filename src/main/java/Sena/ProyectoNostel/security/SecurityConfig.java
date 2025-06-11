@@ -150,6 +150,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(HttpMethod.GET,
                                 /*"/actuator/health",*/
+                                "/actuator/health", "/actuator/info",
                                 "/programas", "/api/programas",
                                 "/fichas/disponibles", "/api/fichas/disponibles"
                         ).permitAll()
