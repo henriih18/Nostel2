@@ -41,15 +41,6 @@ public class AprendizServiceImpl implements AprendizService {
                 .map(aprendizMapper::toAprendizDTO);
     }
 
-    /*public AprendizDTO findByDocumento(Integer documentoStr) {
-        try {
-            Integer documento = Integer.valueOf(documentoStr);
-            return aprendizRepository.findByDocumento(documento).orElse(null);
-        } catch (NumberFormatException e) {
-            log.error("Error al convertir el documento a Integer: {}", documentoStr, e);
-            return null;
-        }
-    }*/
 
     public Optional<AprendizDTO> findByDocumento (Integer documento) {
         if (documento == null) {
