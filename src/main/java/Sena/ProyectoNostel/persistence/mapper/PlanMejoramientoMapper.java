@@ -12,11 +12,15 @@ import java.util.List;
 public interface PlanMejoramientoMapper {
 
 
+    //@Mapping(source = "actividad.idActividad", target = "idActividad")
     PlanMejoramientoDTO toPlanMejoramientoDTO(PlanMejoramiento planMejoramiento);
 
    List<PlanMejoramientoDTO> toPlanMejoramientoList(List<PlanMejoramiento> planMejoramientos);
 
 
+    /*@Mapping(source = "idPlanMejoramiento", target = "idPlanMejoramiento")
+    @Mapping(source = "aprendiz", target = "aprendizDTO") // Asegúrate de tener AprendizMapper
+    @Mapping(source = "instructor", target = "instructorDTO")*/
    PlanMejoramiento toPlanMejoramiento(PlanMejoramientoDTO planMejoramientoDTO);
 
     void updatePlanMejoramiento(PlanMejoramientoDTO planMejoramientoDTO, @MappingTarget PlanMejoramiento planMejoramiento );

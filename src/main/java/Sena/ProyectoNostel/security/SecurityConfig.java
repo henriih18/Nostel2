@@ -149,7 +149,7 @@ public class SecurityConfig {
                         .requestMatchers( "/auth/**", "/swagger-ui/**", "/v3/api-docs/**", "/password-reset/**").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(HttpMethod.GET,
-                                "/actuator/health",
+                                /*"/actuator/health",*/
                                 "/programas", "/api/programas",
                                 "/fichas/disponibles", "/api/fichas/disponibles"
                         ).permitAll()
@@ -166,7 +166,7 @@ public class SecurityConfig {
 
                         .requestMatchers("/api/instructores/**", "/instructores/**").hasAnyRole("ADMIN", "INSTRUCTOR")
                         .requestMatchers("/api/admin/**", "/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/**").authenticated()
+                        /*.requestMatchers("/api/**").authenticated()*/
                         .anyRequest().authenticated()
                 )
                 // Añadir el filtro JWT antes de UsernamePasswordAuthenticationFilter
