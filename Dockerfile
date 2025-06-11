@@ -28,4 +28,4 @@ WORKDIR /nostel
 COPY --from=build /nostel/build/libs/*.jar nostel.jar
 
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "nostel.jar", "--spring.profiles.active=prod", "--server.port=${PORT}"]
+ENTRYPOINT ["java", "-jar", "nostel.jar", "--spring.profiles.active=prod"]
