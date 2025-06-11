@@ -146,9 +146,10 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/actuator/health", "/auth/**", "/swagger-ui/**", "/v3/api-docs/**", "/password-reset/**").permitAll()
+                        .requestMatchers( "/auth/**", "/swagger-ui/**", "/v3/api-docs/**", "/password-reset/**").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(HttpMethod.GET,
+                                "/actuator/health",
                                 "/programas", "/api/programas",
                                 "/fichas/disponibles", "/api/fichas/disponibles"
                         ).permitAll()
