@@ -153,6 +153,7 @@ public class SecurityConfig {
                                 "/programas", "/api/programas",
                                 "/fichas/disponibles", "/api/fichas/disponibles"
                         ).permitAll()
+
                         .requestMatchers(HttpMethod.POST, "/aprendices/RegistroAprendiz").permitAll()
 
                         .requestMatchers(HttpMethod.GET, "/fichas", "/api/fichas").hasAnyRole("ADMIN", "INSTRUCTOR")
