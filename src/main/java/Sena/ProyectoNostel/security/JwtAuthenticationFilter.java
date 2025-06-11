@@ -26,7 +26,7 @@ import java.util.Collection;
 import java.util.Map;
 
 @Slf4j
-@Component
+//@Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
