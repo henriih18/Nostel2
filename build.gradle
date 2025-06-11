@@ -72,8 +72,7 @@ dependencies {
     //Email
     implementation 'org.springframework.boot:spring-boot-starter-mail'
 
-    //Actuator
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
 
 }
 
