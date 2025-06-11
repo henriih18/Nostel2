@@ -12,11 +12,11 @@ public class Application {
 
 	public static void main(String[] args) {
 
-		System.out.println(">> SPRING_DATASOURCE_HOST=" + System.getenv("SPRING_DATASOURCE_HOST"));
-		System.out.println(">> SPRING_DATASOURCE_PORT=" + System.getenv("SPRING_DATASOURCE_PORT"));
-		System.out.println(">> SPRING_DATASOURCE_DATABASE=" + System.getenv("SPRING_DATASOURCE_DATABASE"));
-		System.out.println(">> SPRING_DATASOURCE_USERNAME=" + System.getenv("SPRING_DATASOURCE_USERNAME"));
-		System.out.println(">> SPRING_DATASOURCE_PASSWORD=" + System.getenv("SPRING_DATASOURCE_PASSWORD"));
+		System.out.println(">> SPRING_DATASOURCE_HOST=" + System.getenv("SPRING_MYSQL_HOST"));
+		System.out.println(">> SPRING_DATASOURCE_PORT=" + System.getenv("SPRING_MYSQL_PORT"));
+		System.out.println(">> SPRING_DATASOURCE_DATABASE=" + System.getenv("SPRING_MYSQL_DATABASE"));
+		System.out.println(">> SPRING_DATASOURCE_USERNAME=" + System.getenv("SPRING_MYSQL_USERNAME"));
+		System.out.println(">> SPRING_DATASOURCE_PASSWORD=" + System.getenv("SPRING_MYSQL_PASSWORD"));
 
 		// JWT
 		System.out.println(">> JWT_SECRET=" + System.getenv("JWT_SECRET"));
