@@ -11,7 +11,15 @@ import java.util.List;
 
 public interface ActividadComplementariaRepository extends ActividadComplementariaCrudRepository {
     // Interfaz del repositorio (JpaRepository o CrudRepository)
-    List<ActividadComplementaria> findByIdAprendiz(Integer idAprendiz);
+    //List<ActividadComplementaria> findByIdAprendiz(Integer idAprendiz);
+
+    @Query("""
+    SELECT ac
+      FROM ActividadComplementaria ac
+     WHERE ac.aprendiz.idAprendiz = :idAprendiz
+  """)
+    List<ActividadComplementaria> findByIdAprendiz(@Param("idAprendiz") Integer idAprendiz);
+
 
 
     @Procedure(procedureName = "AsignarActividadComplementaria")
