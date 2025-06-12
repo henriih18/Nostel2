@@ -127,7 +127,7 @@ public class SecurityConfig {
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
 
-    @Value("${ALLOWED_ORIGINS}")
+    @Value("${app.cors.allowed-origins}")
     private String allowedOrigins;
 
     public SecurityConfig(JwtService jwtService,
