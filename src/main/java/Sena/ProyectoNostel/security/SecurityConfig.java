@@ -151,22 +151,22 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET,
                                 /*"/actuator/health",*/
                                 "/actuator/**",
-                                "/programas", "/api/programas",
-                                "/fichas/disponibles", "/api/fichas/disponibles"
+                                "/programas",
+                                "/fichas/disponibles"
                         ).permitAll()
 
                         .requestMatchers(HttpMethod.POST, "/aprendices/RegistroAprendiz").permitAll()
 
-                        .requestMatchers(HttpMethod.GET, "/fichas", "/api/fichas").hasAnyRole("ADMIN", "INSTRUCTOR")
-                        .requestMatchers(HttpMethod.POST, "/fichas", "/api/fichas").hasAnyRole("ADMIN", "INSTRUCTOR")
+                        .requestMatchers(HttpMethod.GET, "/fichas").hasAnyRole("ADMIN", "INSTRUCTOR")
+                        .requestMatchers(HttpMethod.POST, "/fichas").hasAnyRole("ADMIN", "INSTRUCTOR")
 
-                        .requestMatchers(HttpMethod.GET, "/api/aprendices/**", "/aprendices/**").hasAnyRole("ADMIN", "INSTRUCTOR", "APRENDIZ")
-                        .requestMatchers(HttpMethod.POST, "/api/aprendices/**", "/aprendices/**").hasAnyRole("ADMIN", "INSTRUCTOR")
-                        .requestMatchers(HttpMethod.PUT, "/api/aprendices/**", "/aprendices/**").hasAnyRole("ADMIN", "INSTRUCTOR")
-                        .requestMatchers(HttpMethod.DELETE, "/api/aprendices/**", "/aprendices/**").hasAnyRole("ADMIN", "INSTRUCTOR")
+                        .requestMatchers(HttpMethod.GET,  "/aprendices/**").hasAnyRole("ADMIN", "INSTRUCTOR", "APRENDIZ")
+                        .requestMatchers(HttpMethod.POST,  "/aprendices/**").hasAnyRole("ADMIN", "INSTRUCTOR")
+                        .requestMatchers(HttpMethod.PUT,  "/aprendices/**").hasAnyRole("ADMIN", "INSTRUCTOR")
+                        .requestMatchers(HttpMethod.DELETE,  "/aprendices/**").hasAnyRole("ADMIN", "INSTRUCTOR")
 
-                        .requestMatchers("/api/instructores/**", "/instructores/**").hasAnyRole("ADMIN", "INSTRUCTOR")
-                        .requestMatchers("/api/admin/**", "/admin/**").hasRole("ADMIN")
+                        .requestMatchers( "/instructores/**").hasAnyRole("ADMIN", "INSTRUCTOR")
+                        .requestMatchers( "/admin/**").hasRole("ADMIN")
                         /*.requestMatchers("/api/**").authenticated()*/
                         .anyRequest().authenticated()
                 )

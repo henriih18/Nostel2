@@ -38,10 +38,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         String path = request.getServletPath();
 
+
         // Omitir validación JWT para endpoints públicos
         if (path.startsWith("/auth/") || path.equals("/auth") ||
-                path.startsWith("/api/auth/") || path.equals("/api/auth") ||
-                path.equals("/api/fichas") || path.equals("/api/programas") ||
+                path.equals("/actuator") ||
+                path.equals("/fichas/disponibles") || path.equals("/programas") ||
                 path.startsWith("/swagger-ui/") || path.startsWith("/v3/api-docs/") ||
                 request.getMethod().equals("OPTIONS")) {
             log.debug("Omitiendo validación JWT para la ruta: {}", path);
