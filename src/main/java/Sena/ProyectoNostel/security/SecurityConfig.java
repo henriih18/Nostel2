@@ -149,8 +149,7 @@ public class SecurityConfig {
                         .requestMatchers( "/auth/**", "/swagger-ui/**", "/v3/api-docs/**", "/password-reset/**").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(HttpMethod.GET,
-                                /*"/actuator/health",*/
-                                "/actuator/**",
+                                "/actuator/health", "/actuator/info",
                                 "/programas",
                                 "/fichas/disponibles"
                         ).permitAll()
