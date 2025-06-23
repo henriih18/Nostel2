@@ -11,7 +11,8 @@ public class JwtResponseDTO {
     private String token;
     private String rol;
     /*private Integer idFicha;
-    private String nombre;*/
+    private String nombres;*/
+    private String correo;
     private Integer idUsuario;
 
 

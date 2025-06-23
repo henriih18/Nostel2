@@ -151,7 +151,7 @@ public class AuthController {
         log.info("Rol asignado al usuario {}: {}", request.getCorreo(), rol);
 
         // Generar el token JWT con idUsuario
-        String token = jwtService.generateToken(userDetails, usuario.getIdUsuario(), rol);
+        String token = jwtService.generateToken(userDetails, usuario.getIdUsuario(), rol, usuario.getCorreo());
         log.info("Token generado para el usuario {}: {}", usuario.getCorreo(), token);
 
         // Construir la respuesta
@@ -159,7 +159,7 @@ public class AuthController {
         response.setToken(token);
         response.setRol(rol);
         response.setIdUsuario(usuario.getIdUsuario());
-
+        response.setCorreo(usuario.getCorreo());
         return ResponseEntity.ok(response);
     }
 }

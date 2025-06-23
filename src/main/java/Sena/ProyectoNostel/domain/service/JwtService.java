@@ -52,10 +52,11 @@ public class JwtService {
     }
 
     // Nuevo método para generar token con idUsuario y rol
-    public String generateToken(UserDetails userDetails, Integer idUsuario, String rol) {
+    public String generateToken(UserDetails userDetails, Integer idUsuario, String rol, String correo) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("idUsuario", idUsuario);
         claims.put("rol", rol);
+        claims.put("correo", correo);
         claims.put("authorities", rol); // Para coincidir con JwtAuthenticationFilter
         return generateToken(claims, userDetails.getUsername());
     }

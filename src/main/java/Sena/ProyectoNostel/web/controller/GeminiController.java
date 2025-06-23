@@ -50,18 +50,18 @@ public class GeminiController {
             }
 
             // Extraer parámetros contextuales
-            Integer idFicha = body.has("idFicha") ? body.get("idFicha").asInt() : null;
+            //Integer idFicha = body.has("idFicha") ? body.get("idFicha").asInt() : null;
             Integer idAprendiz = body.has("idAprendiz") ? body.get("idAprendiz").asInt() : null;
 
             // Extraer parámetros de generación
             double temp = body.has("temperature") ? body.get("temperature").asDouble(0.2) : 0.2;
-            int maxTok = body.has("max_tokens") ? body.get("max_tokens").asInt(1024) :
-                    (body.has("maxOutputTokens") ? body.get("maxOutputTokens").asInt(1024) : 1024);
+            int maxTok = body.has("max_tokens") ? body.get("max_tokens").asInt(2048) :
+                    (body.has("maxOutputTokens") ? body.get("maxOutputTokens").asInt(2048) : 2048);
             int cand = body.has("n") ? body.get("n").asInt(1) :
                     (body.has("candidateCount") ? body.get("candidateCount").asInt(1) : 1);
 
             // Llamar al servicio
-            Map<String, Object> resultado = geminiService.generarActa(contenido, temp, maxTok, cand, idFicha, idAprendiz);
+            Map<String, Object> resultado = geminiService.generarActa(contenido, temp, maxTok, cand, idAprendiz);
             return ResponseEntity.ok(resultado);
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error al procesar la solicitud: " + e.getMessage());

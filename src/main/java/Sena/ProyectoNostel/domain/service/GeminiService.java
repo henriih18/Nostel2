@@ -1,3 +1,4 @@
+/*
 package Sena.ProyectoNostel.domain.service;
 
 import Sena.ProyectoNostel.domain.dto.AprendizDTO;
@@ -214,4 +215,217 @@ public class GeminiService {
     }
 }
 
+
+*/
+
+package Sena.ProyectoNostel.domain.service;
+
+import Sena.ProyectoNostel.domain.dto.AprendizDTO;
+import Sena.ProyectoNostel.domain.repository.InstructorRepository;
+import Sena.ProyectoNostel.persistence.entity.Instructor;
+import com.fasterxml.jackson.databind.JsonNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+@Service
+public class GeminiService {
+
+    private static final Logger log = LoggerFactory.getLogger(GeminiService.class);
+    private final WebClient webClient;
+    private final AprendizService aprendizService;
+    private final InstructorRepository instructorRepository;
+
+    public GeminiService(WebClient geminiClient, AprendizService aprendizService, InstructorRepository instructorRepository, JwtService jwtService) {
+        this.webClient = geminiClient;
+        this.aprendizService = aprendizService;
+        this.instructorRepository = instructorRepository;
+    }
+
+    public Map<String, Object> generarActa(String prompt, double temperature, int maxTokens,
+                                           int candidateCount, Integer idAprendiz) {
+        Integer documento = null;
+        Pattern pattern = Pattern.compile("documento\\s+(\\d+)");
+        Matcher matcher = pattern.matcher(prompt);
+        if (matcher.find()) {
+            String documentoStr = matcher.group(1);
+            if (!documentoStr.matches("\\d{6,10}")) {
+                throw new IllegalArgumentException("El número de documento debe tener entre 6 y 10 dígitos.");
+            }
+            try {
+                documento = Integer.parseInt(documentoStr);
+                log.info("Número de documento extraído del prompt: {}", documento);
+            } catch (NumberFormatException e) {
+                log.error("Error al convertir el documento: {}", documentoStr, e);
+                throw new IllegalArgumentException("El número de documento debe ser un entero válido.");
+            }
+        }
+
+        if (documento == null) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("status", "incomplete");
+            response.put("message", "Por favor, proporciona el número de documento del aprendiz.");
+            return response;
+        }
+
+        Integer finalDocumento = documento;
+        AprendizDTO aprendiz = aprendizService.findByDocumento(documento)
+                .orElseThrow(() -> new IllegalArgumentException("No se encontró un aprendiz con el número de documento: " + finalDocumento));
+
+        String correoAutenticado = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (correoAutenticado == null || correoAutenticado.isBlank()) {
+            throw new IllegalArgumentException("No se pudo determinar el correo del usuario autenticado.");
+        }
+
+        Instructor instructor = instructorRepository.findByCorreo(correoAutenticado)
+                .orElseThrow(() -> new RuntimeException(
+                        "Instructor no encontrado para el usuario autenticado (" + correoAutenticado + ")"));
+
+        String areaInstructor = instructor.getArea();
+        if (areaInstructor == null || areaInstructor.trim().isEmpty()) {
+            areaInstructor = "General";
+        }
+
+        boolean esActividadComplementaria = prompt.toLowerCase().contains("actividad") ||
+                prompt.toLowerCase().contains("actividad complementaria");
+        boolean esPlanMejoramiento = prompt.toLowerCase().contains("plan") ||
+                prompt.toLowerCase().contains("plan de mejoramiento");
+
+        String tipoDocumento;
+        if (!esActividadComplementaria && !esPlanMejoramiento) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("status", "incomplete");
+            response.put("message", "Por favor, especifica si deseas generar una actividad complementaria o un plan de mejoramiento (usa 'actividad' o 'plan' en el prompt).");
+            return response;
+        }
+        tipoDocumento = esActividadComplementaria ? "actividad complementaria" : "plan de mejoramiento";
+
+
+       /*  String contexto;
+       if (tipoDocumento.equals("actividad complementaria")) {
+            contexto = "Eres un asistente especializado en el sistema Nostel del SENA Colombia. " +
+                    "Genera una actividad complementaria formal y profesional para un instructor en el área de " + areaInstructor + ". " +
+                    "La respuesta debe estar estructurada en líneas separadas con los siguientes encabezados exactos: " +
+                    "'Nombre del Comité:', 'Agenda o Puntos para Desarrollar:', 'Objetivos de la Reunión:', 'Desarrollo de la Reunión:', 'Conclusiones:'. " +
+                    "Proporciona contenido único, detallado y relevante para cada campo, basado únicamente en el área de " + areaInstructor + " y el aprendiz " + nombreCompleto + " (CC " + aprendiz.getDocumento() + "). " +
+                    "No uses ejemplos predefinidos ni estructuras fijas; genera contenido original según el contexto.";
+        } else {
+            contexto = "Eres un asistente especializado en el sistema Nostel del SENA Colombia. " +
+                    "Genera un plan de mejoramiento formal y profesional para un instructor en el área de " + areaInstructor + ". " +
+                    "La respuesta debe estar estructurada en líneas separadas con los siguientes encabezados exactos: " +
+                    "'Nombre del Comité:', 'Agenda o Puntos para Desarrollar:', 'Objetivos de la Reunión:', 'Desarrollo de la Reunión:', 'Conclusiones:'. " +
+                    "Proporciona contenido único, detallado y relevante para cada campo, basado únicamente en el área de " + areaInstructor + " y el aprendiz " + nombreCompleto + " (CC " + aprendiz.getDocumento() + "), enfocado en mejorar su desempeño académico y personal. " +
+                    "No uses ejemplos predefinidos ni estructuras fijas; genera contenido original según el contexto.";
+        }*/
+
+        String contexto;
+        if (tipoDocumento.equals("actividad complementaria")) {
+            contexto = "Eres un instructor del SENA Colombia que está generando una ACTA de actividad complementaria en el sistema Nostel. " +
+                    "La respuesta debe ser formal, profesional y estar estructurada con los siguientes encabezados exactamente como se indica: " +
+                    "'Nombre del Comité: '," + " " + "FICHA" + " " + aprendiz.getNumeroFicha()+  "'Agenda o Puntos para Desarrollar:', 'Objetivos de la Reunión:', 'Desarrollo de la Reunión:', 'Conclusiones:'. " +
+                    "El contenido debe estar centrado en el seguimiento académico del aprendiz "  + " (CC " + aprendiz.getDocumento() + " " +  aprendiz.getNombres().toUpperCase() + aprendiz.getApellidos().toUpperCase() +"). " +
+                    "En ningún momento te refieras al número de documento como un archivo o documento físico. Es su número de identificación personal. " +
+                    "Evita estructuras repetitivas o genéricas. Sé específico y realista según el área del instructor: " + areaInstructor + ".";
+        } else {
+            contexto = "Eres un instructor del SENA Colombia que está generando un PLAN DE MEJORAMIENTO en el sistema Nostel. " +
+                    "La respuesta debe ser formal, profesional y estar estructurada con los siguientes encabezados exactamente como se indica: " +
+                    "'Nombre del Comité: ', " + " " + " FICHA" + " " + aprendiz.getNumeroFicha()+  "'Agenda o Puntos para Desarrollar:', 'Objetivos de la Reunión:', 'Desarrollo de la Reunión:', 'Conclusiones:'. " +
+                    "El contenido debe estar centrado en mejorar el desempeño del aprendiz " + " (CC " + aprendiz.getDocumento() + " " + aprendiz.getNombres().toUpperCase() + aprendiz.getApellidos().toUpperCase() +"). " +
+                    "Nunca interpretes el número de documento como un archivo o evidencia. Se trata de su número de identificación. " +
+                    "Sé específico y contextual, según el área del instructor: " + areaInstructor + ".";
+        }
+
+        /*String promptFinal = contexto + " " + prompt;*/
+        String promptFinal = contexto + " " + prompt + " Recuerda siempre referirte al aprendiz como " + "CC" +
+                aprendiz.getDocumento() + " " + "(número de identificación)." + aprendiz.getNombres() + " " + aprendiz.getApellidos() +
+                "Evita referirte a ese número como un documento a revisar." + "No incluyas campos sin completar, marcadores entre corchetes como [Fecha de la próxima reunión], ni placeholders pendientes por llenar. " +
+                "La redacción debe estar completa, profesional y sin dejar información sin especificar.";;
+        log.info("Prompt final enviado a Gemini: {}", promptFinal);
+
+        Map<String, Object> requestBody = new HashMap<>();
+        requestBody.put("contents", List.of(
+                Map.of(
+                        "role", "user",
+                        "parts", List.of(Map.of("text", promptFinal))
+                )
+        ));
+        requestBody.put("generationConfig", Map.of(
+                "temperature", temperature,
+                "maxOutputTokens", maxTokens,
+                "candidateCount", candidateCount
+        ));
+
+        JsonNode resp = webClient.post()
+                .bodyValue(requestBody)
+                .retrieve()
+                .onStatus(status -> status.isError(),
+                        cr -> cr.bodyToMono(String.class)
+                                .flatMap(err -> Mono.error(new RuntimeException("Error de Gemini: " + err))))
+                .bodyToMono(JsonNode.class)
+                .block();
+
+        String rawResponse = resp
+                .path("candidates")
+                .get(0)
+                .path("content")
+                .path("parts")
+                .get(0)
+                .path("text")
+                .asText();
+
+        Map<String, Object> documentoGenerado = new HashMap<>();
+        try {
+            String[] lines = rawResponse.split("\n");
+            StringBuilder currentSection = new StringBuilder();
+            String currentHeader = null;
+
+            for (String line : lines) {
+                line = line.replaceAll("^\\*\\*(.*?)\\*\\*", "$1").trim();
+                if (line.startsWith("Nombre del Comité:") || line.startsWith("Agenda o Puntos para Desarrollar:") ||
+                        line.startsWith("Objetivos de la Reunión:") || line.startsWith("Desarrollo de la Reunión:") ||
+                        line.startsWith("Conclusiones:")) {
+                    if (currentHeader != null && !currentSection.toString().trim().isEmpty()) {
+                        documentoGenerado.put(currentHeader, currentSection.toString().trim());
+                    }
+                    currentHeader = line.substring(0, line.indexOf(":")).trim();
+                    currentSection = new StringBuilder(line.substring(line.indexOf(":") + 1).trim());
+                } else if (currentHeader != null) {
+                    currentSection.append("\n").append(line);
+                }
+            }
+            if (currentHeader != null && !currentSection.toString().trim().isEmpty()) {
+                documentoGenerado.put(currentHeader, currentSection.toString().trim());
+            }
+
+            if (!documentoGenerado.containsKey("Nombre del Comité") || !documentoGenerado.containsKey("Agenda o Puntos para Desarrollar") ||
+                    !documentoGenerado.containsKey("Objetivos de la Reunión") || !documentoGenerado.containsKey("Desarrollo de la Reunión") ||
+                    !documentoGenerado.containsKey("Conclusiones")) {
+                throw new RuntimeException("La respuesta de Gemini no contiene todos los campos esperados. Respuesta recibida: " + rawResponse);
+            }
+
+            Map<String, Object> formattedDocumento = new HashMap<>();
+            formattedDocumento.put("nombreComite", documentoGenerado.get("Nombre del Comité"));
+            formattedDocumento.put("agenda", documentoGenerado.get("Agenda o Puntos para Desarrollar"));
+            formattedDocumento.put("objetivos", documentoGenerado.get("Objetivos de la Reunión"));
+            formattedDocumento.put("desarrollo", documentoGenerado.get("Desarrollo de la Reunión"));
+            formattedDocumento.put("conclusiones", documentoGenerado.get("Conclusiones"));
+            formattedDocumento.put("idAprendiz", aprendiz.getIdAprendiz());
+            formattedDocumento.put("tipoDocumento", tipoDocumento);
+            formattedDocumento.put("status", "success");
+            return formattedDocumento;
+        } catch (Exception e) {
+            log.error("Error al parsear la respuesta de Gemini: {}", e.getMessage());
+            throw new RuntimeException("Error al parsear la respuesta de Gemini: " + e.getMessage());
+        }
+    }
+}
 
