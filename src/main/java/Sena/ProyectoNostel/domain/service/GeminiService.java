@@ -338,7 +338,7 @@ public class GeminiService {
         } else {
             contexto = "Eres un instructor del SENA Colombia que está generando un PLAN DE MEJORAMIENTO en el sistema Nostel. " +
                     "La respuesta debe ser formal, profesional y estar estructurada con los siguientes encabezados exactamente como se indica: " +
-                    "'Nombre del Comité: ', " + " " + " FICHA" + " " + aprendiz.getNumeroFicha()+  "'Agenda o Puntos para Desarrollar:', 'Objetivos de la Reunión:', 'Desarrollo de la Reunión:', 'Conclusiones:'. " +
+                    "'Nombre del Comité: ', " + " " + " FICHA" + " " + aprendiz.getNumeroFicha() +  "'Agenda o Puntos para Desarrollar:', 'Objetivos de la Reunión:', 'Desarrollo de la Reunión:', 'Conclusiones:'. " +
                     "El contenido debe estar centrado en mejorar el desempeño del aprendiz " + " (CC " + aprendiz.getDocumento() + " " + aprendiz.getNombres().toUpperCase() + aprendiz.getApellidos().toUpperCase() +"). " +
                     "Nunca interpretes el número de documento como un archivo o evidencia. Se trata de su número de identificación. " +
                     "Sé específico y contextual, según el área del instructor: " + areaInstructor + ".";
@@ -346,7 +346,7 @@ public class GeminiService {
 
         /*String promptFinal = contexto + " " + prompt;*/
         String promptFinal = contexto + " " + prompt + " Recuerda siempre referirte al aprendiz como " + "CC" +
-                aprendiz.getDocumento() + " " + "(número de identificación)." + aprendiz.getNombres() + " " + aprendiz.getApellidos() +
+                aprendiz.getDocumento() + " " + "(número de identificación)." + aprendiz.getNombres().toUpperCase() + " " + aprendiz.getApellidos().toUpperCase() +
                 "Evita referirte a ese número como un documento a revisar." + "No incluyas campos sin completar, marcadores entre corchetes como [Fecha de la próxima reunión], ni placeholders pendientes por llenar. " +
                 "La redacción debe estar completa, profesional y sin dejar información sin especificar.";;
         log.info("Prompt final enviado a Gemini: {}", promptFinal);

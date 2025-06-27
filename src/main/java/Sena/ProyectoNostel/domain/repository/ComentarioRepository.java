@@ -20,4 +20,7 @@ public interface ComentarioRepository extends ComentarioCrudRepository {
             @Param("p_comentario") String comentario,
             @Param("p_id_instructor") Integer idInstructor
     );
+
+    long countByAprendiz_IdAprendiz(Integer idAprendiz);
+
 }

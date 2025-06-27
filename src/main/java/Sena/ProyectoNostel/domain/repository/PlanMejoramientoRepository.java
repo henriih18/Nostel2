@@ -37,4 +37,7 @@ public interface PlanMejoramientoRepository extends PlanMejoramientoCrudReposito
     // Método para obtener el último ID insertado (puedes usar una consulta nativa si el procedimiento no lo devuelve)
     @Query(value = "SELECT LAST_INSERT_ID()", nativeQuery = true)
     Integer getLastInsertedId();
+
+    long countByAprendiz_IdAprendiz(Integer idAprendiz);
+
 }

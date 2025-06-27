@@ -109,5 +109,9 @@ public class AprendizDTO {
     //private List<ActividadComplementariaDTO> actividadComplementarias;
     //private List<PlanMejoramientoDTO> planMejoramientos;
 
+    private Integer totalActividades;
+    private Integer totalPlanes;
+    private Integer totalComentarios;
+
 }
 

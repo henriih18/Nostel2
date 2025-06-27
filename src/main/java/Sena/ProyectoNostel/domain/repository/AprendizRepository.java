@@ -20,5 +20,6 @@ public interface AprendizRepository extends AprendizCrudRepository {
     //Aprendiz save(Aprendiz aprendiz);
 
     Optional<Aprendiz> findByUsuarioIdUsuario(Integer idUsuario);
+
 }
 

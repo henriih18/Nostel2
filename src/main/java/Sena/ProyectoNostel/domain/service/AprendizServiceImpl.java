@@ -3,8 +3,7 @@
 package Sena.ProyectoNostel.domain.service;
 
 import Sena.ProyectoNostel.domain.dto.AprendizDTO;
-import Sena.ProyectoNostel.domain.repository.AprendizRepository;
-import Sena.ProyectoNostel.domain.repository.UsuarioRepository;
+import Sena.ProyectoNostel.domain.repository.*;
 import Sena.ProyectoNostel.persistence.entity.Aprendiz;
 import Sena.ProyectoNostel.persistence.entity.Usuario;
 import Sena.ProyectoNostel.persistence.mapper.AprendizMapper;
@@ -27,11 +26,15 @@ public class AprendizServiceImpl implements AprendizService {
     private final UsuarioRepository usuarioRepository;
     private final AprendizMapper aprendizMapper;
     private final PasswordEncoder passwordEncoder;
+    private final ActividadComplementariaRepository actividadComplementariaRepositoryRepository;
+    private final PlanMejoramientoRepository planMejoramientoRepository;
+    private final ComentarioRepository comentarioRepository;
+
 
     @Override
     public List<AprendizDTO> obtenerTodos() {
         return aprendizRepository.findAll().stream()
-                .map(aprendizMapper::toAprendizDTO)
+                .map(this::toAprendizDTO)
                 .collect(Collectors.toList());
     }
 
@@ -42,7 +45,7 @@ public class AprendizServiceImpl implements AprendizService {
     }
 
 
-    public Optional<AprendizDTO> findByDocumento (Integer documento) {
+    public Optional<AprendizDTO> findByDocumento(Integer documento) {
         if (documento == null) {
             return Optional.empty();
         }
@@ -54,40 +57,40 @@ public class AprendizServiceImpl implements AprendizService {
         return aprendizRepository.findByUsuarioIdUsuario(idUsuario);
     }
 
-   @Transactional
-   public AprendizDTO crear(AprendizDTO aprendizDTO) {
-       //log.info("Intentando crear un instructor desde el servicio: {}", instructorDTO);
+    @Transactional
+    public AprendizDTO crear(AprendizDTO aprendizDTO) {
+        //log.info("Intentando crear un instructor desde el servicio: {}", instructorDTO);
 
-       // Verificar si el correo ya existe en usuarios
-       if (usuarioRepository.existsByCorreo(aprendizDTO.getCorreo())) {
-           log.error("El correo {} ya está registrado", aprendizDTO.getCorreo());
-           throw new RuntimeException("El correo ya está registrado");
-       }
+        // Verificar si el correo ya existe en usuarios
+        if (usuarioRepository.existsByCorreo(aprendizDTO.getCorreo())) {
+            log.error("El correo {} ya está registrado", aprendizDTO.getCorreo());
+            throw new RuntimeException("El correo ya está registrado");
+        }
 
-       try {
-           // Crear el usuario en la tabla usuarios
-           Usuario usuario = new Usuario();
-           usuario.setCorreo(aprendizDTO.getCorreo());
-           usuario.setContrasena(passwordEncoder.encode(aprendizDTO.getContrasena()));
-           usuario.setRol("APRENDIZ");
-           usuario = usuarioRepository.save(usuario);
-           log.info("Usuario creado: {}", usuario);
+        try {
+            // Crear el usuario en la tabla usuarios
+            Usuario usuario = new Usuario();
+            usuario.setCorreo(aprendizDTO.getCorreo());
+            usuario.setContrasena(passwordEncoder.encode(aprendizDTO.getContrasena()));
+            usuario.setRol("APRENDIZ");
+            usuario = usuarioRepository.save(usuario);
+            log.info("Usuario creado: {}", usuario);
 
-           // Mapear DTO a entidad
-           Aprendiz aprendiz = aprendizMapper.toAprendiz(aprendizDTO);
-           aprendiz.setUsuario(usuario);
+            // Mapear DTO a entidad
+            Aprendiz aprendiz = aprendizMapper.toAprendiz(aprendizDTO);
+            aprendiz.setUsuario(usuario);
 
-           // Guardar en la tabla instructores
-           Aprendiz savedAprendiz = aprendizRepository.save(aprendiz);
-           log.info("Aprendiz guardado exitosamente: {}", savedAprendiz);
+            // Guardar en la tabla instructores
+            Aprendiz savedAprendiz = aprendizRepository.save(aprendiz);
+            log.info("Aprendiz guardado exitosamente: {}", savedAprendiz);
 
-           return aprendizMapper.toAprendizDTO(savedAprendiz);
-       } catch (Exception e) {
-           log.error("Error al crear el aprendiz: {}", e.getMessage());
-           // La anotación @Transactional hará rollback automáticamente
-           throw new RuntimeException("Error al registrar el aprendiz: " + e.getMessage());
-       }
-   }
+            return aprendizMapper.toAprendizDTO(savedAprendiz);
+        } catch (Exception e) {
+            log.error("Error al crear el aprendiz: {}", e.getMessage());
+            // La anotación @Transactional hará rollback automáticamente
+            throw new RuntimeException("Error al registrar el aprendiz: " + e.getMessage());
+        }
+    }
 
     @Override
     public Optional<AprendizDTO> actualizar(Integer idAprendiz, AprendizDTO aprendizDTO) {
@@ -120,7 +123,19 @@ public class AprendizServiceImpl implements AprendizService {
         });
     }
 
-    public AprendizDTO toAprendizDTO(Aprendiz aprendiz) {
+    /*public AprendizDTO toAprendizDTO(Aprendiz aprendiz) {
         return aprendizMapper.toAprendizDTO(aprendiz);
+    }*/
+
+    public AprendizDTO toAprendizDTO(Aprendiz aprendiz) {
+        AprendizDTO dto = aprendizMapper.toAprendizDTO(aprendiz);
+
+        // Recuentos reales desde los repositorios
+        dto.setTotalActividades((int) actividadComplementariaRepositoryRepository.countByAprendiz_IdAprendiz(aprendiz.getIdAprendiz()));
+        dto.setTotalPlanes((int) planMejoramientoRepository.countByAprendiz_IdAprendiz(aprendiz.getIdAprendiz()));
+        dto.setTotalComentarios((int) comentarioRepository.countByAprendiz_IdAprendiz(aprendiz.getIdAprendiz()));
+
+        return dto;
     }
+
 }

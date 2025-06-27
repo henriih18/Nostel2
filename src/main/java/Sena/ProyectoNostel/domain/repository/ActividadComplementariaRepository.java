@@ -45,4 +45,6 @@ public interface ActividadComplementariaRepository extends ActividadComplementar
     @Query(value = "SELECT LAST_INSERT_ID()", nativeQuery = true)
     Integer getLastInsertedId();
 
+    long countByAprendiz_IdAprendiz(Integer idAprendiz);
+
 }
