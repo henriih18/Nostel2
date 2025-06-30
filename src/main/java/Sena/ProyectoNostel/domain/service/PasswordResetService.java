@@ -57,7 +57,7 @@ public class PasswordResetService {
 
     // Enviar correo con enlace de restablecimiento
     private void sendResetEmail(String email, String token) {
-        String resetUrl = frontendUrl + "/reset-password?token=" + token;
+        String resetUrl = frontendUrl + "/password-reset/reset?token=" + token;
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);
         message.setSubject("Restablecimiento de Contraseña - Proyecto Nostel");
