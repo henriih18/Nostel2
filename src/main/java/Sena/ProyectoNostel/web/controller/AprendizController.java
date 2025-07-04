@@ -81,7 +81,7 @@ public class AprendizController {
 
     }
 
-    @PostMapping
+    /*@PostMapping
     //@PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'APRENDIZ')")
     //@PreAuthorize("hasAnyRole('ADMIN', 'APRENDIZ')")
     public ResponseEntity<?> crear(@RequestBody @Valid AprendizDTO aprendizDTO, BindingResult result) {
@@ -99,7 +99,7 @@ public class AprendizController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
 
-    }
+    }*/
 
     @PutMapping("/{idAprendiz}")
     @PreAuthorize("hasAnyRole('APRENDIZ', 'ADMIN')")

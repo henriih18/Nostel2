@@ -60,8 +60,8 @@ public class InstructorController {
         InstructorDTO creado = instructorService.crearInstructor(instructorDTO);
         return new ResponseEntity<>(creado, HttpStatus.CREATED);
     }*/
-    @PostMapping
-    @PreAuthorize("hasAnyRole('INSTRUCTOR', 'ADMIN')")
+    @PostMapping("/RegistroInstructor")
+    /*@PreAuthorize("hasAnyRole('INSTRUCTOR', 'ADMIN')")*/
     public ResponseEntity<?> crearInstructor(@RequestBody @Valid InstructorDTO instructorDTO, BindingResult result) {
         if (result.hasErrors()) {
             Map<String, String> errores = new HashMap<>();

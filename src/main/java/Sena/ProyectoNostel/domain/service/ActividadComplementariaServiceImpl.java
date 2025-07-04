@@ -136,6 +136,18 @@ public class ActividadComplementariaServiceImpl implements ActividadComplementar
             actividad.setAsistentes(asistentes);
         }
 
+        // DEBUG: Imprimir valores booleanos antes de guardar
+        if (actividad.getAsistentes() != null) {
+            for (Asistente a : actividad.getAsistentes()) {
+                System.out.println("===== DEBUG ASISTENTE =====");
+                System.out.println("Nombre: " + a.getNombre());
+                System.out.println("Planta: " + a.getPlanta());
+                System.out.println("Contratista: " + a.getContratista());
+                System.out.println("Autoriza Grabación: " + a.getAutorizaGrabacion());
+            }
+        }
+
+
         // 7. Guardar las relaciones (compromisos y asistentes) usando JPA
         actividadComplementariaRepository.save(actividad);
         logger.info("Actividad y relaciones guardadas exitosamente con idActividad: {}", idActividad);

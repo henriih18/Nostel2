@@ -1,6 +1,5 @@
 package Sena.ProyectoNostel.domain.dto;
 
-import Sena.ProyectoNostel.persistence.entity.PlanMejoramiento;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -8,7 +7,7 @@ import java.util.List;
 
 @Data
 public class PlanMejoramientoDTO {
-    private Integer idActividad;
+    private Integer idPlanMejoramiento;
     private Integer idAprendiz;
     private Integer idInstructor;
     private String estado; // Enum como String para transferencia

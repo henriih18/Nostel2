@@ -94,6 +94,14 @@ public class ActividadComplementariaController {
                     return new ResponseEntity<>("La firma o participación virtual del asistente es obligatoria.", HttpStatus.BAD_REQUEST);
                 }
             }
+            for (var asistente : actividadComplementariaDTO.getAsistentes()) {
+                System.out.println("---- ASISTENTE ----");
+                System.out.println("Nombre: " + asistente.getNombre());
+                System.out.println("Planta: " + asistente.getPlanta());
+                System.out.println("Contratista: " + asistente.getContratista());
+                System.out.println("Autoriza Grabación: " + asistente.getAutorizaGrabacion());
+            }
+
 
             // Invocar el servicio
             ActividadComplementariaDTO creado = actividadComplementariaService.agregarActividad(actividadComplementariaDTO);
