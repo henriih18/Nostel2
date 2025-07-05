@@ -5,6 +5,7 @@ import Sena.ProyectoNostel.persistence.entity.Instructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 //@Service
@@ -21,4 +22,6 @@ public interface InstructorService {
     void eliminarInstructor(Integer idInstructor);
 
     InstructorDTO toInstructorDTO(Instructor instructor);
+    Map<String, Object> obtenerCodigoYTiempo();
+
 }

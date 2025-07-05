@@ -1,5 +1,6 @@
 package Sena.ProyectoNostel.web.controller;
 
+import Sena.ProyectoNostel.config.CodigoRegistroIns;
 import Sena.ProyectoNostel.domain.dto.AprendizDTO;
 import Sena.ProyectoNostel.domain.dto.InstructorDTO;
 import Sena.ProyectoNostel.domain.repository.UsuarioRepository;
@@ -22,10 +23,12 @@ import java.util.Optional;
 @RequestMapping("/instructores")
 public class InstructorController {
     private final InstructorService instructorService;
+    private final CodigoRegistroIns codigoRegistroIns;
 
 
-    public InstructorController(InstructorService instructorService, UsuarioRepository usuarioRepository) {
+    public InstructorController(InstructorService instructorService, UsuarioRepository usuarioRepository, CodigoRegistroIns codigoRegistroIns) {
         this.instructorService = instructorService;
+        this.codigoRegistroIns = codigoRegistroIns;
     }
 
     // Acceso para ADMIN e INSTRUCTOR
@@ -68,6 +71,7 @@ public class InstructorController {
             result.getFieldErrors().forEach(error -> errores.put(error.getField(), error.getDefaultMessage()));
             return ResponseEntity.badRequest().body(errores);
         }
+
         try {
             InstructorDTO creado = instructorService.crearInstructor(instructorDTO);
             return new ResponseEntity<>(creado, HttpStatus.CREATED);
@@ -77,6 +81,15 @@ public class InstructorController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
 
+    }
+
+    @GetMapping("/codigo-actual")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Map<String, Object>> obtenerCodigoActual() {
+        Map<String, Object> respuesta = new HashMap<>();
+        respuesta.put("codigo", codigoRegistroIns.getCodigoInstructor());
+        respuesta.put("segundosRestantes", codigoRegistroIns.getSegundosRestantes());
+        return ResponseEntity.ok(respuesta);
     }
 
 

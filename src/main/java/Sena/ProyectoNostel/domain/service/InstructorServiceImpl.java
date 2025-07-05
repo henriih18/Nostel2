@@ -1,6 +1,7 @@
 package Sena.ProyectoNostel.domain.service;
 
 
+import Sena.ProyectoNostel.config.CodigoRegistroIns;
 import Sena.ProyectoNostel.domain.dto.InstructorDTO;
 import Sena.ProyectoNostel.domain.repository.InstructorRepository;
 import Sena.ProyectoNostel.domain.repository.UsuarioRepository;
@@ -10,11 +11,14 @@ import Sena.ProyectoNostel.persistence.mapper.InstructorMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -28,6 +32,8 @@ public class InstructorServiceImpl implements InstructorService {
     private final UsuarioRepository usuarioRepository;
     private final InstructorMapper instructorMapper;
     private final PasswordEncoder passwordEncoder;
+    private final CodigoRegistroIns codigoRegistroIns;
+
 
     public List<InstructorDTO> obtenerInstructores() {
         return instructorRepository.findAll().stream()
@@ -47,7 +53,12 @@ public class InstructorServiceImpl implements InstructorService {
 
     @Transactional
     public InstructorDTO crearInstructor(InstructorDTO instructorDTO) {
-        log.info("Intentando crear un instructor desde el servicio: {}", instructorDTO);
+        /*log.info("Intentando crear un instructor desde el servicio: {}", instructorDTO);*/
+
+        if (!codigoRegistroIns.validar(instructorDTO.getCodigoSeguridad())) {
+            log.warn("Código de seguridad inválido: {}", instructorDTO.getCodigoSeguridad());
+            throw new IllegalArgumentException("Código de registro inválido.");
+        }
 
         // Verificar si el correo ya existe en usuarios
         if (usuarioRepository.existsByCorreo(instructorDTO.getCorreo())) {
@@ -111,5 +122,12 @@ public class InstructorServiceImpl implements InstructorService {
 
     public InstructorDTO toInstructorDTO(Instructor instructor) {
         return instructorMapper.toInstructorDTO(instructor);
+    }
+
+    public Map<String, Object> obtenerCodigoYTiempo() {
+        Map<String, Object> respuesta = new HashMap<>();
+        respuesta.put("codigo", codigoRegistroIns.getCodigoInstructor());
+        respuesta.put("segundosRestantes", codigoRegistroIns.getSegundosRestantes());
+        return respuesta;
     }
 }

@@ -164,7 +164,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE,  "/aprendices/**").hasAnyRole("ADMIN", "INSTRUCTOR")
 
                         .requestMatchers( "/instructores/**").hasAnyRole("ADMIN", "INSTRUCTOR")
-                        .requestMatchers( "/admin/**").hasRole("ADMIN")
+                        .requestMatchers( "/admin/**", "/codigo-actual").hasRole("ADMIN")
                         /*.requestMatchers("/api/**").authenticated()*/
                         .anyRequest().authenticated()
                 )

@@ -33,6 +33,8 @@ public class InstructorDTO {
 
     private Integer idUsuario;
 
+    private String codigoSeguridad;
+
 
 /*
     public InstructorDTO() {
