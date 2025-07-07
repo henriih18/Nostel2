@@ -47,7 +47,7 @@ public class JwtService {
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
-        log.debug("Token generado: {}", token);
+        //log.debug("Token generado: {}", token);
         return token;
     }
 
@@ -84,7 +84,7 @@ public class JwtService {
     }
 
     public Claims extractAllClaims(String token) {
-        log.debug("Extrayendo todos los claims del token");
+        //log.debug("Extrayendo todos los claims del token");
         return Jwts.parserBuilder()
                 .setSigningKey(getSignInKey())
                 .build()

@@ -1,5 +1,6 @@
 package Sena.ProyectoNostel.web.controller;
 
+
 import Sena.ProyectoNostel.domain.dto.ProgramaDTO;
 import Sena.ProyectoNostel.domain.service.ProgramaService;
 import jakarta.annotation.security.PermitAll;
@@ -47,13 +48,19 @@ public class ProgramaController {
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<ProgramaDTO> crearPrograma(@RequestBody ProgramaDTO programaDTO) {
+        ProgramaDTO creado = programaService.crearPrograma(programaDTO);
+        return new ResponseEntity<>(creado, HttpStatus.CREATED);
+    }
+    /*public ResponseEntity<ProgramaDTO> crearPrograma(@RequestBody ProgramaDTO programaDTO) {
         try {
             ProgramaDTO nuevoProgramaDTO = programaService.crearPrograma(programaDTO);
             return new ResponseEntity<>(nuevoProgramaDTO, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
+    }*/
+
+
 
     @PutMapping("/{idPrograma}")
     @PreAuthorize("hasAnyRole('ADMIN')")

@@ -18,16 +18,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
-        log.debug("Buscando usuario con correo: {}", correo);
+        //log.debug("Buscando usuario con correo: {}", correo);
 
         // Buscar el usuario en la tabla usuarios
         Usuario usuario = usuarioRepository.findByCorreo(correo)
                 .orElseThrow(() -> {
-                    log.warn("Usuario no encontrado con correo: {}", correo);
+                    //log.warn("Usuario no encontrado con correo: {}", correo);
                     return new UsernameNotFoundException("Usuario no encontrado con correo: " + correo);
                 });
 
-        log.info("Usuario encontrado: correo={}, rol={}", usuario.getCorreo(), usuario.getRol());
+        //log.info("Usuario encontrado: correo={}, rol={}", usuario.getCorreo(), usuario.getRol());
         return new UserDetailsImpl(usuario);
     }
 }

@@ -39,7 +39,7 @@ public class PasswordResetService {
 
     // Generar un token de restablecimiento y enviar correo
     public void createPasswordResetToken(String email) {
-        logger.info("Procesando solicitud de restablecimiento para email: {}", email);
+        //logger.info("Procesando solicitud de restablecimiento para email: {}", email);
         Optional<Usuario> usuarioOpt = usuarioRepository.findByCorreo(email);
         if (usuarioOpt.isEmpty()) {
             logger.warn("No se encontró usuario con el correo: {}", email);
@@ -50,7 +50,7 @@ public class PasswordResetService {
         String token = UUID.randomUUID().toString();
         LocalDateTime expiryDate = LocalDateTime.now().plusHours(1);
         PasswordResetToken resetToken = new PasswordResetToken(token, email, expiryDate);
-        logger.info("Token creado con email: {}, token: {}, expiryDate: {}", resetToken.getEmail(), resetToken.getToken(), resetToken.getExpiryDate());
+        //logger.info("Token creado con email: {}, token: {}, expiryDate: {}", resetToken.getEmail(), resetToken.getToken(), resetToken.getExpiryDate());
         tokenRepository.save(resetToken);
         sendResetEmail(email, token);
     }
@@ -64,22 +64,22 @@ public class PasswordResetService {
         message.setText("Para restablecer tu contraseña, haz clic en el siguiente enlace: \n" + resetUrl +
                 "\nEste enlace expirará en 1 hora.");
         mailSender.send(message);
-        logger.info("Correo de restablecimiento enviado a: {}", email);
+        //logger.info("Correo de restablecimiento enviado a: {}", email);
     }
 
     // Validar token y cambiar contraseña
     public void resetPassword(String token, String newPassword) {
-        logger.info("Validando token de restablecimiento: {}", token);
+        //logger.info("Validando token de restablecimiento: {}", token);
         Optional<PasswordResetToken> tokenOpt = tokenRepository.findByToken(token);
         if (tokenOpt.isEmpty()) {
-            logger.warn("Token no encontrado: {}", token);
+           // logger.warn("Token no encontrado: {}", token);
             throw new RuntimeException("Token inválido.");
         }
 
         PasswordResetToken resetToken = tokenOpt.get();
-        logger.info("Token encontrado - Email: {}, ExpiryDate: {}, Used: {}", resetToken.getEmail(), resetToken.getExpiryDate(), resetToken.isUsed());
+        //logger.info("Token encontrado - Email: {}, ExpiryDate: {}, Used: {}", resetToken.getEmail(), resetToken.getExpiryDate(), resetToken.isUsed());
         if (resetToken.isUsed() || resetToken.getExpiryDate().isBefore(LocalDateTime.now())) {
-            logger.warn("Token inválido - Expirado o usado: {}", token);
+            //logger.warn("Token inválido - Expirado o usado: {}", token);
             throw new RuntimeException("El token ha expirado o ya fue usado.");
         }
 

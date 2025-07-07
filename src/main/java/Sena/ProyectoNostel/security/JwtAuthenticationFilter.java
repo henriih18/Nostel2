@@ -45,7 +45,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 path.equals("/fichas/disponibles") || path.equals("/programas") ||
                 path.startsWith("/swagger-ui/") || path.startsWith("/v3/api-docs/") ||
                 request.getMethod().equals("OPTIONS")) {
-            log.debug("Omitiendo validación JWT para la ruta: {}", path);
+            //log.debug("Omitiendo validación JWT para la ruta: {}", path);
             filterChain.doFilter(request, response);
             return;
         }
@@ -53,29 +53,29 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String authHeader = request.getHeader("Authorization");
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            log.warn("Encabezado de autorización no válido o ausente: {}", authHeader);
+           // log.warn("Encabezado de autorización no válido o ausente: {}", authHeader);
             filterChain.doFilter(request, response);
             return;
         }
 
         try {
             final String jwt = authHeader.substring(7);
-            log.debug("Token recibido: {}", jwt);
+            //log.debug("Token recibido: {}", jwt);
 
             final String userCorreo = jwtService.extractCorreo(jwt);
-            log.debug("Correo extraído del token: {}", userCorreo);
+            //log.debug("Correo extraído del token: {}", userCorreo);
 
             // Extraer idUsuario desde el token
             Integer idUsuario = jwtService.extractIdUsuario(jwt);
             if (idUsuario == null) {
-                log.error("El token no contiene el claim 'idUsuario'");
+               // log.error("El token no contiene el claim 'idUsuario'");
                 response.sendError(HttpStatus.BAD_REQUEST.value(), "Token JWT no contiene idUsuario");
                 return;
             }
 
             if (userCorreo != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(userCorreo);
-                log.debug("Usuario cargado: {}", userDetails.getUsername());
+               // log.debug("Usuario cargado: {}", userDetails.getUsername());
 
                 // Verificar si el token es válido
                 if (jwtService.isTokenValid(jwt, userDetails)) {
@@ -84,11 +84,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     String rol = jwtService.extractRole(jwt);
                     if (rol != null) {
                         authorities.add(new SimpleGrantedAuthority(rol));
-                        log.debug("Rol extraído del token: {}", rol);
+                        //log.debug("Rol extraído del token: {}", rol);
                         if (rol.equals("ROLE_ADMIN")) {
                             authorities.add(new SimpleGrantedAuthority("ROLE_INSTRUCTOR"));
                             authorities.add(new SimpleGrantedAuthority("ROLE_APRENDIZ"));
-                            log.debug("Usuario es ROLE_ADMIN, añadiendo roles ROLE_INSTRUCTOR y ROLE_APRENDIZ");
+                            //log.debug("Usuario es ROLE_ADMIN, añadiendo roles ROLE_INSTRUCTOR y ROLE_APRENDIZ");
                         }
                     }
 
@@ -104,7 +104,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     authority = "ROLE_" + authority;
                                 }
                                 authorities.add(new SimpleGrantedAuthority(authority));
-                                log.debug("Autoridad adicional añadida: {}", authority);
+                                //log.debug("Autoridad adicional añadida: {}", authority);
                             }
                         }
                     }
@@ -112,7 +112,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     if (authorities.isEmpty()) {
                         userDetails.getAuthorities().forEach(authority -> {
                             authorities.add(new SimpleGrantedAuthority(authority.getAuthority()));
-                            log.debug("Usando autoridad de userDetails: {}", authority.getAuthority());
+                            //log.debug("Usando autoridad de userDetails: {}", authority.getAuthority());
                         });
                     }
 
@@ -124,25 +124,25 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);
-                    log.info("Autenticación exitosa para: {}, idUsuario: {}", userCorreo, idUsuario);
+                    //log.info("Autenticación exitosa para: {}, idUsuario: {}", userCorreo, idUsuario);
                 } else {
-                    log.warn("Token no válido para el usuario: {}", userCorreo);
+                    //log.warn("Token no válido para el usuario: {}", userCorreo);
                 }
             }
         } catch (SignatureException e) {
-            log.error("Error de firma JWT: {}", e.getMessage());
+            //log.error("Error de firma JWT: {}", e.getMessage());
             response.sendError(HttpStatus.UNAUTHORIZED.value(), "Token JWT inválido: Firma incorrecta");
             return;
         } catch (ExpiredJwtException e) {
-            log.error("Token JWT expirado: {}", e.getMessage());
+            //log.error("Token JWT expirado: {}", e.getMessage());
             response.sendError(HttpStatus.UNAUTHORIZED.value(), "Token JWT expirado");
             return;
         } catch (MalformedJwtException e) {
-            log.error("Token JWT malformado: {}", e.getMessage());
+            //log.error("Token JWT malformado: {}", e.getMessage());
             response.sendError(HttpStatus.BAD_REQUEST.value(), "Token JWT malformado");
             return;
         } catch (Exception e) {
-            log.error("Error procesando token JWT: {}", e.getMessage(), e);
+            //log.error("Error procesando token JWT: {}", e.getMessage(), e);
             response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error procesando token JWT");
             return;
         }
